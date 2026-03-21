@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}News & Announcements — FieldStation42{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div class="page-header-inner">
+        <p class="page-header-eyebrow">FieldStation42</p>
+        <h1>News & Announcements</h1>
+        <p>Feature releases, updates, and project news.</p>
+    </div>
+</div>
+
+<section class="news-section">
+    <div class="news-inner">
+        <div class="news-grid">
+            {% for article in articles %}
+            <div class="news-card">
+                <div class="news-date">{{ article.date.strftime('%B %d, %Y') }}</div>
+                <h3 class="news-title"><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h3>
+                <p class="news-summary">{{ article.summary if article.summary else article.content|striptags|truncate(140) }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

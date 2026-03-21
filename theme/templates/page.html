@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — FieldStation42{% endblock %}
+{% block description %}{{ page.summary if page.summary else page.title }}{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div class="page-header-inner">
+        <p class="page-header-eyebrow">
+            {% if page.category %}{{ page.category }}{% else %}Documentation{% endif %}
+        </p>
+        <h1>{{ page.title }}</h1>
+        {% if page.subtitle %}<p>{{ page.subtitle }}</p>{% endif %}
+    </div>
+</div>
+
+<div class="docs-layout">
+
+    <aside class="docs-sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-heading">Getting Started</div>
+            <ul class="sidebar-nav">
+                <li><a href="/docs/">Overview</a></li>
+                <li><a href="/docs/install/">1. Install</a></li>
+                <li><a href="/docs/add-content/">2. Add Content</a></li>
+                <li><a href="/docs/configure-stations/">3. Configure Stations</a></li>
+                <li><a href="/docs/generate-schedules/">4. Generate Schedules</a></li>
+                <li><a href="/docs/watch-tv/">5. Watch TV</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-heading">Guides</div>
+            <ul class="sidebar-nav">
+                <li><a href="/docs/guides/advanced-scheduling/">Advanced Scheduling</a></li>
+                <li><a href="/docs/guides/channel-recipes/">Channel Recipes</a></li>
+                <li><a href="/docs/guides/series-in-sequence/">Series in Sequence</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-heading">Reference</div>
+            <ul class="sidebar-nav">
+                <li><a href="/docs/reference/command-line/">Command Line</a></li>
+                <li><a href="/docs/reference/osd-setup/">OSD Setup</a></li>
+                <li><a href="/docs/reference/web-remote/">Web Remote</a></li>
+                <li><a href="/docs/reference/autostart/">Autostart</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <article class="docs-content">
+        {{ page.content }}
+
+        {% if page.prev_page or page.next_page %}
+        <nav class="doc-nav">
+            {% if page.prev_page %}
+            <a href="{{ SITEURL }}/{{ page.prev_page.url }}" class="doc-nav-link doc-nav-prev">
+                <span class="doc-nav-label">← Previous</span>
+                <span class="doc-nav-title">{{ page.prev_page.title }}</span>
+            </a>
+            {% endif %}
+            {% if page.next_page %}
+            <a href="{{ SITEURL }}/{{ page.next_page.url }}" class="doc-nav-link doc-nav-next">
+                <span class="doc-nav-label">Next →</span>
+                <span class="doc-nav-title">{{ page.next_page.title }}</span>
+            </a>
+            {% endif %}
+        </nav>
+        {% endif %}
+    </article>
+
+</div>
+
+{% endblock %}
