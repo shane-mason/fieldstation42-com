@@ -13,7 +13,7 @@ The full getting started guide has been migrated and reworked for clarity, with 
 
 Feature announcements will live here going forward. If you want to keep up with what's new in FieldStation42, this is the place.
 
-The [YouTube channel](https://youtube.com/@wrongdogreckons) continues to be the best place for video walkthroughs and deep dives.
+The [YouTube channel](https://youtube.com/@wrongdog_reckons) continues to be the best place for video walkthroughs and deep dives.
 
 ## Thank you
 
