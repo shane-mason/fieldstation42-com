@@ -1,6 +1,6 @@
 Title: Install FieldStation42
 Slug: docs/install
-Summary: Get FieldStation42 running on your system — dependencies, cloning, and the install script.
+Summary: Get FieldStation42 running on your system: dependencies, cloning, and the install script.
 
 Follow these steps in order. Once finished, move on to [Add Station Content](/docs/add-content/).
 
@@ -32,7 +32,7 @@ sudo apt install python3-tk
 
 ### Raspberry Pi notes
 
-Use **Bookworm OS** for best results. Fresh installations are recommended. Trixie support is in progress — if video won't display on Trixie, create `~/.config/mpv/mpv.conf` with:
+Use **Bookworm OS** for best results. Fresh installations are recommended. Trixie support is in progress. If video won't display on Trixie, create `~/.config/mpv/mpv.conf` with:
 
 ```
 vo=gpu
@@ -51,7 +51,7 @@ Or with GitHub CLI:
 gh repo clone shane-mason/FieldStation42
 ```
 
-This creates a `FieldStation42` folder. Run all commands from inside that directory — configuration file paths are relative to it.
+This creates a `FieldStation42` folder. Run all commands from inside that directory. Configuration file paths are relative to it.
 
 To stay up to date:
 

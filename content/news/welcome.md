@@ -3,7 +3,7 @@ Date: 2026-03-20
 Slug: welcome-to-fieldstation42
 Summary: FieldStation42 now has a proper home on the web. Here's what's new and what's coming.
 
-FieldStation42 has a new home. After living on the GitHub wiki since the project started, the docs are moving here — to a place that can grow with the project and feel a bit more like the retro TV experience it's all about.
+FieldStation42 has a new home. After living on the GitHub wiki since the project started, the docs are moving here, to a place that can grow with the project and feel a bit more like the retro TV experience it's all about.
 
 ## What's here now
 
