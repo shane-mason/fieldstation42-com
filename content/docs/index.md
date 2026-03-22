@@ -2,30 +2,47 @@ Title: Getting Started
 Slug: docs
 Summary: Everything you need to set up your FieldStation42 TV simulator.
 
-Welcome to FieldStation42! Whether you're setting up your first retro TV station or configuring a multi-channel cable system, this guide will walk you through every step.
+Welcome to FieldStation42! This project turns your video collection into a simulated TV broadcast -- complete with channels, schedules, commercial breaks, and that feeling of flipping through stations to see what's on.
 
-FieldStation42 is in active development. Setup takes a few steps and a bit of comfort with the command line, but don't worry, these guides explain everything.
+The setup is straightforward -- five steps from start to finish. Each one builds on the last, and you can take breaks between them.
 
-## The Setup Path
-
-Follow these five steps in order for your first install:
-
-1. [Install FieldStation42](/docs/install/) - get the software running on your system
-2. [Add Station Content](/docs/add-content/) - organize your video files
-3. [Configure Stations](/docs/configure-stations/) - define your TV channels
-4. [Generate Schedules](/docs/generate-schedules/) - build your programming lineup
-5. [Watch TV](/docs/watch-tv/) - fire it up and start watching
-
-## Going Further
-
-Once you're up and running, explore the guides:
-
-- [Advanced Scheduling](/docs/guides/advanced-scheduling/) - sequences, marathons, seasonal programming
-- [Bumps & Commercials](/docs/guides/bumps-and-commercials/) - best practices for station promos and ads
-- [Channel Recipes](/docs/guides/channel-recipes/) - copy-paste configs for common channel types
-- [Media Management](/docs/guides/media-management/) - external drives, symbolic links, large libraries
-- [Scheduling Hints](/docs/guides/scheduling-hints/) - time-of-day, seasonal, and date-based content
-- [Series in Sequence](/docs/guides/series-in-sequence/) - play episodes in order
+<div class="setup-steps">
+  <a href="/docs/install/" class="setup-step">
+    <div class="setup-step-num">1</div>
+    <div class="setup-step-text">
+      <div class="setup-step-title">Install FieldStation42</div>
+      <div class="setup-step-desc">Get the software and its dependencies on your system.</div>
+    </div>
+  </a>
+  <a href="/docs/add-content/" class="setup-step">
+    <div class="setup-step-num">2</div>
+    <div class="setup-step-text">
+      <div class="setup-step-title">Add Station Content</div>
+      <div class="setup-step-desc">Put your video files where FieldStation42 can find them.</div>
+    </div>
+  </a>
+  <a href="/docs/configure-stations/" class="setup-step">
+    <div class="setup-step-num">3</div>
+    <div class="setup-step-text">
+      <div class="setup-step-title">Configure Stations</div>
+      <div class="setup-step-desc">Create your channels and decide what plays when.</div>
+    </div>
+  </a>
+  <a href="/docs/generate-schedules/" class="setup-step">
+    <div class="setup-step-num">4</div>
+    <div class="setup-step-text">
+      <div class="setup-step-title">Generate Schedules</div>
+      <div class="setup-step-desc">Scan your videos and build your programming lineup.</div>
+    </div>
+  </a>
+  <a href="/docs/watch-tv/" class="setup-step">
+    <div class="setup-step-num">5</div>
+    <div class="setup-step-text">
+      <div class="setup-step-title">Watch TV</div>
+      <div class="setup-step-desc">Turn it on and start flipping channels.</div>
+    </div>
+  </a>
+</div>
 
 ## Need Help?
 

@@ -556,6 +556,74 @@ a:hover { color: var(--orange); }
     line-height: 1.6;
 }
 
+/* ---- Setup Step Cards ---- */
+.setup-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+}
+
+.setup-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--teal);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.setup-step:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--text);
+}
+
+.setup-step:nth-child(2) { border-left-color: var(--orange); }
+.setup-step:nth-child(3) { border-left-color: var(--amber); }
+.setup-step:nth-child(4) { border-left-color: var(--teal-light); }
+.setup-step:nth-child(5) { border-left-color: var(--brown-light); }
+
+.setup-step-num {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--teal);
+    flex-shrink: 0;
+    width: 1.5rem;
+    text-align: center;
+}
+
+.setup-step:nth-child(2) .setup-step-num { color: var(--orange); }
+.setup-step:nth-child(3) .setup-step-num { color: var(--amber); }
+.setup-step:nth-child(4) .setup-step-num { color: var(--teal-light); }
+.setup-step:nth-child(5) .setup-step-num { color: var(--brown-light); }
+
+.setup-step-text {
+    flex: 1;
+}
+
+.setup-step-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.setup-step-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+    .setup-step { padding: 1rem 1.25rem; gap: 1rem; }
+}
+
 /* ---- Docs Layout ---- */
 .docs-layout {
     max-width: var(--max-width);
