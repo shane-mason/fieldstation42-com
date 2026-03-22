@@ -306,6 +306,21 @@ a:hover { color: var(--orange); }
 .tv-screen-content {
     text-align: center;
     padding: 1.5rem;
+    transition: opacity 0.1s ease;
+}
+
+.tv-screen-content.switching {
+    animation: tv-static 0.35s steps(1) forwards;
+}
+
+@keyframes tv-static {
+    0%   { opacity: 1; }
+    15%  { opacity: 0.05; filter: brightness(3) contrast(8); }
+    30%  { opacity: 0.4; filter: brightness(0.2); }
+    50%  { opacity: 0.05; filter: brightness(4) contrast(6); }
+    70%  { opacity: 0.3; filter: brightness(0.1); }
+    85%  { opacity: 0.6; filter: brightness(1.5); }
+    100% { opacity: 1; filter: none; }
 }
 
 .tv-channel {
