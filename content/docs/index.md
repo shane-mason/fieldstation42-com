@@ -21,7 +21,10 @@ Follow these five steps in order for your first install:
 Once you're up and running, explore the guides:
 
 - [Advanced Scheduling](/docs/guides/advanced-scheduling/) - sequences, marathons, seasonal programming
+- [Bumps & Commercials](/docs/guides/bumps-and-commercials/) - best practices for station promos and ads
 - [Channel Recipes](/docs/guides/channel-recipes/) - copy-paste configs for common channel types
+- [Media Management](/docs/guides/media-management/) - external drives, symbolic links, large libraries
+- [Scheduling Hints](/docs/guides/scheduling-hints/) - time-of-day, seasonal, and date-based content
 - [Series in Sequence](/docs/guides/series-in-sequence/) - play episodes in order
 
 ## Need Help?

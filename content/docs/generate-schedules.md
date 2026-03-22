@@ -102,3 +102,38 @@ The schedule page will let you reset schedules, add time, and view schedules.
 > ```bash
 > python3 station_42.py --rebuild_catalog
 > ```
+
+### When to Rebuild the Catalog
+
+**Rebuild the catalog when:**
+
+- You add new videos to your folders
+- You remove or move videos
+- You create new category folders
+- You change subfolder organization
+- This is your first time setting up a channel
+
+### What Happens During a Rebuild
+
+1. FieldStation42 scans all channel folders in `catalog/`
+2. Finds all video files in each category
+3. Measures the duration of each video
+4. Updates the catalog database
+5. Shows a summary of what was found
+
+**Example output:**
+
+```
+Starting catalog build for Retro TV
+Checking for media with tag=sitcoms in content folder
+--Found 45 videos in sitcoms folder
+Checking for media with tag=movies in content folder
+--Found 12 videos in movies folder
+Checking for media with tag=commercial in content folder
+--Found 25 videos in commercial folder
+Catalog build complete. Added 82 clips to catalog.
+```
+
+### Rebuilding Multiple Channels
+
+If you have multiple station configurations, each one gets rebuilt when you run `--rebuild_catalog`. The builder scans all `content_dir` paths referenced in your config files.
