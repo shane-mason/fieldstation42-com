@@ -44,7 +44,9 @@
 <script src="/_pagefind/pagefind-ui.js"></script>
 <script>
     window.addEventListener('DOMContentLoaded', () => {
-        new PagefindUI({ element: "#search", showSubResults: true });
+        const ui = new PagefindUI({ element: "#search", showSubResults: true });
+        const q = new URLSearchParams(window.location.search).get('q');
+        if (q) ui.triggerSearch(q);
     });
 </script>
 {% endblock %}
