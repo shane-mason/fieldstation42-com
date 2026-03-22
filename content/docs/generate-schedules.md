@@ -76,3 +76,7 @@ The catalog doesn't update automatically. This saves time when you have large vi
 - Set up a channel for the first time
 
 Just run `python3 station_42.py --rebuild_catalog` again and your catalog will be up to date.
+
+## Next Step
+
+Everything is built. Head to [Step 5: Watch TV](/docs/watch-tv/) to start the player.

@@ -91,10 +91,14 @@ Once you have the basics in place, there's a lot more you can do with your conte
 
 ## Quick Reference Checklist
 
-Before moving on to the next step:
+Before moving on:
 
 - [ ] Channel folder created in `catalog/`
 - [ ] Videos sorted into category subfolders
 - [ ] `commercial/` folder has short ad clips (if using scheduled time blocks)
 - [ ] `bump/` folder has station ID clips (if using scheduled time blocks)
 - [ ] Video files are in supported formats (mp4, mov, mkv, etc.)
+
+## Next Step
+
+Your content is ready. Now head to [Step 3: Configure Stations](/docs/configure-stations/) to tell FieldStation42 what to play and when.

@@ -4,7 +4,6 @@ Summary: Get FieldStation42 running on your system in about ten minutes.
 
 You'll need a Linux computer (including Raspberry Pi) with an internet connection. If you're using Windows, FieldStation42 works great under [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-Once finished here, move on to [Add Station Content](/docs/add-content/).
 
 ## Install Dependencies
 
@@ -95,3 +94,7 @@ Raspberry Pi works great with FieldStation42. A few things to know:
 mkdir -p ~/.config/mpv
 echo -e "vo=gpu\ngpu-api=opengl" > ~/.config/mpv/mpv.conf
 ```
+
+## Next Step
+
+You're all set up. Head over to [Step 2: Add Station Content](/docs/add-content/) to start loading your videos.

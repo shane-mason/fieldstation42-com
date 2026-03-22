@@ -4,7 +4,7 @@ Summary: Create a JSON config file that tells FieldStation42 what to play, when,
 
 This is where you bring your channel to life. You'll create a small configuration file that tells FieldStation42 your channel's name, where to find your videos, and what to play at each hour of the day.
 
-**Note:** This guide covers **standard TV networks**: scheduled programming with commercials and bumps, like a real broadcast channel. FieldStation42 also supports looping playlists, web channels, streaming, and more. Check out [Channel Recipes](/docs/guides/channel-recipes/) for other channel types.
+**Note:** This guide covers **standard TV networks**: scheduled programming with commercials and bumps, like a real broadcast channel. For other channel types (looping playlists, web channels, streaming, pay-per-view), see [Channel Recipes](/docs/guides/channel-recipes/).
 
 ## A Quick Word About JSON
 
@@ -258,6 +258,15 @@ Here's a quick reference for all common settings. You've already seen most of th
 
 Only `network_name` and `channel_number` are required. Everything else has sensible defaults.
 
+## Going Further
+
+Once your basic channel is working, there's a lot more you can do:
+
+- **[Advanced Scheduling](/docs/guides/advanced-scheduling/)**: Marathons, slot overrides, per-slot timing, and advanced day templates.
+- **[Series in Sequence](/docs/guides/series-in-sequence/)**: Play episodes in order instead of randomly.
+- **[Bumps and Commercials](/docs/guides/bumps-and-commercials/)**: Custom bumps per show, pre/post break clips, autobumps, and per-slot commercial directories.
+- **[Scheduling Hints](/docs/guides/scheduling-hints/)**: Make content play only during certain months, times of day, or days of the week, just by naming your folders.
+
 ## File Checklist
 
 Before moving on:
@@ -266,3 +275,7 @@ Before moving on:
 - [ ] `content_dir` folder exists and has video files in subfolders
 - [ ] `commercial` folder has short ad clips (if using scheduled time blocks)
 - [ ] `bump` folder has station ID clips (if using scheduled time blocks)
+
+## Next Step
+
+Your channel is configured. Head to [Step 4: Generate Schedules](/docs/generate-schedules/) to build the catalog and programming lineup.

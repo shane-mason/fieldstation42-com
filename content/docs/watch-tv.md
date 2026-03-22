@@ -38,3 +38,13 @@ The player watches that file for commands. You can also use `"command": "up"` or
 FieldStation42 includes a built-in web remote you can use from your phone or any browser. See the [Web Remote guide](/docs/reference/web-remote/) for setup.
 
 For deeper integration with scripts and external apps, check out the [Web Console and API](/docs/reference/web-console/).
+
+## What's Next
+
+Now that your station is running, here are some things to explore:
+
+- **[Channel Recipes](/docs/guides/channel-recipes/)**: Add different channel types like movie channels, loop channels, weather, or pay-per-view.
+- **[Advanced Scheduling](/docs/guides/advanced-scheduling/)**: Marathons, slot overrides, and more complex programming.
+- **[Series in Sequence](/docs/guides/series-in-sequence/)**: Play episodes in order instead of randomly.
+- **[Bumps and Commercials](/docs/guides/bumps-and-commercials/)**: Custom bumps, autobumps, and per-slot commercial settings.
+- **[Scheduling Hints](/docs/guides/scheduling-hints/)**: Seasonal and time-of-day content just by naming your folders.
