@@ -923,7 +923,8 @@ a:hover { color: var(--orange); }
     .tv-frame { max-width: 300px; }
     .features-inner { grid-template-columns: 1fr; }
     .docs-layout { grid-template-columns: 1fr; }
-    .docs-sidebar { position: static; }
+    .docs-sidebar { position: static; order: 1; }
+    .docs-content { order: 0; }
     .steps-row { flex-direction: column; gap: 1px; }
 }
 
