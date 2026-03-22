@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Search — FieldStation42{% endblock %}
+{% block description %}Search the FieldStation42 documentation and news.{% endblock %}
+
+{% block extra_head %}
+<link href="/_pagefind/pagefind-ui.css" rel="stylesheet">
+<style>
+    .search-page {
+        max-width: var(--docs-width);
+        margin: 0 auto;
+        padding: 3rem 2rem;
+    }
+    .search-page h1 {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .search-page p {
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+    }
+    /* Pagefind theming */
+    :root {
+        --pagefind-ui-scale: 1;
+        --pagefind-ui-primary: var(--teal-dark);
+        --pagefind-ui-text: var(--text);
+        --pagefind-ui-background: var(--white);
+        --pagefind-ui-border: var(--cream-darker);
+        --pagefind-ui-tag: var(--cream-dark);
+        --pagefind-ui-border-width: 1px;
+        --pagefind-ui-border-radius: 6px;
+        --pagefind-ui-font: var(--font-body);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="search-page">
+    <h1>Search</h1>
+    <p>Search across all documentation, guides, and news.</p>
+    <div id="search"></div>
+</div>
+<script src="/_pagefind/pagefind-ui.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        new PagefindUI({ element: "#search", showSubResults: true });
+    });
+</script>
+{% endblock %}
