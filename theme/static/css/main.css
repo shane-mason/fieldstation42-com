@@ -815,6 +815,10 @@ a:hover { color: var(--orange); }
     text-underline-offset: 2px;
 }
 
+.docs-content .doc-index-item {
+    text-decoration: none;
+}
+
 /* Callout boxes */
 .callout {
     padding: 1rem 1.25rem;
