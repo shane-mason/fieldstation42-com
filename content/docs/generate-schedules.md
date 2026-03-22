@@ -12,7 +12,7 @@ source env/bin/activate
 
 ## Build the Catalog
 
-The catalog is FieldStation42's index of all your videos -- what's available, how long each clip is, and which tags they belong to. Build it with:
+The catalog is FieldStation42's index of all your videos: what's available, how long each clip is, and which tags they belong to. Build it with:
 
 ```bash
 python3 station_42.py --rebuild_catalog
@@ -69,7 +69,7 @@ From the web GUI you can rebuild catalogs, view what's in them, generate schedul
 
 ## When to Rebuild the Catalog
 
-The catalog doesn't update automatically -- this saves time when you have large video collections. You'll need to rebuild it when you:
+The catalog doesn't update automatically. This saves time when you have large video collections. You'll need to rebuild it when you:
 
 - Add, remove, or move video files
 - Create new content folders

@@ -2,7 +2,7 @@ Title: Channel Recipes
 Slug: docs/guides/channel-recipes
 Summary: Copy-paste configuration recipes for common FieldStation42 channel types, from traditional networks to weather channels and pay-per-view.
 
-FieldStation42 is powerful and flexible, but that can make configuration a bit complex. This guide provides easy-to-follow "recipes" for common channel behaviors - just copy, tweak, and go!
+FieldStation42 supports a lot of different channel types. This guide gives you ready-to-use recipes for the most common ones. Find the one that matches what you want, copy the config, and adjust it to fit your setup.
 
 - [Recipe 1: Traditional Network Television](#recipe-1-traditional-network-television)
 - [Recipe 2: Movie Channel / Public Broadcasting](#recipe-2-movie-channel--public-broadcasting)
@@ -17,14 +17,9 @@ FieldStation42 is powerful and flexible, but that can make configuration a bit c
 
 ---
 
-## 📺 Recipe 1: Traditional Network Television
+## Recipe 1: Traditional Network Television
 
-**Characteristics:**
-
-- Rigid schedules (shows end on the hour/half-hour)
-- Commercials and bumps between/within shows
-
-**Config Example:**
+The classic TV experience: shows run on a schedule with commercials and bumps between them.
 
 ```json
 {
@@ -35,22 +30,20 @@ FieldStation42 is powerful and flexible, but that can make configuration a bit c
 }
 ```
 
-| Option | Description |
+| Option | What it does |
 |--------|-------------|
-| `network_type` | "standard" (default), "loop", or "guide" |
-| `schedule_increment` | Show end times (e.g., 30 = on the hour/half-hour) |
-| `break_strategy` | `standard` = breaks throughout, `end` = breaks only at end |
-| `commercial_free` | `false` = commercials + bumps, `true` = bumps only |
+| `network_type` | `"standard"` (the default), `"loop"`, or `"guide"` |
+| `schedule_increment` | How shows line up to time blocks (30 = half-hour slots) |
+| `break_strategy` | `"standard"` = breaks throughout, `"end"` = breaks only between shows |
+| `commercial_free` | `false` = commercials and bumps, `true` = bumps only |
 
-*If omitted, these defaults are used.*
+These are the defaults, so if you don't set them explicitly you'll get this behavior automatically.
 
 ---
 
-## 🎬 Recipe 2: Movie Channel / Public Broadcasting
+## Recipe 2: Movie Channel / Public Broadcasting
 
-No commercials, just a few bumps between features (like HBO, PBS)
-
-**Config Example:**
+No commercials, just short bumps between features. Think HBO or PBS.
 
 ```json
 {
@@ -61,17 +54,15 @@ No commercials, just a few bumps between features (like HBO, PBS)
 }
 ```
 
-- `schedule_increment: 5` = shows start at 5 minute increments
-- `break_strategy: end` = all breaks at end (between shows, not during)
-- `commercial_free: true` = only bumps
+- `schedule_increment: 5` keeps movies from getting padded with long breaks (a 92-minute movie fits into a 95-minute slot instead of 120)
+- `break_strategy: "end"` puts all the bumps between shows, not during them
+- `commercial_free: true` means only bumps play, no commercials
 
 ---
 
-## 🚫 Recipe 3: No Breaks
+## Recipe 3: No Breaks
 
-No commercials or bumps (e.g., C-SPAN, public access)
-
-**Config Example:**
+No commercials, no bumps, just content playing back-to-back. Good for a C-SPAN vibe or public access style.
 
 ```json
 {
@@ -81,31 +72,13 @@ No commercials or bumps (e.g., C-SPAN, public access)
 }
 ```
 
-- `schedule_increment: 0` = no breaks at all
+Setting `schedule_increment` to 0 means shows play continuously with no time-block alignment and no breaks at all.
 
 ---
 
-## 🔁 Recipe 4: Looping Channels
+## Recipe 4: Looping Channels
 
-Channel loops over a set of content in order (like bulletin boards)
-
-**Config Example:**
-
-```json
-{
-  "network_type": "loop"
-}
-```
-
-- Looping channels ignore other break/commercial settings
-
-**Quick Start:**
-
-```sh
-cp confs/examples/loop.json confs/
-```
-
-**Minimal Loop Channel Config:**
+Plays everything in a folder in order, looping forever. Great for bulletin boards, background ambiance, or screensaver-style channels.
 
 ```json
 {
@@ -118,21 +91,21 @@ cp confs/examples/loop.json confs/
 }
 ```
 
-- Files in `content_dir` are played in alpha-numeric order.
+Files in `content_dir` play in alphabetical order. When it reaches the end, it starts over. Loop channels ignore all break, commercial, and schedule settings.
+
+There's an example config you can copy as a starting point:
+
+```bash
+cp confs/examples/loop.json confs/
+```
 
 ---
 
-## 🗺️ Recipe 5: The Guide Channel
+## Recipe 5: The Guide Channel
 
-> **Note:** The guide channel is still in development and may change.
+A scrolling TV guide that shows what's on each channel, just like the cable guide channels from the 90s.
 
-**Quick Start:**
-
-```sh
-cp confs/examples/guide.json confs/
-```
-
-**Minimal Guide Channel Config:**
+> The guide channel is still in development and may change.
 
 ```json
 {
@@ -147,12 +120,17 @@ cp confs/examples/guide.json confs/
 }
 ```
 
-- If `sound_to_play` is a directory, it will search the directory for mp3 files and make a random playlist and loop forever
-- If `sound_to_play` is a list of files, it will play them in random order and loop forever
+For `sound_to_play`, you can point to a single MP3 file, a directory of MP3s (they'll shuffle and loop), or a list of files.
 
-### Guide Channel Appearance Options
+There's an example config to start from:
 
-Override any of these in your config:
+```bash
+cp confs/examples/guide.json confs/
+```
+
+### Customizing the Appearance
+
+The guide channel has a lot of visual options. Here are the defaults you can override:
 
 ```json
 {
@@ -189,15 +167,11 @@ Override any of these in your config:
 }
 ```
 
-- `fullscreen: true` ignores width/height
-- `window_decorations: true` = normal window (good for debugging)
+Setting `fullscreen: true` ignores width and height. Setting `window_decorations: true` gives you a normal window (useful for debugging layout).
 
-#### Messages & Images
+### Messages and Images
 
-- Images: upper left; Messages: upper right; both rotate at `message_rotation_rate` seconds
-- Match number of images/messages to keep them aligned
-
-**Example with custom messages/images:**
+The upper section of the guide has two parts: images on the left and messages on the right. Both rotate on a timer set by `message_rotation_rate` (in seconds). If you use both images and messages, match the number of each so they stay in sync.
 
 ```json
 {
@@ -212,13 +186,13 @@ Override any of these in your config:
 }
 ```
 
-> ⚠️ Make sure all paths exist, or the build/guide may fail to start.
+Make sure all image paths exist, or the guide may fail to start.
 
 ---
 
 ## Recipe 6: Streaming Channels (IPTV)
 
-This is a channel type that will let you play live video streams and web streams. Provided a list of streams, each with a duration and title, it will cycle through each in order.
+Plays live video streams and web streams. You give it a list of streams with durations and titles, and it cycles through them in order.
 
 ```json
 {"station_conf" : {
@@ -235,13 +209,13 @@ This is a channel type that will let you play live video streams and web streams
 
 ---
 
-## 🌐 Recipe 7: Web Channel
+## Recipe 7: Web Channel
 
-This is a channel type that uses a web browser component to display a web page - essentially turning any URL into a TV station. To show how this works, we'll make a diagnostics channel based on the FieldStation42 built-in `static/diagnostics.html` that displays system information like memory and cpu usage.
+Turns any web page into a TV channel using a built-in browser component. You point it at a URL and that page becomes your channel.
 
-### 📊 Diagnostic Channel example
+### Diagnostic Channel Example
 
-The following configuration will create a diagnostics channel:
+FieldStation42 includes a built-in diagnostics page that shows system information like memory and CPU usage. Here's how to make it a channel:
 
 ```json
 {"station_conf" : {
@@ -252,37 +226,31 @@ The following configuration will create a diagnostics channel:
 }}
 ```
 
-To see what the channel will look like, you can visit the `web_url` in your web browser while the player is running.
+You can preview what the channel will look like by visiting the `web_url` in your browser while the player is running.
 
-NOTE: To use web channels, you will need to ensure that you have run the installer to pick up pyside dependencies. For Raspberry Pi, you will also need to run the script located at `install/web_reqs.sh` as sudo, which executes the following:
+### Dependencies for Web Channels
 
-```
-apt-get install libwebp7
-ln -s /usr/lib/aarch64-linux-gnu/libwebp.so.7 /usr/lib/aarch64-linux-gnu/libwebp.so.6
-apt-get install minizip
-apt-get install libtiff5-dev
-ln -s /usr/lib/aarch64-linux-gnu/libtiff.so.6 /usr/lib/aarch64-linux-gnu/libtiff.so.5
+Web channels need some extra dependencies. Make sure you've run the installer to pick up PySide dependencies. On Raspberry Pi running Bookworm, you'll also need to run `install/web_reqs.sh` as sudo:
+
+```bash
+sudo bash install/web_reqs.sh
 ```
 
-Note: Some Linux distributions may require additional dependencies. The following have been required on recent Ubuntu/Mint installs:
+That script installs `libwebp7`, `minizip`, and `libtiff5-dev` along with the necessary symlinks.
 
-```
+On some Linux distributions (recent Ubuntu and Mint, for example), you may also need:
+
+```bash
 sudo apt-get install libxcb-cursor0
 ```
 
 ---
 
-## 📻 Recipe 8: Radio Music Channel (Audio with Now Playing Overlay)
+## Recipe 8: Radio Music Channel (Audio with Now Playing Overlay)
 
-Create a radio station that displays track information during playback, similar to digital radio displays.
+A radio station that shows track information during playback, similar to digital radio displays. It displays a "Now Playing" overlay in the lower left corner with the title, artist, and album. Album art is shown automatically by the player.
 
-Features:
-
-- Displays "Now Playing" overlay in lower left corner showing Title, Artist, and Album
-- Album art automatically shown by MPV player
-- Overlay automatically scales for different screen resolutions (CRT to 4K)
-
-Configuration is just a standard network that has `media_filter` set to audio so that it only looks for audio files.
+Under the hood, it's just a standard network with `media_filter` set to `"audio"` so it only picks up audio files:
 
 ```json
 {
@@ -292,21 +260,22 @@ Configuration is just a standard network that has `media_filter` set to audio so
   "content_dir": "catalog/music42/",
   "commercial_dir": "commercials",
   "bump_dir": "bumps"
-  ...
 }
 ```
 
-Otherwise, it works exactly like a standard station with commercials and bumps (station identifications) and tags to schedule time slots. If you want to mix audio and video, set `media_filter` to `mixed`. The overlay extracts metadata from ID3 tags and displays it with a semi-transparent gradient background. For tracks without metadata, the filename is used as the title.
+Everything else works like a regular channel: commercials and bumps, tags for scheduling time slots, all of it. If you want to mix audio and video on the same channel, set `media_filter` to `"mixed"`.
+
+The overlay pulls track info from ID3 tags and displays it over a semi-transparent gradient. For files without metadata, the filename is used as the title. The overlay scales automatically for different screen resolutions.
 
 ---
 
-## 🌤️ Recipe 9: WeatherStar Channel
+## Recipe 9: WeatherStar Channel
 
-To implement the weather channel, we will use `"network_type": "web"` configuration where we point the `web_url` to point to a WeatherStar installation. For this example, we will use [WeatherStar 4000+](https://github.com/netbymatt/ws4kp), but the [international version](https://github.com/mwood77/ws4kp-international) will work as well.
+A weather channel using the [WeatherStar 4000+](https://github.com/netbymatt/ws4kp) project (or the [international version](https://github.com/mwood77/ws4kp-international)). This uses the web channel type to display the WeatherStar interface.
 
-### Install WeatherStar Docker
+### Install WeatherStar with Docker
 
-The easiest way to manage docker components is using [dockge](https://github.com/louislam/dockge). After installing portainer, go to stacks, create a new stack and enter the following:
+The easiest way to run WeatherStar is through Docker. If you use [Dockge](https://github.com/louislam/dockge) for managing containers, create a new stack with this config:
 
 ```yaml
 version: '3.8'
@@ -321,25 +290,23 @@ services:
     restart: unless-stopped
 ```
 
-Note on ports: the default is `8080:8080`, but since 8080 is often already taken on busy server, I changed it to 9090 by setting port mapping to `9090:8080`
+The default port is `8080:8080`, but since 8080 is often already in use, this example maps it to 9090 instead.
 
-### Configuring the URL
+### Configure the URL
 
-After deploying, visit the site in your web browser. Select all the options you want in your display in the check boxes and configuration. Then select `Copy Permalink` which will give you something like this:
+After deploying, visit the WeatherStar page in your browser. Pick the display options you want using the checkboxes and settings, then click **Copy Permalink**. You'll get a long URL like:
 
 ```
-http://<IP_ADDRESS_HERE>:9090/index.html?hazards-checkbox=true&current-weather-checkbox=true&...
+http://<IP_ADDRESS>:9090/index.html?hazards-checkbox=true&current-weather-checkbox=true&...
 ```
 
-To make the URL open in kiosk mode and to make it start autoplaying music, you will need to add the following to the end of the URL:
+Add these parameters to the end of the URL to make it work as a channel:
 
 ```
 &kiosk=true&settings-mediaPlaying-boolean=true
 ```
 
-### Configuring the Weather Channel
-
-Configure the channel to use a `network_type` of `web` and set the `web_url` parameter to be the URL to your WeatherStar4K installation.
+### Create the Channel
 
 ```json
 {"station_conf" : {
@@ -350,17 +317,17 @@ Configure the channel to use a `network_type` of `web` and set the `web_url` par
 }}
 ```
 
+Replace the URL with the permalink you copied, plus the kiosk and media parameters.
+
 ---
 
-## 💳 Recipe 10: Pay-Per-View (PPV)
+## Recipe 10: Pay-Per-View (PPV)
 
-Video-on-demand interface for FieldStation42. Browse movies with page up/down keys, hit ENTER to play. Shows a slideshow with posters, titles, and descriptions.
-
-Metadata handling: checks for local NFO files first, falls back to TMDB API if missing. You can manually curate some content and automate the rest. Optimized for CRT displays.
+A video-on-demand interface where you browse movies with page up/down and press ENTER to play. It shows a slideshow with posters, titles, and descriptions. Optimized for CRT displays.
 
 ### Setup
 
-Create a station config file like `confs/ppv_movies.json`:
+Create a config file like `confs/ppv_movies.json`:
 
 ```json
 {
@@ -374,13 +341,17 @@ Create a station config file like `confs/ppv_movies.json`:
 }
 ```
 
-Drop your movie files directly in `catalog/ppv/` (or whatever `content_dir` you used). Supported: `.mp4`, `.avi`, `.mkv`, `.mov`, `.wmv`, `.flv`, `.webm`, `.m4v`
+Drop your movie files directly into `catalog/ppv/` (or whatever `content_dir` you set). Supported formats: `.mp4`, `.avi`, `.mkv`, `.mov`, `.wmv`, `.flv`, `.webm`, `.m4v`.
 
-For better TMDB matching, put the year in the filename: `The Matrix (1999).mp4`
+### Movie Metadata
 
-### TMDB Setup (optional)
+The PPV channel looks for metadata in two places: local NFO files first, then the TMDB API as a fallback. You can manually curate some titles with NFO files and let TMDB handle the rest.
 
-Get a free API key at https://www.themoviedb.org/signup (Settings → API → Request an API Key)
+For better TMDB matching, include the year in your filename: `The Matrix (1999).mp4`.
+
+### TMDB Setup (Optional)
+
+Get a free API key at [themoviedb.org](https://www.themoviedb.org/signup) (Settings, then API, then Request an API Key).
 
 Add it to `confs/main_config.json`:
 
@@ -390,8 +361,8 @@ Add it to `confs/main_config.json`:
 }
 ```
 
-Without TMDB, you'll need to create NFO files manually.
+Without a TMDB key, you'll need NFO files for each movie to get posters and descriptions.
 
-For testing, you can access at `http://localhost:4242/static/ppv/ppv.html?channel=42`
+For testing, you can access the PPV interface at `http://localhost:4242/static/ppv/ppv.html?channel=42`.
 
 See the [PPV README](https://github.com/shane-mason/FieldStation42/tree/main/fs42/fs42_server/static/ppv) for more details.

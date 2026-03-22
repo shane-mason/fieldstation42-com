@@ -19,11 +19,11 @@ A video window will appear and start playing the scheduled content for your firs
 
 The player starts a web server on port 4242 by default, which gives you a few ways to flip channels:
 
-**From a web browser** -- visit any of these URLs (swap `localhost` for the machine's IP if you're on a different device):
+**From a web browser**, visit any of these URLs (swap `localhost` for the machine's IP if you're on a different device):
 
-- `http://localhost:4242/player/channels/up` -- channel up
-- `http://localhost:4242/player/channels/down` -- channel down
-- `http://localhost:4242/player/channels/42` -- jump to channel 42
+- `http://localhost:4242/player/channels/up` (channel up)
+- `http://localhost:4242/player/channels/down` (channel down)
+- `http://localhost:4242/player/channels/42` (jump to channel 42)
 
 **From the command line:**
 

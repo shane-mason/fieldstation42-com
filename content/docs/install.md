@@ -8,7 +8,7 @@ Once finished here, move on to [Add Station Content](/docs/add-content/).
 
 ## Install Dependencies
 
-Open a terminal and run the following commands. When prompted for your password, that's normal -- `sudo` runs commands with administrator privileges.
+Open a terminal and run the following commands. When prompted for your password, that's normal. `sudo` runs commands with administrator privileges.
 
 **MPV** handles video playback:
 
@@ -16,7 +16,7 @@ Open a terminal and run the following commands. When prompted for your password,
 sudo apt-get install mpv
 ```
 
-Quick test to make sure it works -- try playing any video file you have:
+Quick test to make sure it works. Try playing any video file you have:
 
 ```bash
 mpv /path/to/any/video.mp4
@@ -58,7 +58,7 @@ All commands from here on should be run from inside this folder.
 bash install.sh
 ```
 
-The installer sets up everything FieldStation42 needs to run. When it finishes, you'll see `runtime` and `catalog` folders appear -- those are for later steps.
+The installer sets up everything FieldStation42 needs to run. When it finishes, you'll see `runtime` and `catalog` folders appear. Those are for later steps.
 
 If you see *"Virtual environment does not contain activate script"*, double-check that the Python packages from the first step installed correctly, then run `bash install.sh` again.
 

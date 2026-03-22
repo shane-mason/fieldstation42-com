@@ -2,17 +2,11 @@ Title: Media Management
 Slug: docs/guides/media-management
 Summary: Tips for managing large media libraries with symbolic links, external drives, and network storage.
 
-## Working with Large Media Libraries
+If your video collection lives on an external hard drive, network storage, or another partition, you don't need to copy everything into the `catalog` folder. Symbolic links let you keep your files wherever they are and still have FieldStation42 see them.
 
-### What If My Videos Are on a Different Drive?
+## What is a Symbolic Link?
 
-You might have your video collection on an external hard drive, network storage, or another partition. Instead of copying everything into the `catalog` folder, you can use **symbolic links** (shortcuts).
-
-#### What is a Symbolic Link?
-
-Think of a symbolic link as a "shortcut" or "alias" that points to another location. When FieldStation42 looks inside `catalog/my_channel`, the symbolic link redirects it to wherever your videos actually live.
-
-**Visual example:**
+A symbolic link is like a shortcut. It looks like a folder, but it actually points to another location. When FieldStation42 looks inside `catalog/my_channel`, the link redirects it to wherever your videos actually live.
 
 ```
 Your actual videos:
@@ -27,33 +21,29 @@ catalog/
     (this is a link, not a real folder)
 ```
 
-#### Creating a Symbolic Link (Linux/Mac)
+## Creating a Symbolic Link
 
-**Step 1:** Open a terminal
-**Step 2:** Navigate to your FieldStation42 folder
-**Step 3:** Create the link
+From your FieldStation42 folder, run:
 
 ```bash
 ln -s /path/to/your/videos catalog/my_channel
 ```
 
-**Real example:**
+For example, if your videos are at `/media/external/classic_tv` and you want them available as `catalog/classic_tv`:
 
 ```bash
-# If your videos are at /media/external/classic_tv
-# And you want them available as catalog/classic_tv
 ln -s /media/external/classic_tv catalog/classic_tv
 ```
 
-**Breaking down the command:**
+Here's what each part means:
 
 - `ln -s` = create a symbolic link
-- `/media/external/classic_tv` = where your videos actually are (source)
-- `catalog/classic_tv` = what FieldStation42 will see (link name)
+- `/media/external/classic_tv` = where your videos actually are (the source)
+- `catalog/classic_tv` = what FieldStation42 will see (the link name)
 
-**Important:** Use **full paths** (starting with `/`) for the source location, not relative paths.
+Use **full paths** (starting with `/`) for the source location. Relative paths can break if you run FieldStation42 from a different directory.
 
-#### Checking If a Link Works
+## Checking If a Link Works
 
 After creating the link, verify it:
 
@@ -67,9 +57,11 @@ You should see something like:
 lrwxrwxrwx  1 user user   30 Oct 19 catalog/my_channel -> /media/external/my_videos
 ```
 
-The `->` shows it's a link pointing to another location.
+The `->` shows it's a link pointing to another location. If the link is red or the target doesn't exist, check that the source path is correct.
 
-### Example: Multiple Channels with Symbolic Links
+## Multiple Channels from Different Drives
+
+You can link content from multiple drives into your catalog. Each channel can point to a different location:
 
 ```
 Your media storage:
@@ -89,7 +81,7 @@ catalog/
 └── western_channel -> /media/disk2/western_films/
 ```
 
-Commands to create these links:
+The commands to set this up:
 
 ```bash
 ln -s /media/disk1/classic_sitcoms catalog/retro_channel
@@ -98,7 +90,9 @@ ln -s /media/disk1/music_videos catalog/music_channel
 ln -s /media/disk2/western_films catalog/western_channel
 ```
 
-### Multi-Channel Setup with Symbolic Links
+## Linking Commercials and Bumps Separately
+
+You can also use symbolic links for just the commercials or bumps inside a channel. This is handy when your show content and your ad content live in different places:
 
 ```
 Actual storage locations:
@@ -130,3 +124,5 @@ FieldStation42/
         ├── comedy/
         └── scifi/
 ```
+
+The top-level channel folder is a link to where the shows are, and the `commercial/` and `bump/` folders inside it are separate links to where the ads live. FieldStation42 follows all the links transparently.

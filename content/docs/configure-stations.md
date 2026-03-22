@@ -4,7 +4,7 @@ Summary: Create a JSON config file that tells FieldStation42 what to play, when,
 
 This is where you bring your channel to life. You'll create a small configuration file that tells FieldStation42 your channel's name, where to find your videos, and what to play at each hour of the day.
 
-**Note:** This guide covers **standard TV networks** -- scheduled programming with commercials and bumps, like a real broadcast channel. FieldStation42 also supports looping playlists, web channels, streaming, and more. Check out [Channel Recipes](/docs/guides/channel-recipes/) for other channel types.
+**Note:** This guide covers **standard TV networks**: scheduled programming with commercials and bumps, like a real broadcast channel. FieldStation42 also supports looping playlists, web channels, streaming, and more. Check out [Channel Recipes](/docs/guides/channel-recipes/) for other channel types.
 
 ## A Quick Word About JSON
 
@@ -13,13 +13,13 @@ Station configs are written in JSON, a simple text format for storing settings. 
 - Everything is wrapped in `{ }` curly braces
 - Setting names and text values need **double quotes**: `"network_name"` (single quotes won't work)
 - Commas go between items, but **not** after the last one
-- No comments allowed -- you can't use `//` or `#`
+- No comments allowed (you can't use `//` or `#`)
 
-If something isn't working, paste your config into [jsonlint.com](https://jsonlint.com/) -- it will point you right to the problem. The most common errors are a missing comma, an extra comma at the end of a list, or a missing quote.
+If something isn't working, paste your config into [jsonlint.com](https://jsonlint.com/). It will point you right to the problem. The most common errors are a missing comma, an extra comma at the end of a list, or a missing quote.
 
 ## Create Your First Channel
 
-Create a new file in the `confs/` folder -- something like `confs/mychanel.json`. Here's the simplest working config for a standard channel:
+Create a new file in the `confs/` folder, something like `confs/mychannel.json`. Here's the simplest working config for a standard channel:
 
 ```json
 {
@@ -42,17 +42,17 @@ Create a new file in the `confs/` folder -- something like `confs/mychanel.json`
 
 Here's what each piece means:
 
-- **`network_name`** -- The name viewers see. Call it whatever you want.
-- **`channel_number`** -- The channel number to tune to. Each channel needs a unique number.
-- **`content_dir`** -- Points to the channel folder you created in the previous step.
-- **`commercial_dir`** and **`bump_dir`** -- The subfolder names for your commercials and station promos (inside your `content_dir`).
-- **Monday through Sunday** -- Every standard channel needs all seven days defined. We'll fill these in next. Empty `{}` means off-air for that day.
+- **`network_name`**: The name viewers see. Call it whatever you want.
+- **`channel_number`**: The channel number to tune to. Each channel needs a unique number.
+- **`content_dir`**: Points to the channel folder you created in the previous step.
+- **`commercial_dir`** and **`bump_dir`**: The subfolder names for your commercials and station promos (inside your `content_dir`).
+- **Monday through Sunday**: Every standard channel needs all seven days defined. We'll fill these in next. Empty `{}` means off-air for that day.
 
-Everything else has sensible defaults -- 30-minute time blocks, commercials spread throughout shows, and so on. You can customize all of that later.
+Everything else has sensible defaults: 30-minute time blocks, commercials spread throughout shows, and so on. You can customize all of that later.
 
 ## Build Your Schedule
 
-Now for the fun part -- deciding what plays and when. Each day gets a list of hours, and each hour gets a tag that matches one of your content folders.
+Now for the fun part: deciding what plays and when. Each day gets a list of hours, and each hour gets a tag that matches one of your content folders.
 
 Hours use 24-hour format and need to be in quotes:
 
@@ -92,7 +92,7 @@ Any hour you don't list is off-air. Here's a channel with Monday and Tuesday fil
 }
 ```
 
-The `"tags"` value is the name of a subfolder in your content directory. If you have `catalog/classic_content/sitcoms/`, you'd use `"tags": "sitcoms"` -- and FieldStation42 picks a random video from that folder each time.
+The `"tags"` value is the name of a subfolder in your content directory. If you have `catalog/classic_content/sitcoms/`, you'd use `"tags": "sitcoms"`, and FieldStation42 picks a random video from that folder each time.
 
 ### Reuse Schedules with Day Templates
 
@@ -128,7 +128,7 @@ Typing out the same schedule seven times gets old fast. Templates let you define
 }
 ```
 
-Define your templates in `day_templates`, then assign each day to a template by name. You can create as many templates as you need -- a different one for each day of the week if you want.
+Define your templates in `day_templates`, then assign each day to a template by name. You can create as many templates as you need, even a different one for each day of the week.
 
 ## More Scheduling Options
 
@@ -140,7 +140,7 @@ You can split an hour between different tags by passing a list:
 "18": {"tags": ["news", "sitcoms"]}
 ```
 
-This splits the 6 PM hour into two 30-minute blocks -- news first, then a sitcom. Three tags would split it into three 20-minute blocks, and so on. If a show runs longer than its block, the next tag gets skipped.
+This splits the 6 PM hour into two 30-minute blocks: news first, then a sitcom. Three tags would split it into three 20-minute blocks, and so on. If a show runs longer than its block, the next tag gets skipped.
 
 ### Clip Shows
 
@@ -168,7 +168,7 @@ You can customize the target duration (default is 60 minutes) and add opener/clo
 
 ### Sign-Off Event
 
-For that authentic broadcast feel, you can schedule a sign-off -- a special video (like a national anthem) followed by an off-air pattern:
+For that authentic broadcast feel, you can schedule a sign-off: a special video (like a national anthem) followed by an off-air pattern:
 
 ```json
 {
@@ -232,29 +232,29 @@ Here's a full working config you can copy and customize. Save it as something li
 
 FieldStation42 also ships with several example configs in `confs/examples/` that you can copy to `confs/` and customize:
 
-- **`indie42.json`** -- Basic traditional network
-- **`movie_channel.json`** -- Movie-focused channel
-- **`loop_channel.json`** -- Simple looping channel
-- **`guide.json`** -- Program guide setup
+- **`indie42.json`**: Basic traditional network
+- **`movie_channel.json`**: Movie-focused channel
+- **`loop_channel.json`**: Simple looping channel
+- **`guide.json`**: Program guide setup
 
 ## Configuration Reference
 
-Here's a quick reference for all common settings. You've already seen most of these -- this table is handy when you're tweaking your config later.
+Here's a quick reference for all common settings. You've already seen most of these. This table is handy when you're tweaking your config later.
 
 | Setting | What It Does | Example Values | Default |
 |---------|--------------|----------------|---------|
-| `network_name` | **Required.** Display name for your channel | `"HBO"`, `"Music TV"` | -- |
-| `channel_number` | **Required.** Channel number (must be unique) | `5`, `42`, `100` | -- |
-| `content_dir` | Where your videos are stored | `"catalog/my_videos"` | -- |
+| `network_name` | **Required.** Display name for your channel | `"HBO"`, `"Music TV"` | *none* |
+| `channel_number` | **Required.** Channel number (must be unique) | `5`, `42`, `100` | *none* |
+| `content_dir` | Where your videos are stored | `"catalog/my_videos"` | *none* |
 | `schedule_increment` | Minutes for show blocks (0 = continuous) | `30`, `60`, `0` | `30` |
 | `break_strategy` | Where commercials play: `"standard"` (spread throughout), `"end"` (all at end), `"center"` (one mid-break) | `"standard"` | `"standard"` |
 | `commercial_free` | No commercials (bumps only) | `true`, `false` | `false` |
-| `commercial_dir` | Subfolder for commercials (inside `content_dir`) | `"commercial"` | -- |
-| `bump_dir` | Subfolder for station promos (inside `content_dir`) | `"bump"` | -- |
+| `commercial_dir` | Subfolder for commercials (inside `content_dir`) | `"commercial"` | *none* |
+| `bump_dir` | Subfolder for station promos (inside `content_dir`) | `"bump"` | *none* |
 | `break_duration` | Seconds of commercials per break | `120` | `120` |
 | `hidden` | Hide channel from the guide | `true`, `false` | `false` |
-| `standby_image` | Image shown during technical issues | `"runtime/standby.png"` | -- |
-| `off_air_video` | Looping video when off-air | `"runtime/off_air.mp4"` | -- |
+| `standby_image` | Image shown during technical issues | `"runtime/standby.png"` | *none* |
+| `off_air_video` | Looping video when off-air | `"runtime/off_air.mp4"` | *none* |
 
 Only `network_name` and `channel_number` are required. Everything else has sensible defaults.
 

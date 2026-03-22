@@ -16,7 +16,7 @@ FieldStation42/                 <- Main installation folder
     └── movie_channel/          <- Content for yet another channel
 ```
 
-To create your first channel, just make a new folder inside `catalog`. You can name it whatever you like -- lowercase with underscores works best:
+To create your first channel, just make a new folder inside `catalog`. You can name it whatever you like. Lowercase with underscores works best:
 
 ```bash
 mkdir catalog/retro_tv
@@ -48,15 +48,15 @@ catalog/retro_tv/
     └── promo3.mp4
 ```
 
-The idea is simple: when you schedule the 8 PM hour as `"tags": "sitcoms"`, FieldStation42 picks a random video from your `sitcoms` folder. Name your folders whatever makes sense for your content -- `horror`, `comedy`, `westerns`, `80s_shows` -- it's up to you.
+The idea is simple: when you schedule the 8 PM hour as `"tags": "sitcoms"`, FieldStation42 picks a random video from your `sitcoms` folder. Name your folders whatever makes sense for your content: `horror`, `comedy`, `westerns`, `80s_shows`, whatever you want.
 
 A few things to keep in mind:
 
-- Folder names are **case-sensitive** -- `Movies` and `movies` are different
+- Folder names are **case-sensitive**, so `Movies` and `movies` are different
 - Videos go in the subfolders, not directly in the channel folder
 - Supported formats: mp4, mpg, mpeg, avi, mov, mkv, ts, m4v, webm, wmv
 
-The two special folders -- `commercial` and `bump` -- hold short clips that play between shows, just like real TV. You'll need both if you're building a traditional channel with scheduled time blocks. If you're building a simple looping or continuous play channel, you can skip them.
+The two special folders, `commercial` and `bump`, hold short clips that play between shows, just like real TV. You'll need both if you're building a traditional channel with scheduled time blocks. If you're building a simple looping or continuous play channel, you can skip them.
 
 ### Organizing by Series
 
@@ -83,11 +83,11 @@ Using `"tags": "sitcoms"` pulls randomly from all the shows. If you want just on
 
 Once you have the basics in place, there's a lot more you can do with your content library:
 
-**[Bumps and Commercials](/docs/guides/bumps-and-commercials/)** -- Bumps are short station promos ("You're watching Retro TV!") and commercials fill time between shows. This guide covers best practices, how many you need, and advanced features like pre/post break bumps.
+**[Bumps and Commercials](/docs/guides/bumps-and-commercials/)**: Bumps are short station promos ("You're watching Retro TV!") and commercials fill time between shows. This guide covers best practices, how many you need, and advanced features like pre/post break bumps.
 
-**[Scheduling Hints](/docs/guides/scheduling-hints/)** -- Want Halloween specials that only air in October? Morning commercials that only play before 10am? Just name your subfolders the right way and FieldStation42 handles the rest.
+**[Scheduling Hints](/docs/guides/scheduling-hints/)**: Want Halloween specials that only air in October? Morning commercials that only play before 10am? Just name your subfolders the right way and FieldStation42 handles the rest.
 
-**[Media Management](/docs/guides/media-management/)** -- Your videos don't have to live inside the `catalog` folder. If your collection is on an external drive or network storage, this guide shows you how to link it all together.
+**[Media Management](/docs/guides/media-management/)**: Your videos don't have to live inside the `catalog` folder. If your collection is on an external drive or network storage, this guide shows you how to link it all together.
 
 ## Quick Reference Checklist
 

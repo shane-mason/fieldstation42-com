@@ -84,3 +84,29 @@ Summary: Common problems and solutions for FieldStation42 setup and operation.
 - Check that you have scheduled hours for the current time
 - Remember: hour `"0"` = midnight, `"13"` = 1 PM, `"20"` = 8 PM
 - Hours not in your schedule = off-air
+
+## Scheduling Issues
+
+### Sequences not playing in order
+
+Usually a file naming issue. Check how your files sort:
+
+```bash
+ls -1 catalog/your_content/your_show/
+```
+
+Watch out for names without zero-padding. `episode10.mp4` sorts before `episode2.mp4` alphabetically. Use `episode_01.mp4`, `episode_02.mp4`, etc.
+
+Also check that the sequence name is spelled consistently across all slots that use it.
+
+### Marathon never triggers
+
+A 20% chance means about 1 in 5 days. You might just need to wait. For testing, set `"chance": 1.0` to make it always happen. Remember that schedules are built in advance, so check future days to see if a marathon was generated.
+
+### Slot override not working
+
+Double-check the spelling of your override name. `"overrides": "kids_blok"` won't match `"kids_block"`. Also make sure the override is defined in the `slot_overrides` section (not somewhere else in the config).
+
+### Schedule overruns or gaps
+
+This usually means your videos are longer than the `schedule_increment`, or you're using an increment that doesn't divide evenly into 60. Stick to 5, 10, 15, 20, 30, or 60. If timing isn't critical, set `schedule_increment: 0` for continuous play.

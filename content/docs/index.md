@@ -2,9 +2,9 @@ Title: Getting Started
 Slug: docs
 Summary: Everything you need to set up your FieldStation42 TV simulator.
 
-Welcome to FieldStation42! This project turns your video collection into a simulated TV broadcast -- complete with channels, schedules, commercial breaks, and that feeling of flipping through stations to see what's on.
+Welcome to FieldStation42! This project turns your video collection into a simulated TV broadcast, complete with channels, schedules, commercial breaks, and that feeling of flipping through stations to see what's on.
 
-The setup is straightforward -- five steps from start to finish. Each one builds on the last, and you can take breaks between them.
+The setup is straightforward: five steps from start to finish. Each one builds on the last, and you can take breaks between them.
 
 <div class="setup-steps">
   <a href="/docs/install/" class="setup-step">
