@@ -26,6 +26,9 @@ PAGE_SAVE_AS = '{slug}/index.html'
 ARTICLE_URL = 'news/{slug}/'
 ARTICLE_SAVE_AS = 'news/{slug}/index.html'
 
+ARCHIVES_URL = 'news/'
+ARCHIVES_SAVE_AS = 'news/index.html'
+
 # Navigation
 DISPLAY_PAGES_ON_MENU = False
 DISPLAY_CATEGORIES_ON_MENU = False
