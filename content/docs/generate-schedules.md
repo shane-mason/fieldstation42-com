@@ -55,17 +55,17 @@ Here are all the scheduling commands:
 
 You can run these commands anytime to extend your schedule further into the future.
 
-## Using the Web GUI
+## Using the Web Console
 
-If you prefer a visual interface, FieldStation42 has a built-in web GUI that lets you manage both catalogs and schedules:
+If you'd rather not work in the terminal, the built-in web console handles all of this through a browser interface. Start the server:
 
 ```bash
-python3 station_42.py --server
+python3 station_42.py
 ```
 
 Then visit `http://localhost:4242/` in your browser. If FieldStation42 is running on a different machine (like a Raspberry Pi), replace `localhost` with that machine's IP address.
 
-From the web GUI you can rebuild catalogs, view what's in them, generate schedules, and see what's coming up on each channel.
+From the web console you can rebuild catalogs, view their contents, generate schedules, and see what's coming up on each channel. Everything on this page is also available there.
 
 ## When to Rebuild the Catalog
 

@@ -6,6 +6,18 @@ This is where you bring your channel to life. You'll create a small configuratio
 
 **Note:** This guide covers **standard TV networks**: scheduled programming with commercials and bumps, like a real broadcast channel. For other channel types (looping playlists, web channels, streaming, pay-per-view), see [Channel Recipes](/docs/guides/channel-recipes/).
 
+## Using the Web Console
+
+If you prefer a visual interface over editing JSON by hand, the built-in web console lets you create and manage station configurations in your browser. Start the server:
+
+```bash
+python3 station_42.py
+```
+
+Then visit `http://localhost:4242/` (or replace `localhost` with your machine's IP address if running on a Raspberry Pi or remote machine). From there you can create new station configs, edit existing ones, and see a summary of all your channels at a glance.
+
+The rest of this guide covers the JSON config format directly, which is useful to understand even if you use the web console.
+
 ## A Quick Word About JSON
 
 Station configs are written in JSON, a simple text format for storing settings. It's a little fussy about formatting, so here are the things that trip people up most:

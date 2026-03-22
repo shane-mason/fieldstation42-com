@@ -27,7 +27,7 @@ Everything you need to know about how FieldStation42 works under the hood. Confi
   </a>
 
   <a href="/docs/reference/web-console/" class="doc-index-item">
-    <div class="doc-index-title">Web Console and API</div>
+    <div class="doc-index-title">Server API</div>
     <div class="doc-index-desc">The full REST API for FieldStation42. Build your own tools, automate administration, and control the player programmatically.</div>
   </a>
 

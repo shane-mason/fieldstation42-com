@@ -1,4 +1,4 @@
-Title: Web Console and API
+Title: Server API
 Slug: docs/reference/web-console
 Summary: Complete REST API reference for FieldStation42 - build-time administration, live player control, volume, system monitoring, and async task management.
 
@@ -11,7 +11,7 @@ First things first - let's get your server running!
 ### Starting the Server
 
 ```bash
-python3 station_42.py --server
+python3 station_42.py
 ```
 
 This starts both the API server and web console. Visit **http://localhost:4242** to access the web interface!
