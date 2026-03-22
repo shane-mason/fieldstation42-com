@@ -462,7 +462,9 @@ a:hover { color: var(--orange); }
     background: rgba(255,255,255,0.06);
     text-align: center;
     transition: background 0.2s;
-    cursor: default;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
 }
 
 .step:hover { background: rgba(255,255,255,0.12); }
@@ -622,6 +624,54 @@ a:hover { color: var(--orange); }
 
 @media (max-width: 640px) {
     .setup-step { padding: 1rem 1.25rem; gap: 1rem; }
+}
+
+/* ---- Doc Index Cards ---- */
+.doc-index {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+}
+
+.doc-index-item {
+    display: block;
+    padding: 1.25rem 1.5rem;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--teal);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.doc-index-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--text);
+}
+
+.doc-index-item:nth-child(2) { border-left-color: var(--orange); }
+.doc-index-item:nth-child(3) { border-left-color: var(--amber); }
+.doc-index-item:nth-child(4) { border-left-color: var(--teal-light); }
+.doc-index-item:nth-child(5) { border-left-color: var(--brown-light); }
+.doc-index-item:nth-child(6) { border-left-color: var(--teal); }
+.doc-index-item:nth-child(7) { border-left-color: var(--orange); }
+.doc-index-item:nth-child(8) { border-left-color: var(--amber); }
+.doc-index-item:nth-child(9) { border-left-color: var(--teal-light); }
+.doc-index-item:nth-child(10) { border-left-color: var(--brown-light); }
+
+.doc-index-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.doc-index-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
 }
 
 /* ---- Docs Layout ---- */
