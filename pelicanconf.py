@@ -38,6 +38,7 @@ MENUITEMS = [
     ('Guides', '/docs/guides/'),
     ('Reference', '/docs/reference/'),
     ('News', '/news/'),
+    ('Search', '/search/'),
 ]
 
 DEFAULT_PAGINATION = 10
@@ -45,4 +46,6 @@ DEFAULT_PAGINATION = 10
 STATIC_PATHS = ['images']
 
 # Doc ordering
-TEMPLATE_PAGES = {}
+TEMPLATE_PAGES = {
+    'search.html': 'search/index.html',
+}
