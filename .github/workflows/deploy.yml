@@ -32,7 +32,7 @@ jobs:
 
       - name: Build site
         run: |
-          pelican content -s pelicanconf.py -o output
+          pelican content -s publishconf.py -o output
 
       - name: Index search
         run: npx pagefind --site output

@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css">
+    <link id="theme-retro" rel="stylesheet" href="{{ SITEURL }}/theme/css/theme-retro.css" media="not all">
+    <script>if(new URLSearchParams(location.search).get('theme')==='retro'){document.getElementById('theme-retro').media='all';}</script>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -67,6 +69,10 @@
             <p class="footer-copy">Open source project by <a href="https://youtube.com/@wrongdogreckons">WrongDog Reckons</a></p>
         </div>
     </footer>
+
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-toggle-label">RETRO</span>
+    </button>
 
     <script src="{{ SITEURL }}/theme/js/main.js"></script>
 </body>

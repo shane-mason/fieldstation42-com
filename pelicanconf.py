@@ -1,6 +1,6 @@
 AUTHOR = 'Shane Mason'
 SITENAME = 'FieldStation42'
-SITEURL = 'https://fieldstation42.com'
+SITEURL = ''
 SITESUBTITLE = 'Broadcast & Cable TV Simulator'
 
 PATH = 'content'
