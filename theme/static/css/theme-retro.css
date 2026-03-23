@@ -1,0 +1,149 @@
+/* ============================================
+   FieldStation42 — 90s Retro / Vaporwave Theme
+   Override: replaces variables from main.css
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=VT323&display=swap');
+
+:root {
+    --teal:        #00f0ff;
+    --teal-dark:   #00b8d9;
+    --teal-light:  #7fffd4;
+    --orange:      #ff2d78;
+    --orange-dark: #cc1155;
+    --amber:       #b967ff;
+    --cream:       #1a0a2e;
+    --cream-dark:  #150820;
+    --cream-darker:#0d0518;
+    --brown:       #2d1b54;
+    --brown-dark:  #0d0221;
+    --brown-light: #4a2d7a;
+    --text:        #e8d5ff;
+    --text-muted:  #b39ddb;
+    --white:       #241040;
+
+    --font-display: 'Orbitron', 'DM Serif Display', Georgia, serif;
+    --font-mono:    'VT323', 'DM Mono', monospace;
+
+    --shadow:    0 2px 12px rgba(0, 240, 255, 0.1);
+    --shadow-lg: 0 8px 32px rgba(0, 240, 255, 0.18);
+}
+
+/* ---- Neon glow on header / footer ---- */
+.site-header {
+    box-shadow: 0 2px 24px rgba(0, 240, 255, 0.25);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+}
+
+.site-footer {
+    border-top-color: var(--teal);
+    box-shadow: 0 -4px 24px rgba(0, 240, 255, 0.15);
+}
+
+/* ---- Hero grid overlay ---- */
+.hero::before {
+    background:
+        linear-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(185, 103, 255, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 15% 80%, rgba(255, 45, 120, 0.18) 0%, transparent 50%);
+    background-size: 44px 44px, 44px 44px, 100% 100%, 100% 100%;
+}
+
+.hero::after {
+    background: radial-gradient(ellipse at center, rgba(185, 103, 255, 0.12) 0%, transparent 70%);
+}
+
+/* ---- Gradient hero title accent ---- */
+.hero-title em {
+    background: linear-gradient(135deg, #ff2d78 0%, #b967ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: normal;
+}
+
+/* ---- Glowing CTA button ---- */
+.btn-primary {
+    box-shadow: 0 0 18px rgba(255, 45, 120, 0.45);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 4px 28px rgba(255, 45, 120, 0.7);
+}
+
+/* ---- TV frame glow ---- */
+.tv-frame {
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 240, 255, 0.2), 0 0 0 1px rgba(0, 240, 255, 0.1);
+}
+
+.tv-now-playing {
+    text-shadow: 0 0 12px rgba(127, 255, 212, 0.5);
+}
+
+/* ---- Quickstart strip - dark gradient instead of flat teal ---- */
+.quickstart {
+    background: linear-gradient(135deg, #0d0221 0%, #1a083a 50%, #0d1a2e 100%);
+    border-top: 1px solid rgba(0, 240, 255, 0.15);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+}
+
+.quickstart-subtitle {
+    color: var(--teal);
+    opacity: 0.8;
+}
+
+/* ---- Feature cards - neon top border glow ---- */
+.feature-card {
+    border-top-color: var(--teal);
+    box-shadow: var(--shadow), 0 -2px 12px rgba(0, 240, 255, 0.15);
+}
+
+.feature-card:nth-child(2) {
+    box-shadow: var(--shadow), 0 -2px 12px rgba(255, 45, 120, 0.15);
+}
+
+.feature-card:nth-child(3) {
+    box-shadow: var(--shadow), 0 -2px 12px rgba(185, 103, 255, 0.15);
+}
+
+/* ---- Inline code - needs explicit color since --cream is now dark ---- */
+.docs-content code {
+    color: var(--teal);
+    border-color: rgba(0, 240, 255, 0.2);
+}
+
+.docs-content pre code {
+    color: var(--text);
+}
+
+/* ---- Code block glow ---- */
+.docs-content pre {
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1), var(--shadow);
+}
+
+/* ---- Active sidebar glow ---- */
+.sidebar-nav a.active {
+    border-left-color: var(--teal);
+    box-shadow: inset 4px 0 10px rgba(0, 240, 255, 0.15);
+}
+
+/* ---- Page header band ---- */
+.page-header {
+    border-bottom-color: var(--teal);
+    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+}
+
+/* ---- VT323 renders larger - tighten mono label sizes ---- */
+.hero-eyebrow        { font-size: 1rem; letter-spacing: 0.1em; }
+.tv-channel          { font-size: 1rem; }
+.tv-show-time        { font-size: 0.9rem; }
+.news-date           { font-size: 0.9rem; }
+.sidebar-heading     { font-size: 0.85rem; }
+.doc-nav-label       { font-size: 0.85rem; }
+
+/* Orbitron renders tighter - open up heading spacing slightly */
+.hero-title          { letter-spacing: -0.02em; }
+.docs-content h1     { letter-spacing: -0.01em; }
+.docs-content h2     { letter-spacing: -0.01em; }
