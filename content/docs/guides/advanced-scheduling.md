@@ -2,7 +2,7 @@ Title: Advanced Scheduling Options
 Slug: docs/guides/advanced-scheduling
 Summary: Marathons, slot overrides, schedule timing, and advanced day templates.
 
-This guide builds on the [Configure Stations](/docs/configure-stations/) guide. If you haven't set up a basic channel yet, start there first.
+This guide builds on the [Configure Stations](/docs/configure-stations/) step in the Getting Started section. If you haven't worked through that yet, start there first.
 
 For the full technical specification of every configuration option, see [STATION_CONFIG_README.md](https://github.com/shane-mason/FieldStation42/blob/main/docs/STATION_CONFIG_README.md).
 
@@ -18,6 +18,8 @@ By default, FieldStation42 picks a random video each time a show is scheduled. I
 ```
 
 Each time this slot comes up, it plays the next episode in alphabetical order and remembers where it left off. You can run multiple independent sequences of the same show, split a series across time slots, and more.
+
+The sequence name can be anything you choose -- `"trek_nightly"`, `"sequence_1"`, `"my_queue"` -- it just needs to be unique to that sequence. FieldStation42 tracks progress using the combination of the sequence name and the `tags` value, so two different shows can share a sequence name without interfering with each other. Any slot that uses the same name and tag pair will be treated as part of the same sequence.
 
 For the full details, see the [Series in Sequence](/docs/guides/series-in-sequence/) guide.
 

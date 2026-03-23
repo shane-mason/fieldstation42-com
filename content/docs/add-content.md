@@ -6,7 +6,7 @@ FieldStation42 needs video files to build your channels. This step is all about 
 
 ## Where Your Videos Go
 
-During installation, a `catalog` folder was created inside your FieldStation42 directory. This is your media library. Each channel you create gets its own folder inside `catalog`:
+During installation, a `catalog` folder was created inside your FieldStation42 directory -- the full path will be something like `/home/pi/FieldStation42/catalog`, depending on where you cloned the repo. This is your media library. Each channel you create gets its own folder inside `catalog`:
 
 ```
 FieldStation42/                 <- Main installation folder

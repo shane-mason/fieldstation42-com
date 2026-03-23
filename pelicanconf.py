@@ -34,7 +34,7 @@ DISPLAY_PAGES_ON_MENU = False
 DISPLAY_CATEGORIES_ON_MENU = False
 
 MENUITEMS = [
-    ('Docs', '/docs/'),
+    ('Getting Started', '/docs/'),
     ('Guides', '/docs/guides/'),
     ('Reference', '/docs/reference/'),
     ('News', '/news/'),
