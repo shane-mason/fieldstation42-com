@@ -96,12 +96,22 @@ body {
 
 /* ---- Inline code ---- */
 .docs-content code {
+    font-size: 1rem;
     color: var(--teal);
-    border-color: rgba(34, 211, 238, 0.2);
+    background: rgba(34, 211, 238, 0.08);
+    border-color: rgba(34, 211, 238, 0.25);
+}
+
+/* ---- Code blocks ---- */
+.docs-content pre {
+    background: #080212;
+    border: 1px solid rgba(34, 211, 238, 0.2);
 }
 
 .docs-content pre code {
-    color: var(--text);
+    font-size: 1.1rem;
+    color: #c8f0f8;
+    line-height: 1.6;
 }
 
 /* ---- VT323 renders larger - tighten mono label sizes ---- */
