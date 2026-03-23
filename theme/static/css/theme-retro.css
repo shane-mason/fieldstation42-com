@@ -6,133 +6,102 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=VT323&display=swap');
 
 :root {
-    --teal:        #00f0ff;
-    --teal-dark:   #00b8d9;
-    --teal-light:  #7fffd4;
-    --orange:      #ff2d78;
-    --orange-dark: #cc1155;
-    --amber:       #b967ff;
-    --cream:       #1a0a2e;
-    --cream-dark:  #150820;
-    --cream-darker:#0d0518;
-    --brown:       #2d1b54;
-    --brown-dark:  #0d0221;
-    --brown-light: #4a2d7a;
+    --teal:        #22d3ee;
+    --teal-dark:   #0e9bb5;
+    --teal-light:  #67e8f9;
+    --orange:      #d946a8;
+    --orange-dark: #a8358a;
+    --amber:       #a78bfa;
+    --cream:       #e8d5ff;  /* stays LIGHT - used for text on dark sections */
+    --cream-dark:  #d4b8ee;
+    --cream-darker:#b89dcc;
+    --brown:       #3b1d6b;
+    --brown-dark:  #0f0520;
+    --brown-light: #5b2d96;
     --text:        #e8d5ff;
     --text-muted:  #b39ddb;
-    --white:       #241040;
+    --white:       #1a0a30;  /* card/panel backgrounds */
 
     --font-display: 'Orbitron', 'DM Serif Display', Georgia, serif;
     --font-mono:    'VT323', 'DM Mono', monospace;
 
-    --shadow:    0 2px 12px rgba(0, 240, 255, 0.1);
-    --shadow-lg: 0 8px 32px rgba(0, 240, 255, 0.18);
+    --shadow:    0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* ---- Neon glow on header / footer ---- */
-.site-header {
-    box-shadow: 0 2px 24px rgba(0, 240, 255, 0.25);
-    border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+/* Page background - dark, separate from --cream which is used for text */
+body {
+    background: #15082a;
 }
 
-.site-footer {
-    border-top-color: var(--teal);
-    box-shadow: 0 -4px 24px rgba(0, 240, 255, 0.15);
+/* --white is used for card backgrounds (dark in retro)
+   but also for button/logo text - keep those light */
+.btn-primary,
+.btn-secondary,
+.btn-patreon,
+.logo-mark,
+.site-search-btn {
+    color: #f0e6ff;
+}
+
+/* Card text needs to be light since --white card bg is now dark */
+.feature-title,
+.feature-desc,
+.news-title a,
+.news-summary,
+.setup-step-title,
+.setup-step-desc,
+.doc-index-title,
+.doc-index-desc,
+.docs-content h3 {
+    color: var(--text);
+}
+
+.feature-desc,
+.news-summary,
+.setup-step-desc,
+.doc-index-desc {
+    color: var(--text-muted);
+}
+
+/* ---- Quickstart strip ---- */
+.quickstart {
+    background: #1a0a30;
+    border-top: 1px solid rgba(34, 211, 238, 0.2);
+    border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.quickstart-subtitle {
+    color: var(--teal-light);
 }
 
 /* ---- Hero grid overlay ---- */
 .hero::before {
     background:
-        linear-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
-        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(185, 103, 255, 0.25) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 60% at 15% 80%, rgba(255, 45, 120, 0.18) 0%, transparent 50%);
+        linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(167, 139, 250, 0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 15% 80%, rgba(217, 70, 168, 0.15) 0%, transparent 50%);
     background-size: 44px 44px, 44px 44px, 100% 100%, 100% 100%;
-}
-
-.hero::after {
-    background: radial-gradient(ellipse at center, rgba(185, 103, 255, 0.12) 0%, transparent 70%);
 }
 
 /* ---- Gradient hero title accent ---- */
 .hero-title em {
-    background: linear-gradient(135deg, #ff2d78 0%, #b967ff 100%);
+    background: linear-gradient(135deg, #d946a8 0%, #a78bfa 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-style: normal;
 }
 
-/* ---- Glowing CTA button ---- */
-.btn-primary {
-    box-shadow: 0 0 18px rgba(255, 45, 120, 0.45);
-}
-
-.btn-primary:hover {
-    box-shadow: 0 4px 28px rgba(255, 45, 120, 0.7);
-}
-
-/* ---- TV frame glow ---- */
-.tv-frame {
-    box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 240, 255, 0.2), 0 0 0 1px rgba(0, 240, 255, 0.1);
-}
-
-.tv-now-playing {
-    text-shadow: 0 0 12px rgba(127, 255, 212, 0.5);
-}
-
-/* ---- Quickstart strip - dark gradient instead of flat teal ---- */
-.quickstart {
-    background: linear-gradient(135deg, #0d0221 0%, #1a083a 50%, #0d1a2e 100%);
-    border-top: 1px solid rgba(0, 240, 255, 0.15);
-    border-bottom: 1px solid rgba(0, 240, 255, 0.15);
-}
-
-.quickstart-subtitle {
-    color: var(--teal);
-    opacity: 0.8;
-}
-
-/* ---- Feature cards - neon top border glow ---- */
-.feature-card {
-    border-top-color: var(--teal);
-    box-shadow: var(--shadow), 0 -2px 12px rgba(0, 240, 255, 0.15);
-}
-
-.feature-card:nth-child(2) {
-    box-shadow: var(--shadow), 0 -2px 12px rgba(255, 45, 120, 0.15);
-}
-
-.feature-card:nth-child(3) {
-    box-shadow: var(--shadow), 0 -2px 12px rgba(185, 103, 255, 0.15);
-}
-
-/* ---- Inline code - needs explicit color since --cream is now dark ---- */
+/* ---- Inline code ---- */
 .docs-content code {
     color: var(--teal);
-    border-color: rgba(0, 240, 255, 0.2);
+    border-color: rgba(34, 211, 238, 0.2);
 }
 
 .docs-content pre code {
     color: var(--text);
-}
-
-/* ---- Code block glow ---- */
-.docs-content pre {
-    border: 1px solid rgba(0, 240, 255, 0.15);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1), var(--shadow);
-}
-
-/* ---- Active sidebar glow ---- */
-.sidebar-nav a.active {
-    border-left-color: var(--teal);
-    box-shadow: inset 4px 0 10px rgba(0, 240, 255, 0.15);
-}
-
-/* ---- Page header band ---- */
-.page-header {
-    border-bottom-color: var(--teal);
-    box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
 }
 
 /* ---- VT323 renders larger - tighten mono label sizes ---- */
