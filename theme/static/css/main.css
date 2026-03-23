@@ -275,6 +275,13 @@ a:hover { color: var(--orange); }
 }
 .btn-secondary:hover { background: rgba(255,255,255,0.18); color: var(--white); }
 
+.btn-patreon {
+    background: #FF424D;
+    color: var(--white);
+    border: 1px solid transparent;
+}
+.btn-patreon:hover { background: #e03040; color: var(--white); }
+
 /* Hero visual / screen mockup */
 .hero-visual {
     display: flex;
