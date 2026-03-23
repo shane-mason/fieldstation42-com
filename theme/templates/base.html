@@ -9,8 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=VT323&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css">
-    <script>if(new URLSearchParams(location.search).get('theme')==='classic'){var l=document.createElement('link');l.id='theme-classic';l.rel='stylesheet';l.href='{{ SITEURL }}/theme/css/theme-classic.css';document.currentScript.after(l);}</script>
-    {% block extra_head %}{% endblock %}
+{% block extra_head %}{% endblock %}
 </head>
 <body>
 
@@ -61,17 +60,16 @@
             <div class="footer-links">
                 <a href="https://github.com/shane-mason/FieldStation42" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://youtube.com/@wrongdogreckons" target="_blank" rel="noopener">YouTube</a>
-                <a href="https://www.patreon.com/cw/FieldStation42" target="_blank" rel="noopener">Patreon</a>
                 <a href="/news/">News</a>
                 <a href="/docs/">Docs</a>
             </div>
+            <a href="https://www.patreon.com/cw/FieldStation42" class="btn btn-patreon" target="_blank" rel="noopener">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14.82 2.41C18.78 2.41 22 5.65 22 9.62c0 3.96-3.22 7.18-7.18 7.18-3.96 0-7.18-3.22-7.18-7.18 0-3.97 3.22-7.21 7.18-7.21zM2 21.6h3.5V2.41H2V21.6z"/></svg>
+                Support on Patreon
+            </a>
             <p class="footer-copy">Open source project by <a href="https://youtube.com/@wrongdogreckons">WrongDog Reckons</a></p>
         </div>
     </footer>
-
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-toggle-label">CLASSIC</span>
-    </button>
 
     <script src="{{ SITEURL }}/theme/js/main.js"></script>
 </body>

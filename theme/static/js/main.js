@@ -43,27 +43,6 @@ if (tvContent) {
     }, 5000);
 }
 
-// Theme switcher
-const themeToggle = document.getElementById('theme-toggle');
-if (themeToggle) {
-    const isClassic = new URLSearchParams(location.search).get('theme') === 'classic';
-    const label = themeToggle.querySelector('.theme-toggle-label');
-    if (isClassic) {
-        label.textContent = 'RETRO';
-        themeToggle.classList.add('active');
-    }
-    themeToggle.addEventListener('click', () => {
-        const next = new URLSearchParams(location.search);
-        if (next.get('theme') === 'classic') {
-            next.delete('theme');
-        } else {
-            next.set('theme', 'classic');
-        }
-        const qs = next.toString();
-        location.href = location.pathname + (qs ? '?' + qs : '');
-    });
-}
-
 // Highlight active sidebar link based on current path
 const currentPath = window.location.pathname.replace(/\/$/, '');
 document.querySelectorAll('.sidebar-nav a').forEach(link => {

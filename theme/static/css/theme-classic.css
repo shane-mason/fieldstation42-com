@@ -1,0 +1,115 @@
+/* ============================================
+   FieldStation42 — Classic / Mid-Century Theme
+   Override: restores original variables over retro defaults
+   ============================================ */
+
+:root {
+    --teal:        #3D8FA3;
+    --teal-dark:   #2A6F82;
+    --teal-light:  #6AB3C7;
+    --orange:      #E07A3A;
+    --orange-dark: #C45E20;
+    --amber:       #F0B429;
+    --cream:       #F7EFE0;
+    --cream-dark:  #EDE0CC;
+    --cream-darker:#D9CAAF;
+    --brown:       #7B4A2D;
+    --brown-dark:  #5C3520;
+    --brown-light: #A0673A;
+    --text:        #2C1A0E;
+    --text-muted:  #6B4C35;
+    --white:       #FDFAF5;
+
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-mono:    'DM Mono', monospace;
+
+    --shadow:    0 2px 12px rgba(44, 26, 14, 0.12);
+    --shadow-lg: 0 8px 32px rgba(44, 26, 14, 0.18);
+}
+
+/* Restore light page background */
+body { background: var(--cream); }
+
+/* Restore button/logo text (was overridden for dark --white cards) */
+.btn-primary,
+.btn-secondary,
+.btn-patreon,
+.logo-mark,
+.site-search-btn {
+    color: var(--white);
+}
+
+/* Restore card text colors */
+.feature-title,
+.news-title a,
+.setup-step-title,
+.doc-index-title {
+    color: var(--text);
+}
+
+.feature-desc,
+.news-summary,
+.setup-step-desc,
+.doc-index-desc {
+    color: var(--text-muted);
+}
+
+/* Restore hero overlay */
+.hero::before {
+    background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(61,143,163,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 15% 80%, rgba(224,122,58,0.2) 0%, transparent 50%);
+    background-size: auto;
+}
+
+/* Restore hero title accent */
+.hero-title em {
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+    font-style: italic;
+    color: var(--amber);
+}
+
+/* Restore quickstart strip */
+.quickstart {
+    background: var(--teal-dark);
+    border-top: none;
+    border-bottom: none;
+}
+
+.quickstart-subtitle { color: var(--teal-light); }
+
+/* Restore inline code */
+.docs-content code {
+    font-size: 0.875em;
+    color: var(--brown-dark);
+    background: var(--cream-dark);
+    border-color: var(--cream-darker);
+}
+
+/* Restore code blocks */
+.docs-content pre {
+    background: var(--brown-dark);
+    border: none;
+}
+
+.docs-content pre code {
+    font-size: 0.875rem;
+    color: var(--cream);
+    line-height: inherit;
+}
+
+/* Restore mono label sizes */
+.hero-eyebrow    { font-size: 0.8rem;  letter-spacing: 0.15em; }
+.tv-channel      { font-size: 0.75rem; }
+.tv-show-time    { font-size: 0.7rem; }
+.news-date       { font-size: 0.75rem; }
+.sidebar-heading { font-size: 0.7rem; }
+.doc-nav-label   { font-size: 0.7rem; }
+
+/* Restore heading tracking */
+.hero-title      { letter-spacing: normal; }
+.docs-content h1 { letter-spacing: normal; }
+.docs-content h2 { letter-spacing: normal; }
