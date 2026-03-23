@@ -4,30 +4,30 @@
    ============================================ */
 
 :root {
-    --teal:        #3D8FA3;
-    --teal-dark:   #2A6F82;
-    --teal-light:  #6AB3C7;
-    --orange:      #E07A3A;
-    --orange-dark: #C45E20;
-    --amber:       #F0B429;
-    --cream:       #F7EFE0;
-    --cream-dark:  #EDE0CC;
-    --cream-darker:#D9CAAF;
-    --brown:       #7B4A2D;
-    --brown-dark:  #5C3520;
-    --brown-light: #A0673A;
-    --text:        #2C1A0E;
-    --text-muted:  #6B4C35;
-    --white:       #FDFAF5;
+    --teal:        #22d3ee;
+    --teal-dark:   #0e9bb5;
+    --teal-light:  #67e8f9;
+    --orange:      #d946a8;
+    --orange-dark: #a8358a;
+    --amber:       #a78bfa;
+    --cream:       #e8d5ff;
+    --cream-dark:  #d4b8ee;
+    --cream-darker:#b89dcc;
+    --brown:       #3b1d6b;
+    --brown-dark:  #0f0520;
+    --brown-light: #5b2d96;
+    --text:        #e8d5ff;
+    --text-muted:  #b39ddb;
+    --white:       #1a0a30;
 
-    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-display: 'Orbitron', 'DM Serif Display', Georgia, serif;
     --font-body:    'DM Sans', system-ui, sans-serif;
-    --font-mono:    'DM Mono', monospace;
+    --font-mono:    'VT323', 'DM Mono', monospace;
 
     --radius:       6px;
     --radius-lg:    12px;
-    --shadow:       0 2px 12px rgba(44, 26, 14, 0.12);
-    --shadow-lg:    0 8px 32px rgba(44, 26, 14, 0.18);
+    --shadow:       0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-lg:    0 6px 24px rgba(0, 0, 0, 0.5);
 
     --max-width:    1140px;
     --docs-width:   780px;
@@ -40,7 +40,7 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font-body);
-    background: var(--cream);
+    background: #15082a;
     color: var(--text);
     font-size: 17px;
     line-height: 1.7;
@@ -1059,6 +1059,96 @@ a:hover { color: var(--orange); }
 .footer-copy a { color: rgba(247,239,224,0.6); }
 .footer-copy a:hover { color: var(--amber); }
 
+/* ---- Retro theme overrides ---- */
+
+/* --white is used for card backgrounds (dark) but also for button/logo text */
+.btn-primary,
+.btn-secondary,
+.btn-patreon,
+.logo-mark,
+.site-search-btn {
+    color: #f0e6ff;
+}
+
+/* Card text on dark --white backgrounds */
+.feature-desc,
+.news-summary,
+.setup-step-desc,
+.doc-index-desc {
+    color: var(--text-muted);
+}
+
+.feature-title,
+.news-title a,
+.setup-step-title,
+.doc-index-title {
+    color: var(--text);
+}
+
+/* Hero grid overlay */
+.hero::before {
+    background:
+        linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(167, 139, 250, 0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 15% 80%, rgba(217, 70, 168, 0.15) 0%, transparent 50%);
+    background-size: 44px 44px, 44px 44px, 100% 100%, 100% 100%;
+}
+
+/* Gradient accent on hero title italic */
+.hero-title em {
+    background: linear-gradient(135deg, #d946a8 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: normal;
+}
+
+/* Quickstart strip */
+.quickstart {
+    background: #1a0a30;
+    border-top: 1px solid rgba(34, 211, 238, 0.2);
+    border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.quickstart-subtitle {
+    color: var(--teal-light);
+}
+
+/* Inline code */
+.docs-content code {
+    font-size: 1rem;
+    color: var(--teal);
+    background: rgba(34, 211, 238, 0.08);
+    border-color: rgba(34, 211, 238, 0.25);
+}
+
+/* Code blocks */
+.docs-content pre {
+    background: #080212;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.docs-content pre code {
+    font-size: 1.1rem;
+    color: #c8f0f8;
+    line-height: 1.6;
+}
+
+/* VT323 renders larger - tighten mono label sizes */
+.hero-eyebrow    { font-size: 1rem;   letter-spacing: 0.1em; }
+.tv-channel      { font-size: 1rem; }
+.tv-show-time    { font-size: 0.9rem; }
+.news-date       { font-size: 0.9rem; }
+.sidebar-heading { font-size: 0.85rem; }
+.doc-nav-label   { font-size: 0.85rem; }
+
+/* Orbitron is tighter than DM Serif - open up headings */
+.hero-title      { letter-spacing: -0.02em; }
+.docs-content h1 { letter-spacing: -0.01em; }
+.docs-content h2 { letter-spacing: -0.01em; }
+
+
 /* ---- Theme Toggle ---- */
 .theme-toggle {
     position: fixed;
@@ -1067,33 +1157,23 @@ a:hover { color: var(--orange); }
     z-index: 200;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
     padding: 0.45rem 0.85rem;
     background: var(--brown-dark);
     color: var(--cream-darker);
     border: 1px solid rgba(255,255,255,0.15);
     border-radius: var(--radius);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    transition: color 0.2s, border-color 0.2s;
     box-shadow: var(--shadow);
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
-.theme-toggle:hover {
-    color: var(--amber);
-    border-color: var(--amber);
-    opacity: 1;
-}
-
-.theme-toggle.active {
-    color: var(--teal);
-    border-color: var(--teal);
-    opacity: 1;
-}
+.theme-toggle:hover { color: var(--amber); border-color: var(--amber); opacity: 1; }
+.theme-toggle.active { color: var(--teal); border-color: var(--teal); opacity: 1; }
 
 /* ---- Responsive ---- */
 @media (max-width: 900px) {

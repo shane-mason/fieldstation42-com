@@ -7,9 +7,9 @@
     <meta name="description" content="{% block description %}{{ SITESUBTITLE }}{% endblock %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=VT323&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css">
-    <script>if(new URLSearchParams(location.search).get('theme')==='retro'){var l=document.createElement('link');l.id='theme-retro';l.rel='stylesheet';l.href='{{ SITEURL }}/theme/css/theme-retro.css';document.currentScript.after(l);}</script>
+    <script>if(new URLSearchParams(location.search).get('theme')==='classic'){var l=document.createElement('link');l.id='theme-classic';l.rel='stylesheet';l.href='{{ SITEURL }}/theme/css/theme-classic.css';document.currentScript.after(l);}</script>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -70,7 +70,7 @@
     </footer>
 
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-        <span class="theme-toggle-label">RETRO</span>
+        <span class="theme-toggle-label">CLASSIC</span>
     </button>
 
     <script src="{{ SITEURL }}/theme/js/main.js"></script>
