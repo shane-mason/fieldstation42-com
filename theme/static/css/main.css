@@ -290,10 +290,10 @@ a:hover { color: var(--orange); }
 }
 
 .tv-frame {
-    background: #1a0f08;
+    background: #2e1a52;
     border-radius: 16px;
     padding: 16px 16px 40px;
-    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.06);
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(167,139,250,0.2);
     width: 100%;
     max-width: 420px;
     position: relative;
@@ -381,8 +381,8 @@ a:hover { color: var(--orange); }
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #5a4030, #2a1810);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: radial-gradient(circle at 35% 35%, #6b4fa0, #2e1a52);
+    border: 1px solid rgba(167,139,250,0.25);
 }
 
 /* ---- Feature Strip ---- */
