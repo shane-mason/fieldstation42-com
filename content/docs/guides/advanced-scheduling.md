@@ -19,7 +19,7 @@ By default, FieldStation42 picks a random video each time a show is scheduled. I
 
 Each time this slot comes up, it plays the next episode in alphabetical order and remembers where it left off. You can run multiple independent sequences of the same show, split a series across time slots, and more.
 
-The sequence name can be anything you choose -- `"trek_nightly"`, `"sequence_1"`, `"my_queue"` -- it just needs to be unique to that sequence. FieldStation42 tracks progress using the combination of the sequence name and the `tags` value, so two different shows can share a sequence name without interfering with each other. Any slot that uses the same name and tag pair will be treated as part of the same sequence.
+The sequence name can be anything you choose (`"trek_nightly"`, `"sequence_1"`, `"my_queue"`), it just needs to be unique to that sequence. FieldStation42 tracks progress using the combination of the sequence name and the `tags` value, so two different shows can share a sequence name without interfering with each other. Any slot that uses the same name and tag pair will be treated as part of the same sequence.
 
 For the full details, see the [Series in Sequence](/docs/guides/series-in-sequence/) guide.
 

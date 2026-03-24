@@ -2,7 +2,7 @@ Title: Guides
 Slug: docs/guides
 Summary: In-depth guides for getting the most out of FieldStation42.
 
-These guides go beyond the basics. Once your station is up and running, this is where you come to make it feel truly alive -- seasonal programming that knows what month it is, episodes that play in order every time, commercials that fit the mood, and channels built exactly the way you want them.
+These guides go beyond the basics. Once your station is up and running, this is where you come to make it feel truly alive: seasonal programming that knows what month it is, episodes that play in order every time, commercials that fit the mood, and channels built exactly the way you want them.
 
 <div class="doc-index">
 

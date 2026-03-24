@@ -14,7 +14,7 @@ If you prefer a visual interface over editing JSON by hand, the built-in web con
 python3 station_42.py
 ```
 
-Then open a web browser on that same machine and go to `http://localhost:4242/`. If you're running FieldStation42 on a Raspberry Pi with a desktop, open Chromium or Firefox on the Pi itself and enter that address. You can also access the console from another computer on the same network -- just replace `localhost` with the IP address of the machine running FieldStation42 (for example, `http://192.168.1.42:4242/`). From there you can create new station configs, edit existing ones, and see a summary of all your channels at a glance.
+Then open a web browser on that same machine and go to `http://localhost:4242/`. If you're running FieldStation42 on a Raspberry Pi with a desktop, open Chromium or Firefox on the Pi itself and enter that address. You can also access the console from another computer on the same network by replacing `localhost` with the IP address of the machine running FieldStation42 (for example, `http://192.168.1.42:4242/`). From there you can create new station configs, edit existing ones, and see a summary of all your channels at a glance.
 
 The rest of this guide covers the JSON config format directly, which is useful to understand even if you use the web console.
 
@@ -104,7 +104,7 @@ Any hour you don't list is off-air. Here's a channel with Monday and Tuesday fil
 }
 ```
 
-The `"tags"` value is the name of a subfolder in your content directory. If you have `catalog/classic_content/sitcoms/`, you'd use `"tags": "sitcoms"`, and FieldStation42 picks a random video from that folder each time. You can also point to a nested subfolder -- `"tags": "sitcoms/seinfeld"` would pull only from that specific show's folder.
+The `"tags"` value is the name of a subfolder in your content directory. If you have `catalog/classic_content/sitcoms/`, you'd use `"tags": "sitcoms"`, and FieldStation42 picks a random video from that folder each time. You can also point to a nested subfolder: `"tags": "sitcoms/seinfeld"` would pull only from that specific show's folder.
 
 Remember: any hour not listed will be off-air. In the example above, the channel goes dark between 10 AM and noon on Monday, and between 8 AM and 8 PM on Tuesday.
 
@@ -154,7 +154,7 @@ You can split an hour between different tags by passing a list:
 "18": {"tags": ["news", "sitcoms"]}
 ```
 
-Note that the two shows listed for 6 PM are wrapped in square brackets `[]` and separated by a comma -- that's what tells FieldStation42 to treat them as a split hour rather than a single tag. This splits the 6 PM hour into two 30-minute blocks: news first, then a sitcom. Three tags would split it into three 20-minute blocks, and so on. If a show runs longer than its block, the next tag gets skipped.
+Note that the two shows listed for 6 PM are wrapped in square brackets `[]` and separated by a comma. That's what tells FieldStation42 to treat them as a split hour rather than a single tag. This splits the 6 PM hour into two 30-minute blocks: news first, then a sitcom. Three tags would split it into three 20-minute blocks, and so on. If a show runs longer than its block, the next tag gets skipped.
 
 ### Clip Shows
 

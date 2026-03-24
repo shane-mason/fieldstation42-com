@@ -2,7 +2,7 @@ Title: Reference
 Slug: docs/reference
 Summary: Complete technical reference for FieldStation42 configuration, commands, and built-in tools.
 
-Everything you need to know about how FieldStation42 works under the hood. Configuration files, command-line tools, built-in interfaces, and solutions to common problems -- all in one place when you need to look something up.
+Everything you need to know about how FieldStation42 works under the hood. Configuration files, command-line tools, built-in interfaces, and solutions to common problems. All in one place when you need to look something up.
 
 <div class="doc-index">
 
@@ -13,7 +13,7 @@ Everything you need to know about how FieldStation42 works under the hood. Confi
 
   <a href="/docs/reference/main-config/" class="doc-index-item">
     <div class="doc-index-title">Main Configuration</div>
-    <div class="doc-index-desc">Global settings that apply across all your stations -- server options, title normalization, day parts, and more.</div>
+    <div class="doc-index-desc">Global settings that apply across all your stations: server options, title normalization, day parts, and more.</div>
   </a>
 
   <a href="/docs/reference/command-line/" class="doc-index-item">
@@ -33,7 +33,7 @@ Everything you need to know about how FieldStation42 works under the hood. Confi
 
   <a href="/docs/reference/osd-setup/" class="doc-index-item">
     <div class="doc-index-title">On-Screen Display Setup</div>
-    <div class="doc-index-desc">Configure the channel banner that appears when you change stations -- logos, timing, and tag-driven display behavior.</div>
+    <div class="doc-index-desc">Configure the channel banner that appears when you change stations: logos, timing, and tag-driven display behavior.</div>
   </a>
 
   <a href="/docs/reference/autobump/" class="doc-index-item">

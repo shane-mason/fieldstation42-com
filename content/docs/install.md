@@ -43,7 +43,7 @@ Run this to download the project:
 git clone https://github.com/shane-mason/FieldStation42
 ```
 
-This creates a `FieldStation42` folder in your current directory. If you're following along from a fresh terminal, that's your home directory -- the full path would be `/home/pi/FieldStation42` on a Raspberry Pi, or `/home/yourusername/FieldStation42` on other Linux systems. You may also see this written as `~/FieldStation42` -- the `~` is just a shortcut that means your home folder.
+This creates a `FieldStation42` folder in your current directory. If you're following along from a fresh terminal, that's your home directory. The full path would be `/home/pi/FieldStation42` on a Raspberry Pi, or `/home/yourusername/FieldStation42` on other Linux systems. You may also see this written as `~/FieldStation42`, where `~` is just a shortcut that means your home folder.
 
 Move into it:
 
@@ -91,7 +91,7 @@ git pull
 
 Raspberry Pi works great with FieldStation42. A few things to know:
 
-- Use **Bookworm OS** for best results. A fresh install is recommended. When using the Raspberry Pi Imager, click **Choose OS**, then select **Raspberry Pi OS (64-bit)** -- Trixie is now the default, so you'll need to scroll down and select the **Bookworm** version explicitly. Look for the release name in the description before writing.
+- Use **Bookworm OS** for best results. A fresh install is recommended. When using the Raspberry Pi Imager, click **Choose OS**, then select **Raspberry Pi OS (64-bit)**. Trixie is now the default, so you'll need to scroll down and select the **Bookworm** version explicitly. Look for the release name in the description before writing.
 - **Trixie** support is in progress. If video won't display, run these commands to create a config file that fixes it:
 
 ```bash
