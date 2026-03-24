@@ -42,7 +42,7 @@ The OSD is highly configurable - location, font, color, and layout can all be cu
 
 ## Startup Configuration
 
-To launch the OSD on boot, see the [autostart guide](/docs/reference/autostart/) to start it as a service.
+To launch the OSD on boot, see the [autostart guide](/docs/guides/autostart/) to start it as a service.
 
 For testing, you can use the following command to start the OSD server.
 

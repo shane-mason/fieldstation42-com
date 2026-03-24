@@ -36,4 +36,14 @@ These guides go beyond the basics. Once your station is up and running, this is 
     <div class="doc-index-desc">Keep your library organized as it grows. Use symlinks, external drives, and network storage without duplicating files.</div>
   </a>
 
+  <a href="/docs/guides/remote-control/" class="doc-index-item">
+    <div class="doc-index-title">Connecting Remote Controls</div>
+    <div class="doc-index-desc">Control FieldStation42 with any IR remote using Flirc USB, customize key mappings, or change channels from external scripts.</div>
+  </a>
+
+  <a href="/docs/guides/autostart/" class="doc-index-item">
+    <div class="doc-index-title">Autostart on Login</div>
+    <div class="doc-index-desc">Set it and forget it. Configure FieldStation42 to start automatically whenever the system boots or a user logs in.</div>
+  </a>
+
 </div>

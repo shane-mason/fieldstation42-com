@@ -46,11 +46,6 @@ Everything you need to know about how FieldStation42 works under the hood. Confi
     <div class="doc-index-desc">Turn one of your channels into a video-on-demand browser. Pick a movie from a poster wall, complete with metadata and TMDB art.</div>
   </a>
 
-  <a href="/docs/reference/autostart/" class="doc-index-item">
-    <div class="doc-index-title">Autostart on Login</div>
-    <div class="doc-index-desc">Set it and forget it. Configure FieldStation42 to start automatically whenever the system boots or a user logs in.</div>
-  </a>
-
   <a href="/docs/reference/troubleshooting/" class="doc-index-item">
     <div class="doc-index-title">Troubleshooting</div>
     <div class="doc-index-desc">Something not working? Common problems and their solutions, gathered from real setup experiences.</div>

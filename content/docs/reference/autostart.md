@@ -1,5 +1,5 @@
 Title: Autostart on System Login
-Slug: docs/reference/autostart
+Slug: docs/guides/autostart
 Summary: Configure FieldStation42 to start automatically on system login using systemd services or a desktop autostart entry.
 
 Once you have FieldStation42 running stably, you'll probably want it to start automatically whenever the system boots. This page covers two approaches: the recommended systemd method, and the simpler desktop autostart method for setups that don't need full service management.
