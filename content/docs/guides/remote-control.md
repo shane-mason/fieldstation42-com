@@ -36,11 +36,13 @@ pip install evdev requests
 python3 fs42/pi/remote_controller.py
 ```
 
-Note: you may need `sudo` to access input devices:
+On Linux Mint, Ubuntu, and some other distributions you need `sudo` to access input devices. When using sudo, make sure to point at the virtual environment's Python directly rather than the system Python:
 
 ```bash
-sudo python3 fs42/pi/remote_controller.py
+sudo env/bin/python3 fs42/pi/remote_controller.py
 ```
+
+Using `sudo python3` instead will use the system Python and won't have access to the packages installed in your FieldStation42 environment.
 
 ## Remote Functions Reference
 
@@ -88,27 +90,46 @@ KEY_MAPPINGS = {
 
 ## Selecting an Input Device
 
-By default the remote controller automatically finds your Flirc device. If you have multiple input devices, you can specify which one to use:
+By default the remote controller auto-detects your Flirc device, or falls back to the first available input device. If it picks the wrong one, or you want to be explicit, start by listing what's available:
 
 ```bash
-# List all available input devices
-sudo python3 remote_controller.py --list-devices
-
-# Use a specific device path
-sudo python3 remote_controller.py -d /dev/input/event3
-
-# Use device by index
-sudo python3 remote_controller.py -d 0
-
-# Use device by name pattern
-sudo python3 remote_controller.py -d flirc
-sudo python3 remote_controller.py -d keyboard
+python3 fs42/pi/remote_controller.py --list-devices
 ```
 
-Or set it via environment variable:
+On systems that require sudo for input device access:
 
 ```bash
-FS42_INPUT_DEVICE=keyboard sudo python3 remote_controller.py
+sudo env/bin/python3 fs42/pi/remote_controller.py --list-devices
+```
+
+You'll see output like this:
+
+```
+Available input devices:
+0: Flirc (/dev/input/event4)
+1: Logitech M510 (/dev/input/event3)
+2: Power Button (/dev/input/event1)
+Using default device: Flirc
+```
+
+Then use `-d` to specify which device to use, by index, name pattern, or full path:
+
+```bash
+# By index
+python3 fs42/pi/remote_controller.py -d 0
+
+# By name pattern (matches first device containing that text)
+python3 fs42/pi/remote_controller.py -d flirc
+python3 fs42/pi/remote_controller.py -d keyboard
+
+# By full device path
+python3 fs42/pi/remote_controller.py -d /dev/input/event4
+```
+
+You can also set the device via environment variable instead of passing `-d` every time:
+
+```bash
+FS42_INPUT_DEVICE=flirc python3 fs42/pi/remote_controller.py
 ```
 
 ## Server Location
@@ -136,7 +157,7 @@ Any valid shell command works here, including Python scripts.
 
 ## Troubleshooting
 
-**Permission denied:** Run with `sudo` to access input devices.
+**Permission denied:** Run with `sudo env/bin/python3` to access input devices. Using `sudo python3` will use the system Python instead of the virtual environment.
 
 **No devices found:** Check that Flirc is plugged in and verify with `ls /dev/input/event*`. Run `sudo evtest` to see what keys your device actually sends.
 
