@@ -1059,6 +1059,34 @@ a:hover { color: var(--orange); }
 .footer-copy a { color: rgba(247,239,224,0.6); }
 .footer-copy a:hover { color: var(--amber); }
 
+/* ---- Heading anchors ---- */
+.docs-content h1,
+.docs-content h2,
+.docs-content h3 {
+    position: relative;
+}
+
+.heading-anchor {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.4rem;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+.docs-content h1:hover .heading-anchor,
+.docs-content h2:hover .heading-anchor,
+.docs-content h3:hover .heading-anchor {
+    opacity: 1;
+}
+
+.heading-anchor:hover { color: var(--teal); }
+
+.heading-anchor.copied { color: var(--teal); opacity: 1; }
+
 /* ---- Retro theme overrides ---- */
 
 /* --white is used for card backgrounds (dark) but also for button/logo text */
