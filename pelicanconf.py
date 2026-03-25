@@ -45,6 +45,15 @@ DEFAULT_PAGINATION = 10
 
 STATIC_PATHS = ['images']
 
+# Markdown extensions
+MARKDOWN = {
+    'extension_configs': {
+        'markdown.extensions.toc': {},
+        'markdown.extensions.fenced_code': {},
+        'markdown.extensions.tables': {},
+    }
+}
+
 # Doc ordering
 TEMPLATE_PAGES = {
     'search.html': 'search/index.html',
