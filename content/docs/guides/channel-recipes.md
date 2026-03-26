@@ -8,7 +8,7 @@ FieldStation42 supports a lot of different channel types. This guide gives you r
 - [Recipe 2: Movie Channel / Public Broadcasting](#recipe-2-movie-channel--public-broadcasting)
 - [Recipe 3: No Breaks](#recipe-3-no-breaks)
 - [Recipe 4: Looping Channels](#recipe-4-looping-channels)
-- [Recipe 5: The Guide Channel](#recipe-5-the-guide-channel)
+- [Recipe 5: Guide Channels](#recipe-5-guide-channels)
 - [Recipe 6: Streaming Channels (IPTV)](#recipe-6-streaming-channels-iptv)
 - [Recipe 7: Web Channel](#recipe-7-web-channel)
 - [Recipe 8: Radio Channel](#recipe-8-radio-music-channel-audio-with-now-playing-overlay)
@@ -101,11 +101,13 @@ cp confs/examples/loop.json confs/
 
 ---
 
-## Recipe 5: The Guide Channel
+## Recipe 5: Guide Channels
 
-A scrolling TV guide that shows what's on each channel, just like the cable guide channels from the 90s.
+FieldStation42 has two types of guide channels. The classic guide is a simple scrolling grid built into the player. The custom guide is a web-based version with decade-themed visuals, background music, and video panels. See the [Guide Channel Guide](/docs/guides/guide-channels/) for the full breakdown and deep customization options.
 
-> The guide channel is still in development and may change.
+### Classic Guide Channel
+
+A scrolling TV grid, images, rotating messages, and optional background music. Configured entirely in JSON.
 
 ```json
 {
@@ -120,73 +122,61 @@ A scrolling TV guide that shows what's on each channel, just like the cable guid
 }
 ```
 
-For `sound_to_play`, you can point to a single MP3 file, a directory of MP3s (they'll shuffle and loop), or a list of files.
-
-There's an example config to start from:
+`sound_to_play` accepts a single MP3 file, a directory of MP3s (shuffles and loops), or a list of files. Copy the example config to get started:
 
 ```bash
 cp confs/examples/guide.json confs/
 ```
 
-### Customizing the Appearance
+### Custom Guide Channel: 80s Theme
 
-The guide channel has a lot of visual options. Here are the defaults you can override:
-
-```json
-{
-  "fullscreen": false,
-  "width": 720,
-  "height": 480,
-  "window_decorations": false,
-  "top_bg": "blue3",
-  "bottom_bg": "blue4",
-  "pad": 10,
-  "messages": ["Hello FieldStation42\nGuide preview", "Cheers!\nFrom us to you!", "FieldStation42 Guide\nOn cable mode."],
-  "message_rotation_rate": 10,
-  "message_fg": "white",
-  "message_font_family": "Arial",
-  "message_font_size": 25,
-  "images": [],
-  "network_font_family": "Arial",
-  "network_font_size": 12,
-  "network_width_divisor": 6,
-  "schedule_font_family": "Arial",
-  "schedule_font_size": 12,
-  "schedule_highlight_fg": "yellow",
-  "schedule_fg": "white",
-  "schedule_border_width": 4,
-  "schedule_border_relief": "raised",
-  "footer_messages": ["You are watching FieldStation42", "Now with cable mode."],
-  "footer_height": 50,
-  "schedule_row_count": 3,
-  "top_section_ratio": 0.5,
-  "target_row_height": 60,
-  "min_row_height": 45,
-  "max_row_height": 75,
-  "normalize_title": true
-}
-```
-
-Setting `fullscreen: true` ignores width and height. Setting `window_decorations: true` gives you a normal window (useful for debugging layout).
-
-### Messages and Images
-
-The upper section of the guide has two parts: images on the left and messages on the right. Both rotate on a timer set by `message_rotation_rate` (in seconds). If you use both images and messages, match the number of each so they stay in sync.
+Scrolling list layout. Deep navy background, CGA-palette colors, monospace font. Looks like early cable TV guide channels.
 
 ```json
 {
   "station_conf": {
     "network_name": "Guide",
-    "network_type": "guide",
+    "network_long_name": "Guide Channel",
     "channel_number": 3,
-    "content_dir": "catalog/indie42_catalog/commercial/December",
-    "messages": ["FieldStation42\nCable Entertainment", "Cheers!\nFrom us to you!", "FieldStation42 Guide\nOn cable mode."],
-    "images": ["runtime/guide/image0.png", "runtime/guide/image1.png", "runtime/guide/image2.png"]
+    "network_type": "web",
+    "web_url": "http://localhost:4242/static/customguide/customguide.html?theme=80s&slots=3"
   }
 }
 ```
 
-Make sure all image paths exist, or the guide may fail to start.
+### Custom Guide Channel: 90s Theme
+
+Split-screen layout. Video panel on the left, rotating messages on the right, horizontal schedule grid below. Expects 4:3 video clips in `runtime/guide_videos/`.
+
+```json
+{
+  "station_conf": {
+    "network_name": "Guide",
+    "network_long_name": "Guide Channel",
+    "channel_number": 3,
+    "network_type": "web",
+    "web_url": "http://localhost:4242/static/customguide/customguide.html?theme=90s&slots=3"
+  }
+}
+```
+
+### Custom Guide Channel: 00s Theme
+
+Same split-screen layout as 90s but cleaner and more polished. Red rounded channel pills, pill-shaped time slot labels. Expects 16:9 video clips.
+
+```json
+{
+  "station_conf": {
+    "network_name": "Guide",
+    "network_long_name": "Guide Channel",
+    "channel_number": 3,
+    "network_type": "web",
+    "web_url": "http://localhost:4242/static/customguide/customguide.html?theme=00s&slots=3"
+  }
+}
+```
+
+Custom guide channels require the web channel dependencies. See [Recipe 7: Web Channel](#recipe-7-web-channel) for setup instructions.
 
 ---
 

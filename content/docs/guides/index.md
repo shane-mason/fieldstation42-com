@@ -11,6 +11,11 @@ These guides go beyond the basics. Once your station is up and running, this is 
     <div class="doc-index-desc">Ready-to-use configurations for every channel type. Grab one, paste it in, and have a working channel in minutes.</div>
   </a>
 
+  <a href="/docs/guides/guide-channels/" class="doc-index-item">
+    <div class="doc-index-title">Guide Channels</div>
+    <div class="doc-index-desc">Set up a TV schedule guide channel using the classic built-in guide or the web-based custom guide with decade-themed visuals.</div>
+  </a>
+
   <a href="/docs/guides/bumps-and-commercials/" class="doc-index-item">
     <div class="doc-index-title">Bumps and Commercials</div>
     <div class="doc-index-desc">Give your station its identity. Add the short clips between shows that make it feel like a real broadcast, not just a playlist.</div>
