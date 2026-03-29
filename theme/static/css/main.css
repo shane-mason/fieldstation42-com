@@ -837,6 +837,27 @@ a:hover { color: var(--orange); }
     text-underline-offset: 2px;
 }
 
+.docs-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+    font-size: 0.95rem;
+}
+
+.docs-content th,
+.docs-content td {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(167, 139, 250, 0.15);
+    text-align: left;
+    vertical-align: top;
+}
+
+.docs-content th {
+    background: rgba(167, 139, 250, 0.08);
+    font-weight: 600;
+    color: var(--cream);
+}
+
 .docs-content .doc-index-item {
     text-decoration: none;
 }
