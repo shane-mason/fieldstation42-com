@@ -18,7 +18,7 @@ The classic guide is the simplest option. Set `network_type` to `"guide"` and po
 cp confs/examples/guide.json confs/
 ```
 
-Key settings:
+### Basic Configuration
 
 ```json
 {
@@ -36,6 +36,37 @@ Key settings:
 ```
 
 `sound_to_play` accepts a single file, a directory (shuffles and loops), or a list of files. The upper section of the guide rotates between images on the left and messages on the right. If you use both, match the count so they stay in sync.
+
+### Messages and Images
+
+Images appear in the upper left; messages appear in the upper right. Both rotate at `message_rotation_rate` seconds. To keep them in sync, use the same number of images and messages.
+
+Messages support newlines (`\n`) for two-line display:
+
+```json
+{
+  "station_conf": {
+    "network_name": "Guide",
+    "network_type": "guide",
+    "channel_number": 3,
+    "content_dir": "catalog/guide_content/",
+    "messages": [
+      "FieldStation42\nCable Entertainment",
+      "Cheers!\nFrom us to you!",
+      "FieldStation42 Guide\nOn cable mode."
+    ],
+    "images": [
+      "runtime/guide/image0.png",
+      "runtime/guide/image1.png",
+      "runtime/guide/image2.png"
+    ]
+  }
+}
+```
+
+Make sure all image paths exist before starting. A missing file will prevent the guide from launching.
+
+For a full list of layout, font, color, and sizing options, see the [Classic Guide Appearance Reference](#classic-guide-appearance-reference) at the bottom of this page.
 
 ## Custom Guide Channel
 
@@ -287,3 +318,42 @@ This is the most important variable. It controls which DOM layout the JS builds 
 | `--program-current-bg` | background of the currently-airing block |
 | `--program-current-border` | border color of the currently-airing block |
 | `--program-current-color` | text color of the currently-airing block |
+
+## Classic Guide Appearance Reference
+
+All of these can be overridden directly in your station config alongside `network_type` and the other standard fields.
+
+| Property | Default | Description |
+|----------|---------|-------------|
+| `fullscreen` | `false` | `true` ignores `width`/`height` and fills the screen |
+| `width` | `720` | Window width in pixels |
+| `height` | `480` | Window height in pixels |
+| `window_decorations` | `false` | `true` shows a normal window frame (useful for debugging) |
+| `top_bg` | `"blue3"` | Background color of the upper panel |
+| `bottom_bg` | `"blue4"` | Background color of the schedule grid |
+| `pad` | `10` | Padding around content in pixels |
+| `messages` | `[...]` | List of messages to rotate in the upper right |
+| `message_rotation_rate` | `10` | Seconds between message/image rotations |
+| `message_fg` | `"white"` | Message text color |
+| `message_font_family` | `"Arial"` | Message font |
+| `message_font_size` | `25` | Message font size |
+| `images` | `[]` | List of image paths to rotate in the upper left |
+| `network_font_family` | `"Arial"` | Channel name font |
+| `network_font_size` | `12` | Channel name font size |
+| `network_width_divisor` | `6` | Controls the width of the channel name column |
+| `schedule_font_family` | `"Arial"` | Schedule text font |
+| `schedule_font_size` | `12` | Schedule text font size |
+| `schedule_highlight_fg` | `"yellow"` | Color for the currently-airing show |
+| `schedule_fg` | `"white"` | Schedule text color |
+| `schedule_border_width` | `4` | Border width on schedule cells |
+| `schedule_border_relief` | `"raised"` | Tkinter relief style for schedule cells |
+| `footer_messages` | `[...]` | Messages that scroll along the bottom ticker |
+| `footer_height` | `50` | Height of the footer bar in pixels |
+| `schedule_row_count` | `3` | Number of channels visible at once |
+| `top_section_ratio` | `0.5` | Fraction of the window used by the upper panel |
+| `target_row_height` | `60` | Preferred height for each channel row |
+| `min_row_height` | `45` | Minimum row height |
+| `max_row_height` | `75` | Maximum row height |
+| `normalize_title` | `true` | Clean up show titles for display |
+
+Color values use Tkinter color names (e.g. `"blue3"`, `"white"`, `"yellow"`) or hex strings (e.g. `"#1a1a2e"`).
