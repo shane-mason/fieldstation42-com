@@ -55,6 +55,12 @@ Here are all the scheduling commands:
 
 You can run these commands anytime to extend your schedule further into the future.
 
+## Automating Schedule Generation
+
+Running `--add_week` manually works fine, but you can also configure FieldStation42 to extend schedules automatically in the background. The live schedule agent watches all your channels and regenerates them before they expire, so you never have to think about it.
+
+See [Live Schedule Agent](/docs/reference/main-config/#live-schedule-agent) in the Main Config reference for setup details.
+
 ## Using the Web Console
 
 If you'd rather not work in the terminal, the built-in web console handles all of this through a browser interface. Start the server:

@@ -39,6 +39,62 @@ The `confs/main_config.json` file is optional. If it doesn't exist, FieldStation
 | `db_path` | string | `"runtime/fs42_fluid.db"` | Path to the SQLite database |
 | `normalize_titles` | boolean | `false` | Enable automatic title normalization from filenames |
 | `title_patterns` | array | `[]` | Custom regex patterns for title parsing (see below) |
+| `schedule_agent` | object | none | Background agent for proactive schedule generation (see below) |
+
+## Live Schedule Agent
+
+The live schedule agent runs in the background and automatically extends channel schedules before they expire, preventing the `schedule_panic` fallback from ever needing to fire during normal operation.
+
+### Configuration
+
+Add a `schedule_agent` block to `main_config.json`:
+
+```json
+{
+    "schedule_agent": {
+        "trigger_add_at": "day",
+        "amount_to_add": "week"
+    }
+}
+```
+
+| Property | Options | Description |
+|----------|---------|-------------|
+| `trigger_add_at` | `"day"`, `"week"`, `"month"` | How close a channel's schedule can get to expiring before the agent extends it. `"day"` triggers when less than 24 hours remain; `"week"` when less than 7 days remain; `"month"` when less than 30 days remain. |
+| `amount_to_add` | `"day"`, `"week"`, `"month"` | How much schedule to generate when triggered. |
+
+### How It Works
+
+- The agent checks all channel schedules approximately once per hour during playback
+- If any channel's schedule ends within the `trigger_add_at` threshold, a background process is spawned to extend it by `amount_to_add`
+- Schedule generation runs in a separate process so playback is not interrupted
+- Once the build finishes, schedules are reloaded automatically on the next check
+- A shared lock prevents conflicts between the background agent and the `schedule_panic` fallback
+
+`schedule_panic` still fires if you tune to a channel with no schedule at all. The agent is proactive; `schedule_panic` is the last resort.
+
+### Behavior Without Configuration
+
+If `schedule_agent` is not present in your config, the agent does not activate and behavior is identical to before: `schedule_panic` handles everything on-demand.
+
+## Validation and Error Handling
+
+When FieldStation42 loads `main_config.json`:
+
+1. **Pattern validation**: Each regex pattern is compiled to check for syntax errors
+2. **Required fields**: Patterns must have both `pattern` and `group` fields
+3. **Logging**: Successfully loaded patterns are logged with their descriptions
+4. **Error recovery**: Invalid patterns are logged and skipped (they won't crash the system)
+
+Check your logs on startup to verify your patterns loaded correctly:
+
+```
+INFO: Loaded custom title pattern: Studio releases with year and episode
+INFO: Loaded custom title pattern: Remastered editions
+INFO: Loaded 2 custom title pattern(s)
+```
+
+
 
 ## Day Parts
 
@@ -192,28 +248,14 @@ Before adding patterns to your config:
     "prime": {"start_hour": 18, "end_hour": 23},
     "late": {"start_hour": 23, "end_hour": 2},
     "overnight": {"start_hour": 2, "end_hour": 6}
+  },
+  "schedule_agent": {
+    "trigger_add_at": "day",
+    "amount_to_add": "week"
   }
 }
 ```
-
-## Validation and Error Handling
-
-When FieldStation42 loads `main_config.json`:
-
-1. **Pattern validation**: Each regex pattern is compiled to check for syntax errors
-2. **Required fields**: Patterns must have both `pattern` and `group` fields
-3. **Logging**: Successfully loaded patterns are logged with their descriptions
-4. **Error recovery**: Invalid patterns are logged and skipped (they won't crash the system)
-
-Check your logs on startup to verify your patterns loaded correctly:
-
-```
-INFO: Loaded custom title pattern: Studio releases with year and episode
-INFO: Loaded custom title pattern: Remastered editions
-INFO: Loaded 2 custom title pattern(s)
-```
-
-## Best Practices
+### Best Practices
 
 1. **Start simple**: Add one pattern at a time and test it
 2. **Order matters**: Put more specific patterns first
@@ -221,3 +263,5 @@ INFO: Loaded 2 custom title pattern(s)
 4. **Use non-greedy**: `.+?` instead of `.+` to avoid over-matching
 5. **Document**: Always include a description for future reference
 6. **Test filenames**: Verify your patterns work with actual filenames from your library
+
+
