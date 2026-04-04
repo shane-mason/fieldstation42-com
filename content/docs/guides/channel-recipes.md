@@ -357,10 +357,11 @@ For testing, you can access the PPV interface at `http://localhost:4242/static/p
 
 ### Visual Themes (Variations)
 
-The PPV channel supports a `variation` URL parameter to switch between visual themes. Two themes are built in:
+The PPV channel supports a `variation` URL parameter to switch between visual themes. Three themes are built in:
 
 - `retro` - a classic CRT-era look
 - `modern` - a cleaner, contemporary style
+- `terminal` - black background with green text
 
 Add the parameter to your `web_url`:
 
