@@ -355,4 +355,26 @@ Without a TMDB key, you'll need NFO files for each movie to get posters and desc
 
 For testing, you can access the PPV interface at `http://localhost:4242/static/ppv/ppv.html?channel=42`.
 
+### Visual Themes (Variations)
+
+The PPV channel supports a `variation` URL parameter to switch between visual themes. Two themes are built in:
+
+- `retro` - a classic CRT-era look
+- `modern` - a cleaner, contemporary style
+
+Add the parameter to your `web_url`:
+
+```json
+"web_url": "http://<IP_ADDRESS_OR_HOST>:4242/static/ppv/ppv.html?variation=retro"
+```
+
+You can also create your own theme. Add a CSS file to the `ppv/themes/` directory and pass its name as the variation:
+
+```json
+"web_url": "http://<IP_ADDRESS_OR_HOST>:4242/static/ppv/ppv.html?variation=mytheme"
+```
+
+The `variation` value maps directly to the filename (without the `.css` extension) in `ppv/themes/`.
+
 See the [PPV README](https://github.com/shane-mason/FieldStation42/tree/main/fs42/fs42_server/static/ppv) for more details.
+
