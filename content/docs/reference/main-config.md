@@ -39,6 +39,7 @@ The `confs/main_config.json` file is optional. If it doesn't exist, FieldStation
 | `db_path` | string | `"runtime/fs42_fluid.db"` | Path to the SQLite database |
 | `normalize_titles` | boolean | `false` | Enable automatic title normalization from filenames |
 | `title_patterns` | array | `[]` | Custom regex patterns for title parsing (see below) |
+| `video_seek_timeout` | integer | `10` | How long in seconds to attempt seeking before giving up |
 | `schedule_agent` | object | none | Background agent for proactive schedule generation (see below) |
 
 ## Live Schedule Agent
