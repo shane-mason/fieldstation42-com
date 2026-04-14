@@ -46,6 +46,11 @@ Everything you need to know about how FieldStation42 works under the hood. Confi
     <div class="doc-index-desc">Turn one of your channels into a video-on-demand browser. Pick a movie from a poster wall, complete with metadata and TMDB art.</div>
   </a>
 
+  <a href="/docs/reference/video-overlays/" class="doc-index-item">
+    <div class="doc-index-title">Music Video NFO Overlays</div>
+    <div class="doc-index-desc">Now-playing overlays for music video channels. Display artist, title, album, and year from NFO sidecar files during playback.</div>
+  </a>
+
   <a href="/docs/reference/troubleshooting/" class="doc-index-item">
     <div class="doc-index-title">Troubleshooting</div>
     <div class="doc-index-desc">Something not working? Common problems and their solutions, gathered from real setup experiences.</div>

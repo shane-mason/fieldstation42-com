@@ -216,7 +216,6 @@ FieldStation42 includes a built-in diagnostics page that shows system informatio
     "web_url": "http://localhost:4242/static/diagnostics.html"
 }}
 ```
-
 You can preview what the channel will look like by visiting the `web_url` in your browser while the player is running.
 
 Note: If `refresh_interval` is zero or not set, the page will not refresh (which is most often what you want). If you want it to refresh, set the interval in seconds.
