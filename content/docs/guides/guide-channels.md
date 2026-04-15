@@ -244,6 +244,7 @@ This is the most important variable. It controls which DOM layout the JS builds 
 | `--channel-number-color` | channel number text |
 | `--channel-name-color` | channel name text |
 | `--show-title-color` | show title text |
+| `--current-show-title-color` | current show text color |
 | `--row-divider-color` | border between listing rows |
 
 ### Typography and spacing
@@ -252,6 +253,16 @@ This is the most important variable. It controls which DOM layout the JS builds 
 |----------|---------|
 | `--font-family` | font stack |
 | `--font-size` | base font size |
+| `--title-font` | title message font |
+| `--body-font` | body message font |
+| `--clock-font` | clock font |
+| `--time-font` | time slot font |
+| `--channel-number-font` | channel number font |
+| `--channel-name-font` | channel name font |
+| `--show-title-font` | show title font |
+| `--title-font-size` | title message text size |
+| `--body-font-size` | body message text size |
+| `--show-title-size` | show title text size |
 | `--h-padding` | horizontal inset (useful for CRT overscan) |
 | `--v-padding` | vertical inset |
 
