@@ -68,6 +68,74 @@ Videos without a matching NFO play normally with no overlay.
 
 The 10-second default is defined by `DEFAULT_SHOW_SECONDS` in `fs42/nfo_agent.py`.
 
+## Configuration
+
+All overlay appearance settings are controlled by an `overlay_conf` object in `main_config.json`. Every field is optional -- defaults are used for anything you omit.
+
+```json
+{
+  "overlay_conf": {
+    "overlay_type": "normal",
+    "overlay_effect": "outline",
+    "overlay_offset_px": 2,
+    "overlay_font_path": null,
+    "overlay_text_color": [255, 255, 255, 255],
+    "overlay_shadow_color": [0, 0, 0, 255],
+    "overlay_title_size": 30,
+    "overlay_body_size": 20,
+    "overlay_title_weight": "bold",
+    "overlay_body_weight": "normal",
+    "overlay_fade_duration_ms": 600
+  }
+}
+```
+
+### Display Type
+
+`overlay_type` controls how much information is shown:
+
+| Value | Fields Displayed |
+|-------|-----------------|
+| `"normal"` (default) | Artist, title, album, year |
+| `"minimal"` | Artist and title only |
+
+### Visual Effect
+
+`overlay_effect` controls the text rendering style:
+
+| Value | Description |
+|-------|-------------|
+| `"outline"` (default) | Text with a solid outline |
+| `"drop_shadow"` | Graduated shadow built from layered offset copies |
+
+`overlay_offset_px` sets the pixel distance for the outline or shadow (default: `2`).
+
+### Font
+
+`overlay_font_path` accepts an absolute path to a TrueType (`.ttf`) font file. If omitted or the file is not found, Arial is used as a fallback.
+
+### Colors
+
+Colors are RGBA arrays with values 0--255:
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `overlay_text_color` | `[255, 255, 255, 255]` | Main text color |
+| `overlay_shadow_color` | `[0, 0, 0, 255]` | Outline or shadow color |
+
+### Text Size and Weight
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `overlay_title_size` | `30` | Font size in pixels for the artist line |
+| `overlay_body_size` | `20` | Font size in pixels for title, album, and year |
+| `overlay_title_weight` | `"bold"` | `"bold"` or `"normal"` |
+| `overlay_body_weight` | `"normal"` | `"bold"` or `"normal"` |
+
+### Fade Animation
+
+`overlay_fade_duration_ms` sets the fade-in and fade-out duration in milliseconds when the overlay appears and disappears (default: `600`).
+
 ## Commercials and Channel Changes
 
 The overlay is cleared when:
