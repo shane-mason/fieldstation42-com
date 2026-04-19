@@ -169,3 +169,26 @@ You can preview what your autobumps look like while the player is running by vis
 ```
 http://localhost:4242/static/bump/bump.html?next_network=PublicDomainTV
 ```
+
+### Filling Entire Breaks with Autobumps
+
+By default, autobumps slot in at the start or end of breaks alongside regular bumps and commercials. With `fill_break`, autobumps can take over entire breaks instead -- showing a "next up" bumper with a countdown timer in the corner for the full break duration.
+
+```json
+"autobump": {
+  "title": "NBC TV",
+  "variation": "retro",
+  "strategy": "end",
+  "fill_break": 1.0
+}
+```
+
+`fill_break` is a probability from `0.0` to `1.0`:
+
+| Value | Behavior |
+|-------|----------|
+| `1.0` | Every break is filled with autobumps |
+| `0.5` | 50% of breaks use autobumps; the rest use regular bumps and commercials |
+| `0.0` (default) | Autobumps slot in normally, breaks are not filled |
+
+This works well for channels where you want a clean "next up" presentation rather than a mix of bumps and spots. See the [Autobump reference](/docs/reference/autobump/) for the full list of configuration options.
