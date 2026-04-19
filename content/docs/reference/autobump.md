@@ -95,6 +95,30 @@ bump.html?title=HBO&subtitle=Premium Entertainment&next_network=hbo
 
 Displays next 3 upcoming shows as: `"2:30 PM - Show Title"`
 
+## Filling Breaks with Autobumps
+
+By default, commercial breaks are filled with whatever bumps and commercials are in the rotation. The `fill_break` option lets autobumps take over entire breaks instead, showing a "next up" bumper with a countdown timer in the corner.
+
+Set `fill_break` in your autobump configuration:
+
+```json
+{
+    "title": "FIELDSTATION42",
+    "variation": "retro",
+    "fill_break": 1.0
+}
+```
+
+`fill_break` is a probability from `0.0` to `1.0`:
+
+| Value | Behavior |
+|-------|----------|
+| `1.0` | Every break is filled with autobumps |
+| `0.5` | 50% of breaks use autobumps; the rest use regular bumps and commercials |
+| `0.0` (default) | Autobumps are placed normally, breaks are not filled |
+
+When a break is filled, FS42 generates an autobump that runs for the full break duration. The bump displays the "next up" program information and a countdown timer in the corner so viewers know when the show resumes.
+
 ## Examples
 
 ### Basic Station ID
