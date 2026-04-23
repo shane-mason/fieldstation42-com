@@ -99,6 +99,8 @@ All custom guide configuration is passed as URL parameters:
 | `music` | none | Path to a music directory relative to the project root (e.g. `runtime/guide_music/`). |
 | `messages` | none | Path to a messages JSON file (e.g. `runtime/messages.json`). Used by grid-mode themes. |
 | `videos` | `true` | Set to `false` to hide the video panel in grid-mode themes. |
+| `loop` | off | `?loop=1` loops the operator video playlist continuously. |
+| `random_start` | off | `?random_start=1` starts the operator video playlist at a random position. |
 | `mock` | off | `?mock=1` generates fake schedule data for local testing without a server connection. |
 
 ## Decade Themes
@@ -265,6 +267,10 @@ This is the most important variable. It controls which DOM layout the JS builds 
 | `--show-title-size` | show title text size |
 | `--h-padding` | horizontal inset (useful for CRT overscan) |
 | `--v-padding` | vertical inset |
+| `--channel-text-padding` | padding inside channel name and number cells |
+| `--channel-padding-top` | top padding on channel row cells |
+| `--channel-padding-bottom` | bottom padding on channel row cells |
+| `--channel-names-wrap` | whether channel names wrap (`wrap`) or clip (`nowrap`) |
 
 ### Scrolling (list mode)
 
