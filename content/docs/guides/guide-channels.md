@@ -99,8 +99,8 @@ All custom guide configuration is passed as URL parameters:
 | `music` | none | Path to a music directory relative to the project root (e.g. `runtime/guide_music/`). |
 | `messages` | none | Path to a messages JSON file (e.g. `runtime/messages.json`). Used by grid-mode themes. |
 | `videos` | `true` | Set to `false` to hide the video panel in grid-mode themes. |
-| `loop` | off | `?loop=1` loops the operator video playlist continuously. |
-| `random_start` | off | `?random_start=1` starts the operator video playlist at a random position. |
+| `loop` | off | `?loop=1` loops the operator video playlist continuously. Grid-mode themes only (90s, 00s). |
+| `random_start` | off | `?random_start=1` starts the operator video playlist at a random position. Grid-mode themes only (90s, 00s). |
 | `mock` | off | `?mock=1` generates fake schedule data for local testing without a server connection. |
 
 ## Decade Themes
