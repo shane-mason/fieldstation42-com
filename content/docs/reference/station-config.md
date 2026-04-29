@@ -200,6 +200,7 @@ If no `fallback_tag` is specified and content is not found, the scheduler will g
 - `chunky_scramble` - Complex realistic scramble effect
 - `spicy` - Spicy scrambling effect
 - `special_sauce` - Authentic scrambled cable TV emulation (pairs with the matching audio effect)
+- `glitchtastic` - Glitchy digital look
 
 **Available `audio_scramble_fx` values:**
 - `special_sauce` - Audio companion to the `special_sauce` video effect

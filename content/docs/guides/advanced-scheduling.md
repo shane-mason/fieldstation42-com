@@ -130,6 +130,7 @@ Available video effects:
 - `chunky_scramble`
 - `spicy`
 - `special_sauce`
+- `glitchtastic`
 
 You can also scramble audio with `audio_scramble_fx`. The `special_sauce` audio effect pairs with the matching video effect to produce an authentic scrambled cable look and sound:
 
