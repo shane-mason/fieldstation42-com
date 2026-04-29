@@ -117,7 +117,19 @@ Add visual effects to specific content, great for simulating "premium" scrambled
 }
 ```
 
-Available video effects: `horizontal_line`, `diagonal_lines`, `static_overlay`, `pixel_block`, `color_inversion`, `severe_noise`, `wavy`, `random_block`, `chunky_scramble`, `spicy`, and `special_sauce`.
+Available video effects:
+
+- `horizontal_line`
+- `diagonal_lines`
+- `static_overlay`
+- `pixel_block`
+- `color_inversion`
+- `severe_noise`
+- `wavy`
+- `random_block`
+- `chunky_scramble`
+- `spicy`
+- `special_sauce`
 
 You can also scramble audio with `audio_scramble_fx`. The `special_sauce` audio effect pairs with the matching video effect to produce an authentic scrambled cable look and sound:
 
