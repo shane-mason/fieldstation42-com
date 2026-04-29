@@ -106,7 +106,7 @@ You can change the time block size for a specific hour:
 
 This gives the 3 PM hour 15-minute blocks instead of the station's default. Pick values that divide evenly into 60 (5, 10, 15, 20, 30, or 60). Odd values like 7 or 13 will cause problems.
 
-### Video Scramble Effects
+### Video and Audio Scramble Effects
 
 Add visual effects to specific content, great for simulating "premium" scrambled channels:
 
@@ -117,18 +117,31 @@ Add visual effects to specific content, great for simulating "premium" scrambled
 }
 ```
 
-Available effects: `horizontal_line`, `diagonal_lines`, `static_overlay`, `pixel_block`, `color_inversion`, `severe_noise`, `wavy`, `random_block`, `chunky_scramble`, and `spicy`.
+Available video effects: `horizontal_line`, `diagonal_lines`, `static_overlay`, `pixel_block`, `color_inversion`, `severe_noise`, `wavy`, `random_block`, `chunky_scramble`, `spicy`, and `special_sauce`.
 
-To disable scramble for a specific slot (even if it's set station-wide):
+You can also scramble audio with `audio_scramble_fx`. The `special_sauce` audio effect pairs with the matching video effect to produce an authentic scrambled cable look and sound:
+
+```json
+"21": {
+  "tags": "premium_content",
+  "video_scramble_fx": "special_sauce",
+  "audio_scramble_fx": "special_sauce"
+}
+```
+
+Video and audio effects can be set independently; you don't have to use them together.
+
+To disable either effect for a specific slot (even if it's set station-wide):
 
 ```json
 "9": {
   "tags": "free_preview",
-  "video_scramble_fx": false
+  "video_scramble_fx": false,
+  "audio_scramble_fx": false
 }
 ```
 
-See [STATION_CONFIG_README.md](https://github.com/shane-mason/FieldStation42/blob/main/docs/STATION_CONFIG_README.md#video-effects) for descriptions of each effect.
+New presets are defined in `fs42/station_player.py` as mpv filters and then referenced by name from a station config. See [STATION_CONFIG_README.md](https://github.com/shane-mason/FieldStation42/blob/main/docs/STATION_CONFIG_README.md#video-effects) for descriptions of each effect.
 
 ## Reusable Configuration Blocks (Slot Overrides)
 
@@ -392,6 +405,77 @@ Templates and slot overrides work together naturally:
 ```
 
 All weekdays get the same schedule, with consistent bump and commercial settings applied through overrides.
+
+## Date-Specific Schedule Overrides
+
+Sometimes you want a particular calendar date to look nothing like the regular weekday schedule. A Christmas Day movie marathon, a New Year's Eve countdown, an annual sports special. The `date_overrides` field lets you replace the normal schedule on specific dates without having to juggle templates or rewrite your weekday lineup.
+
+### Basic Usage
+
+`date_overrides` is an object where each key is a date written as `"Month Day"` and each value is either a `day_template` name or an inline hour-slot definition. Reuse an existing template:
+
+```json
+{
+  "day_templates": {
+    "christmas_day": {
+      "0": {"tags": "christmas_movie"},
+      "8": {"tags": "christmas_movie"},
+      "12": {"tags": "christmas_movie"},
+      "20": {"tags": "christmas_movie"}
+    }
+  },
+  "date_overrides": {
+    "December 25": "christmas_day"
+  }
+}
+```
+
+Or define the override inline without a template:
+
+```json
+"date_overrides": {
+  "December 25": {
+    "0": {"tags": "christmas_movie"},
+    "1": {"tags": "christmas_movie"},
+    "2": {"tags": "christmas_movie"},
+    "3": {"event": "signoff"}
+  }
+}
+```
+
+The structure of an inline override is identical to a normal weekday, so anything you can put in a weekday slot (tags, sequences, marathons, slot overrides) works here too.
+
+### Partial Overrides
+
+You don't have to redefine the whole day. Only the hours you specify get replaced. Every other hour keeps its normal weekday schedule:
+
+```json
+"date_overrides": {
+  "April 23": {
+    "20": {"tags": "wwf"},
+    "21": {"tags": "wcw"}
+  }
+}
+```
+
+On April 23, only 8 PM and 9 PM change. The morning, afternoon, and late-night hours play whatever the regular weekday schedule has scheduled.
+
+### How It Resolves
+
+When the scheduler is building a day, it checks `date_overrides` first. If today's date has an entry, the scheduler uses that override for any hour defined in it. Hours not defined in the override fall back to the normal weekday schedule. If no date matches, scheduling works exactly as it did before.
+
+In short: exact date matches win, and the weekday schedule is always the fallback.
+
+### When to Use It
+
+`date_overrides` shines for:
+
+- **Holiday programming.** Christmas Day, Thanksgiving, July 4th, New Year's Eve.
+- **One-off events.** A wrestling pay-per-view, the Super Bowl, a season finale block.
+- **Anniversary specials.** A channel's birthday, the anniversary of a beloved show.
+- **Surprise takeovers.** April Fools' Day stunts, themed marathons, fundraising blocks.
+
+For seasonal programming that spans a range of dates, look at `active_rules` with `date_range` instead. That swaps in a whole alternate config file for the duration of the range. Use `date_overrides` when you only need to change one specific day.
 
 ## Complete Example
 

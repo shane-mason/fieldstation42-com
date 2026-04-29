@@ -152,6 +152,8 @@ This would make the configuration active only during the holiday season from Dec
 
 **Note:** If the date range does not parse correctly, a warning will be logged and the configuration will still be loaded.
 
+**See also:** To override the schedule on a single calendar date without swapping the entire config, use [`date_overrides`](#date-specific-overrides).
+
 ### Fallback Content
 
 | Property | Type | Description |
@@ -178,11 +180,12 @@ If no `fallback_tag` is specified and content is not found, the scheduler will g
 | `height` | integer | Window height (pixels) (Guide only) |
 | `window_decorations` | boolean | Show window decorations (Guide only) |
 
-### Video Effects
+### Video and Audio Effects
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `video_scramble_fx` | string | Apply preset scrambling effect (see values below) |
+| `video_scramble_fx` | string | Apply preset video scrambling effect (see values below) |
+| `audio_scramble_fx` | string | Apply preset audio scrambling effect (see values below) |
 | `station_fx` | string | Custom FFMPEG video filter string (ignored if `video_scramble_fx` is set) |
 
 **Available `video_scramble_fx` values:**
@@ -196,6 +199,20 @@ If no `fallback_tag` is specified and content is not found, the scheduler will g
 - `random_block` - Random block replacement distortion
 - `chunky_scramble` - Complex realistic scramble effect
 - `spicy` - Spicy scrambling effect
+- `special_sauce` - Authentic scrambled cable TV emulation (pairs with the matching audio effect)
+
+**Available `audio_scramble_fx` values:**
+- `special_sauce` - Audio companion to the `special_sauce` video effect
+
+Both fields accept the same kind of value: a preset name applied as an mpv filter at playback time. They can be set independently or paired. New presets are defined in `fs42/station_player.py` and then referenced by name from a station config.
+
+Example pairing both effects on a scrambled premium channel:
+```json
+{
+  "video_scramble_fx": "special_sauce",
+  "audio_scramble_fx": "special_sauce"
+}
+```
 
 ### On-Screen Display (Logo) Properties
 
@@ -335,6 +352,58 @@ Create reusable schedules using `day_templates`:
 
 **Processing:** Template references are resolved during config preprocessing by `ConfigProcessor._process_templates()`.
 
+### Date-Specific Overrides
+
+Use `date_overrides` to replace the normal weekday schedule on specific calendar dates. This is useful for holiday marathons, one-off events, and full-day takeovers.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `date_overrides` | object | Map of `"Month Day"` strings to a `day_template` name or an inline hour-slot object |
+
+Each key is a date written as `"Month Day"` (full month name, capitalized, followed by the day of the month). Each value is either:
+
+- A string referencing a `day_templates` entry, or
+- An object using the same hour-slot structure as a normal weekday.
+
+Reference an existing template:
+```json
+"day_templates": {
+  "christmas_day": {
+    "0": {"tags": "christmas_movie"},
+    "1": {"tags": "christmas_movie"}
+  }
+},
+"date_overrides": {
+  "December 25": "christmas_day"
+}
+```
+
+Define the override inline:
+```json
+"date_overrides": {
+  "December 25": {
+    "0": {"tags": "christmas_movie"},
+    "1": {"tags": "christmas_movie"},
+    "2": {"tags": "christmas_movie"},
+    "3": {"event": "signoff"}
+  }
+}
+```
+
+Partial overrides are supported. Hours not specified in the override fall back to the normal weekday schedule for that hour:
+```json
+"date_overrides": {
+  "April 23": {
+    "20": {"tags": "wwf"},
+    "21": {"tags": "wcw"}
+  }
+}
+```
+
+On April 23, only 8 PM and 9 PM are overridden; every other hour uses the regular weekday schedule.
+
+**Resolution order:** When building a schedule, the system first checks `date_overrides` for the current date. If a match exists and the current hour is defined in it, that slot is used. If the hour is not defined in the override, the normal weekday schedule is used as a fallback. If no date matches, the weekday schedule is used as before.
+
 ## Time Slot Configuration
 
 Each hour slot is an object that can contain:
@@ -364,6 +433,7 @@ Tags can be:
 | `bump_dir` | string | Override bump directory for this slot |
 | `commercial_dir` | string | Override commercial directory for this slot |
 | `video_scramble_fx` | string or boolean | Apply video scrambling effect (see available effects above) or `false` to disable |
+| `audio_scramble_fx` | string or boolean | Apply audio scrambling effect (see available effects above) or `false` to disable |
 
 ### Scheduling Overrides
 
@@ -450,6 +520,7 @@ Define named override sets for reuse across multiple time slots:
 - `schedule_increment`
 - `random_tags`
 - `video_scramble_fx`
+- `audio_scramble_fx`
 - `marathon`
 
 ### Tag Overrides
@@ -505,6 +576,7 @@ Same as slot overrides:
 - `schedule_increment`
 - `random_tags`
 - `video_scramble_fx`
+- `audio_scramble_fx`
 - `marathon`
 
 ### Random Tag Selection
