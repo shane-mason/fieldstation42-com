@@ -56,6 +56,51 @@ catalog/retro_tv/
 
 If `pre/` exists, the first clip in every break comes from there. If `post/` exists, the last clip does. If either folder is missing, regular bumps are used instead.
 
+### Context-Aware Bumps (Coming Up Next)
+
+Some bumps reference upcoming shows ("Coming up next, The X-Files") or both the current and upcoming shows ("You're watching Cheers, next is Seinfeld"). Dropping these into the regular bump folder means they play whether or not the schedule actually matches, which kills the illusion. The `next/` folder gives the scheduler enough information to play these bumps only when their context matches.
+
+**How it works:**
+
+1. Create a folder called `next/` inside your network's content directory, alongside the regular `bump/` folder (e.g. `catalog/my_network/next/`).
+2. Inside `next/`, create subfolders whose names encode which show(s) they reference, using a naming convention based on the `--` prefix.
+3. The scheduler checks the current show and the next three upcoming shows. When it finds a `next/` subfolder whose name matches the upcoming context, those bumps are added to the bump pool for that break.
+
+**Folder naming convention:**
+
+`--` followed by a tag name means "coming up next." A tag name without `--` at the start means it's the current show. Folder names must match the **tag name** as defined in your station config, not the show's display name.
+
+| Folder Name | Meaning |
+|-------------|---------|
+| `--showB` | Next show is Show B |
+| `--showB--showC` | Next is Show B, then Show C |
+| `--showB--showC--showD` | Next is Show B, then Show C, then Show D |
+| `showA--showB` | Currently watching Show A, next is Show B |
+| `showA--showB--showC` | Watching Show A, next is Show B, then Show C |
+| `showA--showB--showC--showD` | Watching Show A, next is Show B, then C, then D |
+
+**Example:**
+
+A bump that says "Coming up next, The X-Files" goes in `catalog/my_network/next/--xfiles/`. When The X-Files is genuinely up next, that bump joins the regular bump pool for that break. Otherwise it stays out.
+
+```
+catalog/my_network/
+├── bump/
+├── next/
+│   ├── --xfiles/
+│   │   └── coming_up_xfiles.mp4
+│   ├── cheers--seinfeld/
+│   │   └── youre_watching_cheers_next_seinfeld.mp4
+│   └── --xfiles--twin_peaks--cheers/
+│       └── tonight_lineup.mp4
+```
+
+**Important behaviors:**
+
+- Matched bumps **compete randomly** with normal bumps; they aren't guaranteed to play. With a large normal bump pool and a single matching `next/` bump, you may not see it fire often. Add more files to the `next/` subfolder or shrink the regular bump pool to improve the odds.
+- The `pre/` and `post/` subfolders work inside any `next/` subfolder too, as do the day-part hints described in [Scheduling Hints](/docs/guides/scheduling-hints/).
+- After creating or changing `next/` folders, rebuild the catalog with `--rebuild_catalog` before the changes are picked up.
+
 ## Custom Bumps for Specific Shows
 
 You can give individual time slots their own bumps using `start_bump` and `end_bump`. This is great for branded programming blocks:
