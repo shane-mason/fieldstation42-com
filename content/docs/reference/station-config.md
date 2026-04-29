@@ -258,6 +258,21 @@ Explicit shuffle playlist (plays files in random order, looping indefinitely):
 }
 ```
 
+### Loop Network Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `shuffle_loop` | boolean | When `true`, every video in `content_dir` plays once before the list is shuffled and replayed. Defaults to `false` (alphabetical order, looping). |
+
+Example:
+```json
+{
+  "network_type": "loop",
+  "content_dir": "catalog/loop",
+  "shuffle_loop": true
+}
+```
+
 ### Streaming Network Properties
 
 | Property | Type | Description |

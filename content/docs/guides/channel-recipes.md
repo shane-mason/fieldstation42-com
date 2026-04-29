@@ -86,12 +86,19 @@ Plays everything in a folder in order, looping forever. Great for bulletin board
     "network_name": "MyLoop",
     "network_type": "loop",
     "channel_number": 2,
-    "content_dir": "catalog/loop"
+    "content_dir": "catalog/loop",
+    "shuffle_loop": false
   }
 }
 ```
 
 Files in `content_dir` play in alphabetical order. When it reaches the end, it starts over. Loop channels ignore all break, commercial, and schedule settings.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `shuffle_loop` | boolean | When `true`, every video plays once before the list is shuffled and replayed. Defaults to `false` (alphabetical order). |
+
+Set `shuffle_loop` to `true` when you want variety on each pass. Every file still plays exactly once per cycle, but the order is randomized between cycles.
 
 There's an example config you can copy as a starting point:
 
