@@ -335,12 +335,14 @@ Create a config file like `confs/ppv_movies.json`:
     "channel_number": 42,
     "network_type": "web",
     "content_dir": "catalog/ppv",
-    "web_url": "http://<IP_ADDRESS_OR_HOST>:4242/static/ppv/ppv.html"
+    "web_url": "http://<IP_ADDRESS_OR_HOST>:4242/static/ppv/ppv.html&channel=42"
   }
 }
 ```
 
 Drop your movie files directly into `catalog/ppv/` (or whatever `content_dir` you set). Supported formats: `.mp4`, `.avi`, `.mkv`, `.mov`, `.wmv`, `.flv`, `.webm`, `.m4v`.
+
+Note: Update `channel=42` to match `channel_number` since the web channel javascript components needs that passed in.
 
 ### Movie Metadata
 
