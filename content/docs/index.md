@@ -6,7 +6,9 @@ Welcome to FieldStation42! This project turns your video collection into a simul
 
 The setup is straightforward: five steps from start to finish. Each one builds on the last, and you can take breaks between them.
 
-**New to Linux or Raspberry Pi?** A community member has written [FieldStation42 For Dummies](https://docs.google.com/document/d/1SuhWGHZ0qCLkS23DFLHndt3QxuvK2_LqV-8r33BBL5s/edit?tab=t.0) -- a beginner-friendly walkthrough that starts from the very beginning and holds your hand through the whole process.
+<div class="callout callout-tip">
+<strong>New to Linux or Raspberry Pi?</strong> A community member has written <a href="https://docs.google.com/document/d/1SuhWGHZ0qCLkS23DFLHndt3QxuvK2_LqV-8r33BBL5s/edit?tab=t.0">FieldStation42 For Dummies</a> -- a beginner-friendly walkthrough that starts from the very beginning and holds your hand through the whole process.
+</div>
 
 <div class="setup-steps">
   <a href="/docs/install/" class="setup-step">
