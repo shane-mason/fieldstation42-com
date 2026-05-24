@@ -15,6 +15,7 @@ The `confs/main_config.json` file is optional. If it doesn't exist, FieldStation
   "server_host": "0.0.0.0",
   "server_port": 4242,
   "normalize_titles": true,
+  "show_cable_box_time": true,
   "day_parts": {
     "morning": {"start_hour": 6, "end_hour": 10},
     "daytime": {"start_hour": 10, "end_hour": 18},
@@ -37,6 +38,7 @@ The `confs/main_config.json` file is optional. If it doesn't exist, FieldStation
 | `date_time_format` | string | `"%Y-%m-%dT%H:%M:%S"` | Format for date/time values (strftime format) |
 | `start_channel` | integer | none | Channel number to tune to on startup (must match a station's `channel_number`). When set, overrides `recall_last_channel`. |
 | `start_mpv` | boolean | `true` | Whether to start mpv player automatically |
+| `show_cable_box_time` | boolean | `true` | Show the current time in the cable box OSD display |
 | `db_path` | string | `"runtime/fs42_fluid.db"` | Path to the SQLite database |
 | `normalize_titles` | boolean | `false` | Enable automatic title normalization from filenames |
 | `title_patterns` | array | `[]` | Custom regex patterns for title parsing (see below) |
