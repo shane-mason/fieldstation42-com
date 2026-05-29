@@ -2,7 +2,7 @@ Title: Install FieldStation42
 Slug: docs/install
 Summary: Get FieldStation42 running on your system in about ten minutes.
 
-You'll need a Linux computer (including Raspberry Pi) with an internet connection. If you're using Windows, FieldStation42 works great under [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
+You'll need a Linux computer (including Raspberry Pi) with an internet connection. If you're using Windows, FieldStation42 can be used under [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) for experimenting, though video performance is limited.
 
 <div class="callout callout-tip">
 <strong>New to Linux?</strong> Check out <a href="https://docs.google.com/document/d/1SuhWGHZ0qCLkS23DFLHndt3QxuvK2_LqV-8r33BBL5s/edit?tab=t.0">FieldStation42 For Dummies</a>, a community-written guide that walks through everything from scratch.
