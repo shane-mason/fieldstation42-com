@@ -2,7 +2,7 @@ Title: Adult Swim Style Blocks
 Slug: docs/guides/adult-swim-blocks
 Summary: Build a channel that runs daytime cartoons and shifts to a distinct late-night identity at 9 PM, with its own bumps, tighter timing, and a signon and signoff.
 
-The Adult Swim model is a classic TV pattern: a children's network by day that hands off to something completely different after dark. Different tone, different bumps, tighter timing, and a clear on/off moment that marks the transition.
+The Adult Swim model is a classic TV pattern: a children's network by day that changes into something completely different after dark. Different tone, different bumps, tighter timing, and a clear on/off moment that marks the transition.
 
 This guide walks through how to build that in FieldStation42, using Toon TV as the example. The same approach works for any channel that needs to shift identity at a specific time of night.
 
