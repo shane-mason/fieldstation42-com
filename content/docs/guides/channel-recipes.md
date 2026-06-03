@@ -335,7 +335,7 @@ Create a config file like `confs/ppv_movies.json`:
     "channel_number": 42,
     "network_type": "web",
     "content_dir": "catalog/ppv",
-    "web_url": "http://<IP_ADDRESS_OR_HOST>:4242/static/ppv/ppv.html&channel=42"
+    "web_url": "http://<IP_ADDRESS_OR_HOST>:4242/static/ppv/ppv.html?channel=42"
   }
 }
 ```
