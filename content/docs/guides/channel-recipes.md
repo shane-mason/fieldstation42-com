@@ -361,7 +361,7 @@ Add it to `confs/main_config.json`:
   "tmdb_api_key": "your_api_key_here"
 }
 ```
-[See main_config.json reference]()
+[See main_config.json reference](/docs/reference/main-config/)
 
 Without a TMDB key, you'll need NFO files for each movie to get posters and descriptions.
 
