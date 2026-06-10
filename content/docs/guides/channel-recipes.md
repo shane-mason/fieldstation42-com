@@ -342,7 +342,7 @@ Create a config file like `confs/ppv_movies.json`:
 
 Drop your movie files directly into `catalog/ppv/` (or whatever `content_dir` you set). Supported formats: `.mp4`, `.avi`, `.mkv`, `.mov`, `.wmv`, `.flv`, `.webm`, `.m4v`.
 
-Note: Update `channel=42` to match `channel_number` since the web channel javascript components needs that passed in.
+Note: Update `channel=42` to match `channel_number` woulsince the web channel javascript components needs that passed in.
 
 ### Movie Metadata
 

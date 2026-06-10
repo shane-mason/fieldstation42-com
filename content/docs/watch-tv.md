@@ -37,7 +37,7 @@ The player watches that file for commands. You can also use `"command": "up"` or
 
 FieldStation42 includes a built-in web remote you can use from your phone or any browser. See the [Web Remote guide](/docs/reference/web-remote/) for setup.
 
-For deeper integration with scripts and external apps, check out the [Web Console and API](/docs/reference/web-console/).
+For deeper integration with scripts and external apps, check out the [Server API](/docs/reference/web-console/).
 
 ## What's Next
 
