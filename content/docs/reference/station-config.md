@@ -476,6 +476,7 @@ Trigger probabilistic multi-episode marathons:
 Marathon object contains:
 - `chance`: Probability (0.0 to 1.0) of marathon occurring
 - `count`: Number of episodes to play consecutively
+- `hint` (optional): Restricts the marathon to a specific time period -- accepts a month name, quarter (`Q1`-`Q4`), date range, or day of week. See [Scheduling Hints](/docs/guides/scheduling-hints/) for the full format.
 
 Example:
 ```json
@@ -489,6 +490,19 @@ Example:
 ```
 
 This has a 50% chance of playing 6 consecutive episodes.
+
+To restrict a marathon to a specific season or day:
+
+```json
+{
+  "tags": "horror",
+  "marathon": {
+    "chance": 1,
+    "count": 6,
+    "hint": "October 15 - October 31"
+  }
+}
+```
 
 **Processing:** Marathons are detected and executed by `MarathonAgent` during schedule building.
 

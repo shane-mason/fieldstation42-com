@@ -66,6 +66,34 @@ About 1 in 7 Saturdays, a 6-hour X-Files marathon plays from noon to 6 PM with e
 
 Set `"chance": 1.0` to make a marathon always happen. This is useful for holiday programming or special event days.
 
+### Seasonal Marathons
+
+Use the `hint` field to restrict a marathon to a specific time of year or day of week. The hint accepts the same values as [scheduling hints](/docs/guides/scheduling-hints/):
+
+```json
+"saturday": {
+  "12": {
+    "tags": "horror",
+    "marathon": {
+      "chance": 1,
+      "count": 6,
+      "hint": "October 15 - October 31"
+    }
+  }
+}
+```
+
+This marathon only triggers during October. Outside that window it behaves like a normal slot.
+
+You can use any of the hint formats:
+
+- **Month name:** `"hint": "October"` -- restricts to that calendar month
+- **Quarter:** `"hint": "Q4"` -- restricts to Q1/Q2/Q3/Q4
+- **Date range:** `"hint": "October 15 - October 31"` -- restricts to an explicit range, including across year boundaries
+- **Day of week:** `"hint": "friday"` -- restricts to a specific day (use lowercase)
+
+See [Scheduling Hints](/docs/guides/scheduling-hints/) for the full details on each format.
+
 ### Planning Around Marathons
 
 Marathons override whatever is scheduled in the following hours. If you have a marathon with `"count": 6` starting at hour 8, it replaces hours 8 through 13. Hour 14 and beyond are unaffected.
