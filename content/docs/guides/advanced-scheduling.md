@@ -528,9 +528,11 @@ That override is active from December 24 through January 2 of the following year
 
 ### How It Resolves
 
-When the scheduler is building a day, it checks `date_overrides` first. If today's date has an entry, the scheduler uses that override for any hour defined in it. Hours not defined in the override fall back to the normal weekday schedule. If no date matches, scheduling works exactly as it did before.
+When the scheduler is building a day, it checks `date_overrides` first. If today's date matches an entry -- either exactly or because it falls within a range -- the scheduler uses that override for any hour defined in it. Hours not defined in the override fall back to the normal weekday schedule. If no date matches, scheduling works exactly as it did before.
 
-In short: exact date matches win, and the weekday schedule is always the fallback.
+In short: date matches win, and the weekday schedule is always the fallback.
+
+Dates are validated when the config is loaded. An impossible date like `"April 31"` raises a Configuration Error immediately rather than silently never matching during scheduling.
 
 ### When to Use It
 
