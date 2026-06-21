@@ -543,7 +543,7 @@ Dates are validated when the config is loaded. An impossible date like `"April 3
 - **Anniversary specials.** A channel's birthday, the anniversary of a beloved show.
 - **Surprise takeovers.** April Fools' Day stunts, themed marathons, fundraising blocks.
 
-For seasonal programming that spans a range of dates, look at `active_rules` with `date_range` instead. That swaps in a whole alternate config file for the duration of the range. Use `date_overrides` when you only need to change one specific day.
+For seasonal programming that needs a completely different config for weeks or months, look at `active_rules` with `date_range` instead. That swaps in a whole alternate config file for the duration of the range. Use `date_overrides` when you want to adjust specific hours on one day or across a short span of dates without replacing your whole configuration.
 
 ## Complete Example
 
