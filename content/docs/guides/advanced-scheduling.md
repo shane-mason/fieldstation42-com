@@ -453,7 +453,7 @@ Sometimes you want a particular calendar date to look nothing like the regular w
 
 ### Basic Usage
 
-`date_overrides` is an object where each key is a date written as `"Month Day"` and each value is either a `day_template` name or an inline hour-slot definition. Reuse an existing template:
+`date_overrides` is an object where each key is either an exact date or a date range, and each value is either a `day_template` name or an inline hour-slot definition. Exact dates use `"Month Day"` format; date ranges use `"Month Day - Month Day"`. Reuse an existing template:
 
 ```json
 {
@@ -500,6 +500,31 @@ You don't have to redefine the whole day. Only the hours you specify get replace
 ```
 
 On April 23, only 8 PM and 9 PM change. The morning, afternoon, and late-night hours play whatever the regular weekday schedule has scheduled.
+
+### Date Ranges
+
+Instead of a single date, a key can span multiple days:
+
+```json
+"date_overrides": {
+  "April 23 - April 25": {
+    "20": {"tags": "wrestling"},
+    "21": {"tags": "wrestling"}
+  }
+}
+```
+
+This applies the same override to April 23, April 24, and April 25. The range is inclusive on both ends.
+
+Ranges wrap around the year boundary, so you can cover holiday runs without splitting them into two entries:
+
+```json
+"date_overrides": {
+  "December 24 - January 2": "holiday_marathon"
+}
+```
+
+That override is active from December 24 through January 2 of the following year.
 
 ### How It Resolves
 

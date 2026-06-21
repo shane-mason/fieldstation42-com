@@ -4,6 +4,8 @@ Summary: Use special subfolder names to control when content plays by month, qua
 
 FieldStation42 can automatically figure out when certain content should play based on the names of your subfolders. Name a folder `October` and the videos inside it only play during October. Name one `morning` and those clips only show up in the morning. No configuration changes needed.
 
+The same hint formats are also used in [marathon configuration](/docs/guides/advanced-scheduling/#seasonal-marathons) to restrict when a marathon can trigger.
+
 ## Monthly Content
 
 Name a subfolder after a month and its contents only play during that month:
