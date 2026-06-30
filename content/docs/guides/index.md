@@ -47,8 +47,8 @@ These guides go beyond the basics. Once your station is up and running, this is 
   </a>
 
   <a href="/docs/guides/scheduling-hints/" class="doc-index-item">
-    <div class="doc-index-title">Scheduling Hints</div>
-    <div class="doc-index-desc">Unlock time-aware programming. Play holiday movies in December, late-night content after dark, and weekday cartoons on Saturday morning.</div>
+    <div class="doc-index-title">Controlling When Content Plays</div>
+    <div class="doc-index-desc">Restrict content to specific dates, seasons, times of day, or days of the week using folder naming conventions or the meta_hints config block.</div>
   </a>
 
   <a href="/docs/guides/series-in-sequence/" class="doc-index-item">

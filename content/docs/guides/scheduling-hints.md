@@ -1,12 +1,18 @@
-Title: Scheduling Hints
+Title: Controlling When Content Plays
 Slug: docs/guides/scheduling-hints
-Summary: Use special subfolder names to control when content plays by month, quarter, date range, time of day, or day of week.
+Summary: Use folder naming or meta_hints configuration to restrict when specific content is eligible to play, by month, date range, time of day, or day of week.
 
-FieldStation42 can automatically figure out when certain content should play based on the names of your subfolders. Name a folder `October` and the videos inside it only play during October. Name one `morning` and those clips only show up in the morning. No configuration changes needed.
+FieldStation42 gives you two tools for controlling when content is eligible to play. The first is folder-based hints: names you give to subfolders that FieldStation42 reads at catalog-build time to determine availability windows. The second is `meta_hints`: a block in your station config that expresses the same rules as JSON, without touching your folder structure.
 
-The same hint formats are also used in [marathon configuration](/docs/guides/advanced-scheduling/#seasonal-marathons) to restrict when a marathon can trigger.
+Both work on the same principle. Content that is outside its availability window is simply not added to the eligible pool when the scheduler runs. No config changes are needed at schedule-build time; you set the rules once and they apply automatically.
 
-## Monthly Content
+---
+
+## Folder-Based Hints
+
+Folder hints are the simplest option. Name a subfolder with a month, quarter, date range, time of day, or day of the week, and FieldStation42 restricts that folder's contents to the matching window automatically.
+
+### Monthly
 
 Name a subfolder after a month and its contents only play during that month:
 
@@ -21,30 +27,30 @@ catalog/retro_tv/
         └── xmas_special2.mp4
 ```
 
-Use the full month name (January, February, March, etc.). Abbreviations won't work.
+Use the full month name (January, February, March, etc.). Abbreviations are not recognized.
 
-## Quarterly Content
+### Quarterly
 
 Use `Q1`, `Q2`, `Q3`, or `Q4` to restrict content to a three-month window:
 
 ```
 catalog/retro_tv/
-└── commercials/
+└── commercial/
     └── Q4/                     <- Only plays Oct through Dec
         ├── holiday_sale.mp4
         └── winter_promo.mp4
 ```
 
-The quarters break down like this:
+| Name | Months                   |
+|------|--------------------------|
+| Q1   | January through March    |
+| Q2   | April through June       |
+| Q3   | July through September   |
+| Q4   | October through December |
 
-- Q1 = January through March
-- Q2 = April through June
-- Q3 = July through September
-- Q4 = October through December
+### Date Range
 
-## Date Range Content
-
-For more specific timing, name a folder with a date range. This works even across year boundaries:
+For more specific windows, name a folder with a date range:
 
 ```
 catalog/retro_tv/
@@ -54,15 +60,13 @@ catalog/retro_tv/
         └── xmas_ep2.mp4
 ```
 
-Another example:
+Ranges wrap around the year boundary, so a winter season can be expressed as a single folder name:
 
 ```
 November 15 - April 10/         <- Plays Nov 15 through Apr 10
 ```
 
-This is perfect for holiday seasons, sweeps periods, or any time you want content to appear for a specific stretch.
-
-## Time-of-Day Content
+### Time of Day
 
 Name subfolders after parts of the day to control what plays when. This is especially useful for commercials and bumps:
 
@@ -82,27 +86,32 @@ catalog/retro_tv/
         └── insomnia_ad.mp4
 ```
 
-The default time ranges are:
+| Name        | Hours       |
+|-------------|-------------|
+| `morning`   | 6am to 10am |
+| `daytime`   | 10am to 5pm |
+| `prime`     | 5pm to 11pm |
+| `late`      | 11pm to 2am |
+| `overnight` | 2am to 6am  |
 
-| Name | Hours |
-|------|-------|
-| `morning` | 6am to 10am |
-| `daytime` | 10am to 5pm |
-| `prime` | 5pm to 11pm |
-| `late` | 11pm to 2am |
-| `overnight` | 2am to 6am |
+You can change these ranges in `confs/main_config.json`. The change applies across all channels. See [Main Config Reference](/docs/reference/main-config/) for details.
 
-You can change these times by editing `conf/main_config.json` (the change applies to all channels).
+### Day of Week
 
-## Day-of-Week Content
+Name a subfolder after a day of the week and its content only plays on that day. Use all lowercase: `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`.
 
-Name a subfolder after a day of the week and its content only plays on that day. For example, a folder named `friday` would only contribute videos on Fridays.
+### Combining Folder Hints
 
-Use all lowercase: `monday`, `tuesday`, `wednesday`, etc.
+Folder hints stack by nesting. A `commercial` folder might have a `morning` subfolder, and inside that a `December` subfolder:
 
-## Putting It All Together
+```
+commercial/
+└── morning/
+    └── December/
+        └── holiday_breakfast_ad.mp4
+```
 
-Here's how a channel might look when you combine several types of scheduling hints:
+That ad only plays during December mornings. Here is how a fully hinted channel might look:
 
 ```
 FieldStation42/
@@ -110,32 +119,191 @@ FieldStation42/
     └── family_channel/
         ├── cartoons/
         │   ├── regular_toons/
-        │   │   ├── cartoon1.mp4
-        │   │   └── cartoon2.mp4
         │   ├── October/              <- Halloween specials
-        │   │   └── halloween.mp4
         │   └── December/             <- Christmas specials
-        │       └── christmas.mp4
         ├── sitcoms/
         │   ├── family_friendly/
-        │   │   └── show1_ep1.mp4
-        │   └── November 15 - April 10/  <- Winter season
-        │       └── winter_episode.mp4
+        │   └── November 15 - April 10/  <- Winter season content
         ├── commercial/
         │   ├── morning/              <- 6am to 10am only
-        │   │   └── breakfast_ad.mp4
         │   ├── daytime/              <- 10am to 5pm only
-        │   │   └── general_ad.mp4
         │   └── prime/                <- 5pm to 11pm only
-        │       └── dinner_ad.mp4
         └── bump/
-            ├── pre/                  <- Start of breaks
-            │   └── brb.mp4
-            ├── post/                 <- End of breaks
-            │   └── welcome_back.mp4
-            └── general_promo.mp4
+            ├── pre/
+            └── post/
 ```
 
-The regular cartoons and sitcoms play all year. Halloween specials appear in October, Christmas specials in December, and winter episodes run from mid-November through early April. Meanwhile, the commercials rotate by time of day automatically.
+The regular and seasonal content coexist in the same tag folders. No schedule changes are needed; the scheduler filters automatically based on the current date and time.
 
-All of this happens just from the folder names. You don't need to touch your station config at all.
+---
+
+## Meta Hints
+
+`meta_hints` lets you express the same availability rules inside your station config instead of in folder names. It is useful when:
+
+- Your folders are already organized by show or type and you don't want to restructure them
+- You want all of a channel's rules visible in one place
+- You need to apply the same rule to multiple tags without creating matching folders for each
+
+`meta_hints` is a top-level array inside `station_conf`:
+
+```json
+{
+  "station_conf": {
+    "network_name": "Classic TV",
+    "channel_number": 4,
+    "content_dir": "catalog/classic",
+    "meta_hints": [
+      { "tags": "holiday/halloween", "date_range": "October 15 - November 1"}
+    ]
+  }
+}
+```
+
+Each entry has a `tags` field and one or more conditions. Content in those tags is only eligible during the matching window.
+
+### Date Range
+
+```json
+"meta_hints": [
+  { "tags": "holiday/halloween", "date_range": "October 15 - November 1"}
+]
+```
+
+The date range format is the same as for folder names. Ranges wrap around the year boundary:
+
+```json
+{ "tags": "holiday/winter", "date_range": "December 1 - January 10"}
+```
+
+### Time of Day
+
+```json
+"meta_hints": [
+  { "tags": "bumps/kids", "day_part": "morning"}
+]
+```
+
+Day part names match the ones defined in your main config: `morning`, `daytime`, `prime`, `late`, `overnight` by default.
+
+### Combining Conditions
+
+Specify both `date_range` and `day_part` in one entry to require both conditions simultaneously:
+
+```json
+"meta_hints": [
+  { "tags": "holiday/halloween", "date_range": "October 15 - November 1", "day_part": "late"}
+]
+```
+
+Halloween content is only eligible during late-night hours within the October window. Outside that date range, or outside late hours, the tag is ignored.
+
+### Multiple Entries
+
+Each entry in the array is evaluated independently. A tag that appears in multiple entries is eligible whenever any of its entries match:
+
+```json
+"meta_hints": [
+  { "tags": "bumps/kids", "day_part": "morning"},
+  { "tags": "bumps/kids", "day_part": "daytime"}
+]
+```
+
+Kids bumps are now available during both morning and daytime hours.
+
+### Tags as a List
+
+A single entry can apply to multiple tags at once by passing an array:
+
+```json
+"meta_hints": [
+  { "tags": ["holiday/halloween", "seasons/autumn"], "date_range": "October 15 - November 1"}
+]
+```
+
+Both folders enter the eligible pool under the same window. This is equivalent to two separate entries, one per tag.
+
+### The exclusive Flag
+
+By default, a matching entry adds its content to the eligible pool alongside anything else that would normally be available. Setting `"exclusive": true` changes that: when the conditions match, only the hinted content is eligible for that content type. Everything else is excluded for that window.
+
+```json
+"meta_hints": [
+  { "tags": "bumps/kids", "day_part": "morning", "exclusive": true}
+]
+```
+
+During morning hours, the scheduler pulls bumps exclusively from `bumps/kids`. The general bump pool is set aside until morning ends.
+
+`exclusive` is most useful for themed blocks. A December holiday bump set with `exclusive` ensures nothing from the general bump folder surfaces in December. A late-night block with `exclusive` ensures daytime-style commercials never leak in after hours.
+
+---
+
+## Choosing an Approach
+
+Both approaches restrict eligibility using the same underlying mechanism. The choice comes down to how your content is organized and where you prefer to keep configuration:
+
+|                          | Folder hints                                | `meta_hints`                       |
+|--------------------------|---------------------------------------------|------------------------------------|
+| Setup                    | Rename or organize folders                  | Edit station config                |
+| Best for                 | Content organized by season or time         | Content organized by show or type  |
+| Multiple tags            | Each folder gets its own name               | One entry can cover several tags   |
+| Rules visible in config  | No                                          | Yes                                |
+| Requires catalog rebuild | Yes, when folders change                    | Yes, when tags change              |
+
+The two approaches can be combined freely. A folder hint handles one set of seasonal content; `meta_hints` handles another. The scheduler applies both sets of rules at the same time.
+
+---
+
+## Complete Example
+
+A channel that uses folder hints for its commercial library and `meta_hints` for show content and bumps:
+
+```json
+{
+  "station_conf": {
+    "network_name": "Classic TV",
+    "channel_number": 4,
+    "content_dir": "catalog/classic",
+    "commercial_dir": "commercial",
+    "bump_dir": "bump",
+    "schedule_increment": 30,
+
+    "meta_hints": [
+      { "tags": "holiday/halloween",  "date_range": "October 15 - November 1"},
+      { "tags": "holiday/christmas",  "date_range": "December 1 - December 26"},
+      { "tags": "bumps/morning",      "day_part": "morning",   "exclusive": true},
+      { "tags": "bumps/primetime",    "day_part": "prime",     "exclusive": true},
+      { "tags": ["bumps/kids", "commercial/kids"], "day_part": "morning", "date_range": "September 1 - June 15"}
+    ],
+
+    "day_templates": {
+      "weekday": {
+        "7":  {"tags": "cartoons"},
+        "12": {"tags": "movies"},
+        "20": {"tags": "sitcoms"}
+      }
+    },
+
+    "monday":    "weekday",
+    "tuesday":   "weekday",
+    "wednesday": "weekday",
+    "thursday":  "weekday",
+    "friday":    "weekday",
+    "saturday":  "weekday",
+    "sunday":    "weekday"
+  }
+}
+```
+
+The `commercial/` folder uses folder-based time-of-day hints internally:
+
+```
+catalog/classic/
+└── commercial/
+    ├── morning/        <- folder hint: 6am to 10am
+    ├── prime/          <- folder hint: 5pm to 11pm
+    └── general/        <- no hint: available at all times
+```
+
+The `meta_hints` block then adds holiday show content during its respective windows, time-specific bumps with `exclusive` so the general bump pool does not bleed in, and school-year kids content during mornings from September through mid-June.
