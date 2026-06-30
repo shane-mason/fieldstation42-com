@@ -90,6 +90,21 @@ This is great for playing classic seasons during the day and recent seasons at p
 
 When a sequence reaches its end point, it loops back to its start point (not the beginning of the series).
 
+### Random Start Position
+
+Setting `sequence_start` to a negative number (such as `-1`) tells FieldStation42 to pick a random starting episode on the first run through the series. Once it reaches `sequence_end`, it loops back to episode one and continues normally from there.
+
+```json
+"20": {
+  "tags": "star_trek",
+  "sequence": "trek_nightly",
+  "sequence_start": -1,
+  "sequence_end": 1.0
+}
+```
+
+This is useful when you're setting up a sequence for a long-running series and don't want every viewer to start from the pilot. The first night drops into a random episode mid-run; after that the series cycles from the beginning as usual.
+
 ## Scanning and Rebuilding Sequences
 
 After you add or change sequences in your config, scan them:
