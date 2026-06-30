@@ -106,6 +106,95 @@ python3 station_42.py --rebuild_sequences
 
 If you get errors during scanning, try rebuilding your catalog first with `--rebuild_catalog`.
 
+## Random Show Rotation
+
+The `random_show` strategy sits between fully random play and a fixed sequence. Instead of picking a random episode each time a slot comes up, it picks a random **show**, plays that show's episodes in order until they run out, then picks a different show at random and starts again.
+
+To use it, add `"sequence_strategy": "random_show"` alongside a `sequence` name on any time slot:
+
+```json
+"20": {
+  "tags": "sitcoms",
+  "sequence": "evening_sitcoms",
+  "sequence_strategy": "random_show"
+}
+```
+
+### How the Folder Structure Works
+
+The `random_show` strategy looks at the immediate subdirectories under your tag folder and treats each one as a show. Season folders inside a show directory are detected automatically and their episodes are collected in order.
+
+```
+catalog/classic/
+└── sitcoms/
+    ├── Cheers/
+    │   ├── S01E01.mp4
+    │   └── S01E02.mp4
+    ├── Seinfeld/
+    │   ├── Season 1/
+    │   │   ├── S01E01.mp4
+    │   │   └── S01E02.mp4
+    │   └── Season 2/
+    │       └── S02E01.mp4
+    └── Friends/
+        ├── S01E01.mp4
+        └── S01E02.mp4
+```
+
+One show is chosen at random and played in episode order. When the last episode of that show airs, another show from the same folder is chosen at random and takes over.
+
+### Using random_show with Tag Arrays
+
+When you use a tag array to split an hour across multiple shows, each slot position needs its own independent tracking so they can be on different shows. Add a `sequence_id_array` with one name per tag to give each slot position a stable identity:
+
+```json
+"15": {
+  "tags": ["sitcoms", "sitcoms"],
+  "sequence": "the_block",
+  "sequence_id_array": ["block_a", "block_b"],
+  "sequence_strategy": "random_show",
+  "schedule_increment": 30
+}
+```
+
+Without `sequence_id_array`, both half-hours would share the same tracking and always be on the same show. With it, each slot position independently picks and advances through its own show.
+
+Tags in the array don't have to be identical. This two-hour block runs any sitcom in the first hour and restricts the second hour to 1990s shows only, while both hours belong to the same named sequence:
+
+```json
+"15": {
+  "tags": ["sitcoms", "sitcoms"],
+  "sequence": "the_block",
+  "sequence_id_array": ["block_a", "block_b"],
+  "sequence_strategy": "random_show",
+  "schedule_increment": 30
+},
+"16": {
+  "tags": ["sitcoms/1990s", "sitcoms/1990s"],
+  "sequence": "the_block",
+  "sequence_id_array": ["block_c", "block_d"],
+  "sequence_strategy": "random_show",
+  "schedule_increment": 30
+}
+```
+
+A resulting schedule might look like this:
+
+```
+15:00 - Friends (playing S01E03)
+15:30 - Perfect Strangers (playing S02E01)
+16:00 - Frasier (playing S01E07)
+16:30 - Seinfeld (playing S03E02)
+```
+
+When Friends finishes its run, the `block_a` slot picks a new show from `sitcoms/` and starts from episode one.
+
+### State and Rebuilding
+
+The active show selection for each slot is stored in the database and survives restarts. Rebuilding sequences with `--rebuild_sequences` resets these selections along with the episode positions.
+
+---
+
 ## Random Play (No Sequence)
 
 If you don't add a `sequence` to a time slot, episodes play randomly. This doesn't affect any existing sequences for that show:
