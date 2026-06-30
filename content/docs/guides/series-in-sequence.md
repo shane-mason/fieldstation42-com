@@ -103,7 +103,7 @@ Setting `sequence_start` to a negative number (such as `-1`) tells FieldStation4
 }
 ```
 
-This is useful when you're setting up a sequence for a long-running series and don't want every viewer to start from the pilot. The first night drops into a random episode mid-run; after that the series cycles from the beginning as usual.
+This is useful when you're setting up multiple new sequences and don't want them all to start from the pilot. The first night drops into a random episode mid-run; after that the series cycles from the beginning as usual.
 
 ## Scanning and Rebuilding Sequences
 
