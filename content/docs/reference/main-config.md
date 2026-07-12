@@ -37,6 +37,7 @@ The `confs/main_config.json` file is optional. If it doesn't exist, FieldStation
 | `time_format` | string | `"%H:%M"` | Format for displaying times (strftime format) |
 | `date_time_format` | string | `"%Y-%m-%dT%H:%M:%S"` | Format for date/time values (strftime format) |
 | `start_channel` | integer | none | Channel number to tune to on startup (must match a station's `channel_number`). When set, overrides `recall_last_channel`. |
+| `recall_last_channel` | boolean | `true` | Whether to start on the last channel that was playing. If `false`, the system starts on the lowest numbered channel instead. Ignored when `start_channel` is set. |
 | `start_mpv` | boolean | `true` | Whether to start mpv player automatically |
 | `show_cable_box_time` | boolean | `true` | Show the current time in the cable box OSD display |
 | `db_path` | string | `"runtime/fs42_fluid.db"` | Path to the SQLite database |
