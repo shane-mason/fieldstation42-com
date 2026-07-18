@@ -1,6 +1,6 @@
 Title: On-Screen Display (OSD) Setup
 Slug: docs/reference/osd-setup
-Summary: Configure the OSD overlay that shows channel number and name when changing channels, including logo selection, temporal hints, and tag-driven behavior.
+Summary: Configure the OSD overlay that shows channel number and name when changing channels, including logo selection, temporal hints, tag-driven behavior, and the on-screen volume meter.
 
 FieldStation42 includes an On-Screen Display (OSD) that shows the channel number and name when you change channels. It runs as a separate process alongside `field_player`.
 
@@ -267,3 +267,84 @@ catalog/ABC/logos/Friday/prime/TGIF.png
 catalog/NBC/logos/December/holiday_nbc_logo.png
 catalog/NBC/logos/December 1 - December 31/holiday_nbc_logo.png
 ```
+
+---
+
+## Volume Display
+
+The on-screen volume meter appears for a few seconds whenever the volume is changed (via the remote or the API `/player/volume/up` and `/player/volume/down` endpoints). It draws a simple outlined bar with a filled center proportional to the current volume.
+
+A volume meter is shown automatically even if you don't configure one. A default `VolumeDisplay` is added when none is present in `osd.json`, and it inherits its color from your first `StatusDisplay`. Add an explicit `VolumeDisplay` block only when you want to override the defaults (position, size, color, or timing).
+
+### Global Settings (`osd.json`)
+
+The `VolumeDisplay` object lives in the same array as the text and logo config:
+
+```json
+[
+  {
+    "type": "VolumeDisplay",
+    "halign": "CENTER",
+    "valign": "BOTTOM",
+    "width": 0.4,
+    "height": 0.04,
+    "x_margin": 0.1,
+    "y_margin": 0.25,
+    "color": [0, 255, 0, 200],
+    "display_time": 5.0,
+    "border_thickness": 2.0,
+    "padding": 0.008
+  }
+]
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `type` | string | **Required.** Must be `"VolumeDisplay"`. |
+| `halign` | string | Horizontal alignment: `"LEFT"`, `"RIGHT"`, or `"CENTER"`. Default `"CENTER"`. |
+| `valign` | string | Vertical alignment: `"TOP"`, `"BOTTOM"`, or `"CENTER"`. Default `"BOTTOM"`. |
+| `width` | float | Meter width as a fraction of half the screen width (e.g. `0.4` = 20% of screen). Default `0.4`. |
+| `height` | float | Meter height as a fraction of half the screen height. Default `0.04`. |
+| `x_margin` | float | Horizontal margin from the aligned edge, as a fraction of half the screen width. Ignored when `halign` is `"CENTER"`. Default `0.1`. |
+| `y_margin` | float | Vertical margin from the aligned edge, as a fraction of half the screen height. Ignored when `valign` is `"CENTER"`. Default `0.25`. |
+| `color` | array | RGBA color of the outline and fill as `[R, G, B, A]`, each value 0-255. Defaults to the color of the first `StatusDisplay`, or `[0, 255, 0, 200]` if there isn't one. |
+| `display_time` | float | Seconds the meter stays on screen after a volume change. Default `5.0`. |
+| `border_thickness` | float | Line width of the meter's outline, in pixels. Default `2.0`. |
+| `padding` | float | Gap in NDC units between the outline and the filled center. Default `0.008`. |
+
+### Positioning with `valign` and `y_margin`
+
+`y_margin` is the distance from the edge named by `valign`. With `valign: "BOTTOM"` a larger `y_margin` pushes the meter **up**; with `valign: "TOP"` a larger `y_margin` pushes it **down**. When `valign` is `"CENTER"`, `y_margin` is ignored and the meter is centered vertically.
+
+The examples below only change the vertical placement; all other fields keep their defaults.
+
+**Near the top of the screen:**
+
+```json
+{
+  "type": "VolumeDisplay",
+  "valign": "TOP",
+  "y_margin": 0.25
+}
+```
+
+**Middle of the screen:**
+
+```json
+{
+  "type": "VolumeDisplay",
+  "valign": "CENTER"
+}
+```
+
+**Default (near the bottom):**
+
+```json
+{
+  "type": "VolumeDisplay",
+  "valign": "BOTTOM",
+  "y_margin": 0.25
+}
+```
+
+> **Tip:** On a real CRT/TV, the outermost edges are lost to overscan. If the meter is clipped at the bottom, increase `y_margin` to lift it further into the title-safe area.
