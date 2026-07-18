@@ -173,7 +173,14 @@ WebM/VP9 works reliably in Qt WebEngine on Raspberry Pi and desktop Linux.
 
 ### Text Messages (90s and 00s themes)
 
-The text carousel in the info panel loads from a JSON file. Pass the file path via `?messages=`:
+The text carousel in the info panel loads from a JSON file. Pass the file path via `?messages=` URL parameter. 
+
+```
+http://localhost:4242/static/customguide/customguide.html?theme=90s&messages=runtime/guide_messages.json&loop=1
+```
+
+The URL above will cause the system to look for messages in `runtime/guide_messages.json`. Here is an example of what that
+file should look like:
 
 ```json
 {
