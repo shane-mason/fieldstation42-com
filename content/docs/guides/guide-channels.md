@@ -98,10 +98,27 @@ All custom guide configuration is passed as URL parameters:
 | `pause` | (from CSS) | Scroll pause duration in seconds. Overrides the theme's `--scroll-pause`. |
 | `music` | none | Path to a music directory relative to the project root (e.g. `runtime/guide_music/`). |
 | `messages` | none | Path to a messages JSON file (e.g. `runtime/messages.json`). Used by grid-mode themes. |
+| `use_meta` | on | `?use_meta=0` hides the program descriptions pulled from NFO metadata. Grid-mode themes only (90s, 00s). |
 | `videos` | `true` | Set to `false` to hide the video panel in grid-mode themes. |
 | `loop` | off | `?loop=1` loops the operator video playlist continuously. Grid-mode themes only (90s, 00s). |
 | `random_start` | off | `?random_start=1` starts the operator video playlist at a random position. Grid-mode themes only (90s, 00s). |
 | `mock` | off | `?mock=1` generates fake schedule data for local testing without a server connection. |
+
+## Program Descriptions
+
+The grid-mode themes (90s and 00s) show a program description underneath the title when the scheduled content has one. This is on by default, so any [NFO sidecar metadata](/docs/reference/nfo-metadata/) in your library shows up in the guide without further configuration.
+
+The description comes from the `plot` field, which means `<movie>`, `<episodedetails>`, and `<tvshow>` sidecars all produce one. Music video NFOs have no plot, so they show the title alone. Blocks without metadata, along with multi-content blocks like clip shows and loops, also fall back to just the title.
+
+To turn descriptions off and show titles only, pass `use_meta=0`:
+
+```
+http://localhost:4242/static/customguide/customguide.html?theme=90s&slots=3&use_meta=0
+```
+
+Only the literal value `0` disables it. Any other value, or omitting the parameter, leaves descriptions on.
+
+The 80s theme never requests metadata, so `use_meta` has no effect there.
 
 ## Decade Themes
 

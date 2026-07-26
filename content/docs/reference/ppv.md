@@ -50,11 +50,29 @@ For testing, you can access at `http://localhost:4242/static/ppv/ppv.html?channe
 
 ## Manual Metadata
 
-NFO files are just ascii text files - FS42 will parse them looking for the first 3 lines to be:
+PPV reads the same [NFO sidecar files](/docs/reference/nfo-metadata/) as the rest of FieldStation42, so Kodi-format XML and plain text both work. Whatever the format, PPV displays three things: a title, an info line, and a description.
 
-1. Title
-2. Info line (year, artist, etc)
-3. Description
+Which field lands in which slot depends on the NFO type:
+
+| NFO type | Title | Info line | Description |
+|----------|-------|-----------|-------------|
+| Movie (`<movie>`), and any other type | `title` | `year` | `plot` |
+| Music video (`<musicvideo>`) | `title` | `artist` | `album` |
+| Episode (`<episodedetails>`) | `title` | `show_title` | `plot` |
+| Plain text | line 1 | line 2 | line 3 |
+
+For a movie library, `<movie>` is the natural fit:
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<movie>
+  <title>The Big City</title>
+  <year>1958</year>
+  <plot>In this feature, they talk about the big city and what that means.</plot>
+</movie>
+```
+
+Plain ascii text still works if you want something quicker to type. Put the title, info line, and description on the first three lines.
 
 Example `The_Big_City.nfo`:
 
@@ -63,6 +81,8 @@ The Big City
 Unknown Artist
 In this feature, they talk about the big city and what that means.
 ```
+
+Unlike the rest of the system, PPV content is not cataloged, so PPV parses NFO files straight from disk each time it builds the listing. Edits show up on the next page load with no catalog build needed.
 
 Poster images: same base filename as video (`movie.mp4` -> `movie.jpg` or `.png`)
 
