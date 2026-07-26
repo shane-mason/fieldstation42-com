@@ -1,6 +1,6 @@
 Title: Advanced Scheduling Options
 Slug: docs/guides/advanced-scheduling
-Summary: Marathons, slot overrides, schedule timing, and advanced day templates.
+Summary: Marathons, slot overrides, schedule timing, advanced day templates, and date and week schedule overrides.
 
 This guide builds on the [Configure Stations](/docs/configure-stations/) step in the Getting Started section. If you haven't worked through that yet, start there first.
 
@@ -451,6 +451,8 @@ All weekdays get the same schedule, with consistent bump and commercial settings
 
 Sometimes you want a particular calendar date to look nothing like the regular weekday schedule. A Christmas Day movie marathon, a New Year's Eve countdown, an annual sports special. The `date_overrides` field lets you replace the normal schedule on specific dates without having to juggle templates or rewrite your weekday lineup.
 
+There are two calendar-based override fields, and they work as a pair. `date_overrides` applies **one day** of programming to every date it matches. [`week_overrides`](#week-schedule-overrides) applies **a whole week** of programming across a range of dates, keeping the weekdays distinct from one another. Start with `date_overrides` below, then read the week section to see how they layer.
+
 ### Basic Usage
 
 `date_overrides` is an object where each key is either an exact date or a date range, and each value is either a `day_template` name or an inline hour-slot definition. Exact dates use `"Month Day"` format; date ranges use `"Month Day - Month Day"`. Reuse an existing template:
@@ -526,11 +528,13 @@ Ranges wrap around the year boundary, so you can cover holiday runs without spli
 
 That override is active from December 24 through January 2 of the following year.
 
+Notice what a range does *not* do: it is weekday-blind. Every date it covers gets the identical hour schedule, so a Monday and a Saturday inside the range look exactly the same. That is precisely what you want for a holiday run, and rarely what you want for a season. When the weekdays need to stay different from one another, reach for `week_overrides`.
+
 ### How It Resolves
 
-When the scheduler is building a day, it checks `date_overrides` first. If today's date matches an entry -- either exactly or because it falls within a range -- the scheduler uses that override for any hour defined in it. Hours not defined in the override fall back to the normal weekday schedule. If no date matches, scheduling works exactly as it did before.
+When the scheduler is building a day, it checks `date_overrides` first. If today's date matches an entry, either exactly or because it falls within a range, the scheduler uses that override for any hour defined in it. Hours not defined in the override fall back to the normal weekday schedule. If no date matches, scheduling works exactly as it did before.
 
-In short: date matches win, and the weekday schedule is always the fallback.
+In short: date matches win, and the weekday schedule is always the fallback. The full picture, once week overrides are in play, is in [How Overrides Layer](#how-overrides-layer) below.
 
 Dates are validated when the config is loaded. An impossible date like `"April 31"` raises a Configuration Error immediately rather than silently never matching during scheduling.
 
@@ -544,6 +548,208 @@ Dates are validated when the config is loaded. An impossible date like `"April 3
 - **Surprise takeovers.** April Fools' Day stunts, themed marathons, fundraising blocks.
 
 For seasonal programming that needs a completely different config for weeks or months, look at `active_rules` with `date_range` instead. That swaps in a whole alternate config file for the duration of the range. Use `date_overrides` when you want to adjust specific hours on one day or across a short span of dates without replacing your whole configuration.
+
+## Week Schedule Overrides
+
+`week_overrides` swaps in a different **week** of programming for a range of dates, then goes back to normal automatically. Use it for anything seasonal: a summer schedule, sweeps week, a holiday fortnight, a themed marathon week.
+
+Where a `date_overrides` range flattens every date into the same lineup, a week override keeps the weekday structure intact, so Saturday can still look different from Tuesday inside the range.
+
+### Quick Example
+
+Summer programming from June 21 through September 1, with a different weekend:
+
+```json
+"week_overrides": {
+  "June 21 - September 1": {
+    "monday":    {"6": {"tags": "summer_morning"}, "20": {"tags": "summer_movie"}},
+    "tuesday":   {"6": {"tags": "summer_morning"}, "20": {"tags": "summer_movie"}},
+    "wednesday": {"6": {"tags": "summer_morning"}, "20": {"tags": "summer_movie"}},
+    "thursday":  {"6": {"tags": "summer_morning"}, "20": {"tags": "summer_movie"}},
+    "friday":    {"6": {"tags": "summer_morning"}, "20": {"tags": "summer_movie"}},
+    "saturday":  {"8": {"tags": "cartoons"},       "20": {"tags": "creature_feature"}},
+    "sunday":    {"8": {"tags": "cartoons"},       "20": {"tags": "summer_movie"}}
+  }
+}
+```
+
+For those ten weeks the station runs the summer schedule. On September 2 it returns to the normal weekly schedule with no further configuration.
+
+### Date Keys
+
+Keys are a single date or an inclusive date range, using full month names, exactly like `date_overrides`:
+
+```json
+"July 4"                      // single date
+"June 21 - September 1"       // range
+"December 24 - January 2"     // wraps the year boundary
+```
+
+The separator is a spaced hyphen (` - `). Years are never part of the key, so a range applies every year. Ranges that wrap from December into January are handled correctly.
+
+If two ranges overlap, **the first one listed in the config file wins**. Order your entries from most specific to least specific if you rely on this.
+
+### Week Schedules
+
+The value for a date key is an object keyed by lowercase day names. Each day is either an object of hour slots, or the name of a day template:
+
+```json
+"week_overrides": {
+  "November 20 - November 27": {
+    "thursday": {"12": {"tags": "parade"}, "16": {"tags": "football"}},
+    "friday":   "holiday_shopping"
+  }
+}
+```
+
+Valid day keys are `monday` through `sunday`, lowercase. Anything else, including a capitalized `Monday`, is a configuration error rather than being silently ignored.
+
+Hour keys are strings, `"0"` through `"23"`, exactly as in a normal day schedule. Slots accept all the usual properties (`tags`, `bump_dir`, `commercial_dir`, `sequence`, `marathon`, and so on).
+
+Any tags referenced inside a week override are picked up by the catalog scan, so their content gets indexed like anything else. Sequences declared in override slots are scanned too.
+
+### Partial Weeks and Fallthrough
+
+A week override is a patch over your normal schedule, not a replacement for it, and **precedence is evaluated per hour, not per day**. This matters more than it sounds. Given:
+
+```json
+"monday": {"6": {"tags": "morning"}, "20": {"tags": "primetime"}},
+"week_overrides": {
+  "July 1 - July 7": {
+    "monday": {"20": {"tags": "firefly"}}
+  }
+}
+```
+
+On Monday July 6, hour 20 is `firefly`, but hour 6 is still `morning`, inherited from the regular Monday schedule. Likewise, any day you leave out of the week schedule runs entirely normally: omit `sunday` and Sundays are untouched.
+
+If you want an hour to be **off air** during an override week, you cannot simply omit it, because the normal schedule will show through. Define the full day explicitly instead.
+
+### Using Day Templates
+
+Day templates work inside week overrides, which keeps repetitive weeks readable:
+
+```json
+"day_templates": {
+  "summer_weekday": {
+    "6":  {"tags": "summer_morning"},
+    "20": {"tags": "summer_movie"}
+  },
+  "summer_weekend": {
+    "8":  {"tags": "cartoons"},
+    "20": {"tags": "creature_feature"}
+  }
+},
+"week_overrides": {
+  "June 21 - September 1": {
+    "monday":    "summer_weekday",
+    "tuesday":   "summer_weekday",
+    "wednesday": "summer_weekday",
+    "thursday":  "summer_weekday",
+    "friday":    "summer_weekday",
+    "saturday":  "summer_weekend",
+    "sunday":    "summer_weekend"
+  }
+}
+```
+
+Templates referenced from a week override are copied, not shared, so they can be safely reused by your regular weekday schedule at the same time.
+
+### Slot Overrides in Week Overrides
+
+Slots inside a week override can reference a `slot_overrides` definition, same as a normal slot:
+
+```json
+"slot_overrides": {
+  "movie_night": {"break_strategy": "standard", "marathon": true}
+},
+"week_overrides": {
+  "October 25 - October 31": {
+    "friday": {"20": {"tags": "horror", "overrides": "movie_night"}}
+  }
+}
+```
+
+The overridable properties are the same set allowed anywhere else, listed in the [Station Configuration Reference](/docs/reference/station-config/#slot-overrides).
+
+### Continued Slots
+
+`continued` works inside a week override, inheriting tags from the previous slot in that same override week:
+
+```json
+"week_overrides": {
+  "July 1 - July 7": {
+    "monday": {
+      "20": {"tags": "long_movie"},
+      "21": {"continued": true}
+    }
+  }
+}
+```
+
+**Limitation:** a `continued` slot can only inherit from another slot *within the same week override*. It cannot inherit across the fallthrough boundary from your regular schedule. This fails:
+
+```json
+"monday": {"20": {"tags": "primetime"}},
+"week_overrides": {
+  "July 1 - July 7": {
+    "monday": {"21": {"continued": true}}
+  }
+}
+```
+
+Hour 21 has no preceding tagged slot inside the override, so it raises a configuration error at startup rather than silently producing a slot with no content. Define the tags explicitly, or include the preceding hour in the override.
+
+## How Overrides Layer
+
+Both override types coexist. When the scheduler resolves a given hour, it checks in this order:
+
+1. **`date_overrides`**, an exact-date entry matching today
+2. **`week_overrides`**, a week entry whose range contains today, at today's weekday
+3. The **regular weekday schedule**
+4. Off air, if none of the above define that hour
+
+Narrower beats broader. This is what makes the common case work: run a themed week, then punch a single day through it.
+
+```json
+"week_overrides": {
+  "July 1 - July 7": {
+    "monday":    {"20": {"tags": "firefly"}},
+    "tuesday":   {"20": {"tags": "firefly"}},
+    "wednesday": {"20": {"tags": "firefly"}},
+    "thursday":  {"20": {"tags": "firefly"}},
+    "friday":    {"20": {"tags": "firefly"}},
+    "saturday":  {"20": {"tags": "firefly"}},
+    "sunday":    {"20": {"tags": "firefly"}}
+  }
+},
+"date_overrides": {
+  "July 4": {"20": {"tags": "jaws"}}
+}
+```
+
+Firefly runs at 8 PM all week, except July 4th, which shows Jaws.
+
+### Choosing Between Them
+
+Both fields are keyed by a date or range, so the names are easy to confuse. The difference is the shape of the value, and therefore whether weekday matters.
+
+| | `date_overrides` | `week_overrides` |
+|---|---|---|
+| Key | date or range | date or range |
+| Value | one day of hour slots | seven days of hour slots |
+| Weekday-aware inside a range? | No | Yes |
+| Precedence | Highest | Middle |
+
+Rule of thumb: **a single special day goes in `date_overrides`. A stretch of time that should still feel like a normal week goes in `week_overrides`.**
+
+Strictly, `week_overrides` can express anything `date_overrides` can (set all seven days identically), but `date_overrides` is far less typing for the single-day case.
+
+### Validation
+
+Configuration problems in either field are reported at startup with the offending entry named. Impossible dates like `"April 31"`, misspelled or capitalized day keys, unknown template and slot override names, and `continued` slots with nothing to inherit from all fail immediately rather than at scheduling time. The full error table is in the [Station Configuration Reference](/docs/reference/station-config/#override-resolution-order).
+
+The JSON schema in `fs42/station_config_schema.json` covers `week_overrides` too, so schema validation catches most structural mistakes before the station starts.
 
 ## Complete Example
 
