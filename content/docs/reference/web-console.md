@@ -184,6 +184,8 @@ GET /about/themes
 
 Lists all available CSS themes for the web interface.
 
+To keep theme files outside the FieldStation42 directory, symlink them into the static themes directory and enable [`follow_static_symlinks`](/docs/reference/main-config/#following-static-symlinks) in your main config.
+
 ### Build Operations
 
 *Asynchronous operations that return task IDs for status tracking*

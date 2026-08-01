@@ -45,6 +45,7 @@ The `confs/main_config.json` file is optional. If it doesn't exist, FieldStation
 | `title_patterns` | array | `[]` | Custom regex patterns for title parsing (see below) |
 | `video_seek_timeout` | integer | `10` | How long in seconds to wait when seeking in streams and videos before giving up |
 | `schedule_agent` | object | none | Background agent for proactive schedule generation (see below) |
+| `follow_static_symlinks` | boolean | `false` | Serve files through symlinks that point outside the static directories (see below) |
 
 ## Live Schedule Agent
 
@@ -268,5 +269,35 @@ Before adding patterns to your config:
 4. **Use non-greedy**: `.+?` instead of `.+` to avoid over-matching
 5. **Document**: Always include a description for future reference
 6. **Test filenames**: Verify your patterns work with actual filenames from your library
+
+## Following Static Symlinks
+
+By default, the web server refuses to serve a file if the path resolves outside of its static directories. This is a safety measure: it keeps a stray symlink from exposing the rest of your filesystem over the network.
+
+Setting `follow_static_symlinks` to `true` relaxes that check, so symlinked files are served as if they lived in the static directory itself.
+
+```json
+{
+  "follow_static_symlinks": true
+}
+```
+
+### Why You Might Want This
+
+The most common use is keeping CSS themes somewhere other than the FieldStation42 install. Instead of copying a theme file into the static directory every time you change it, you can link to it:
+
+```bash
+ln -s ~/my-themes/retro-amber.css static/themes/retro-amber.css
+```
+
+With `follow_static_symlinks` enabled, the linked theme shows up in the web console theme list just like any other theme. Your themes stay in your own directory, survive a fresh checkout, and can live in their own git repository.
+
+The same applies to any other static asset you would rather store outside the project, such as logos, fonts, or background images.
+
+### Security Note
+
+Only enable this if you control the contents of your static directories. A symlink can point anywhere the FieldStation42 process can read, so a link pointing at something like a home directory or a config file would make that file reachable from the web server. Keep the setting off unless you are actually using symlinks, and only link to files you intend to publish.
+
+If your web server is reachable beyond your local network, be especially deliberate about what you link.
 
 
