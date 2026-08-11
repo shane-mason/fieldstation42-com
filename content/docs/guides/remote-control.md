@@ -18,8 +18,13 @@ Pick up a [Flirc USB receiver](https://flirc.tv/) and install the Flirc software
 | Home / Guide | `Home` |
 | Volume Up | `Right Arrow` |
 | Volume Down | `Left Arrow` |
+| Mute | `m` |
 | Channel Up | `Up Arrow` |
 | Channel Down | `Down Arrow` |
+| Last Channel | `Backspace` |
+| Subtitles On/Off | `v` |
+| Subtitle Track | `j` |
+| Audio Track | `a` |
 | Power / Stop | `End` |
 
 Then plug the Flirc receiver into your Raspberry Pi.
@@ -50,11 +55,16 @@ Using `sudo python3` instead will use the system Python and won't have access to
 |----------|-------------|-------------|
 | Numbers 0-9 | `0-9` | Channel selection |
 | Show Guide | `Home` | Display program guide |
-| Volume Up | `Right Arrow` | Increase volume by 5% |
-| Volume Down | `Left Arrow` | Decrease volume by 5% |
+| Volume Up | `Right Arrow` | Increase volume by 2% |
+| Volume Down | `Left Arrow` | Decrease volume by 2% |
+| Mute | `m` | Mute or unmute volume |
 | Channel Up | `Up Arrow` | Next channel |
 | Channel Down | `Down Arrow` | Previous channel |
-| Power/Stop | `End` | Stop the player |
+| Last Channel | `Backspace` | Jump back to the previously watched channel |
+| Toggle Subtitles | `v` | Show or hide subtitles |
+| Cycle Subtitles | `j` | Step through the available subtitle tracks |
+| Cycle Audio | `a` | Step through the available audio tracks |
+| Power/Stop | `End` | Toggle the FieldStation42 services on and off |
 | Exit | `Esc` | Exit remote controller |
 
 ### Channel Selection
@@ -62,6 +72,20 @@ Using `sudo python3` instead will use the system Python and won't have access to
 - Press `1`, wait one second: switch to channel 1
 - Press `1`, `2`, wait one second: switch to channel 12
 - Press `1`, `2`, `3`: immediately switch to channel 123
+
+### Subtitles and Audio Tracks
+
+The subtitle and audio keys act on the item playing at that moment. `j` steps through each subtitle track in the current file and then back to off, while `v` hides and restores subtitles without changing which track is selected. `a` steps through the audio tracks, which is useful for media carrying alternate language dubs or commentary.
+
+Each program, commercial and bump is loaded as a fresh file, so these selections reset when the player moves on to the next item. Most media has a single audio track and no subtitles at all - on those files, pressing these keys will not appear to do anything because there is nothing to cycle to.
+
+The same subtitle and audio cycling is available on the [web remote](/docs/reference/web-remote/).
+
+### The Power Button
+
+By default the power key does not simply stop the player. `USE_SYSTEMCTL` is enabled at the top of `remote_controller.py`, so pressing it checks whether `fs42.service` is running and then starts or stops every service listed in `SYSTEMCTL_TO_TOGGLE` - the player, the cable box and the OSD. That gives a real power button that brings the whole system up and down.
+
+If you would rather have the key only stop the player, set `USE_SYSTEMCTL = False` and it will call the player's stop command instead.
 
 ## Customizing Key Mappings
 
@@ -74,10 +98,17 @@ KEY_MAPPINGS = {
     'volume_down': 'left',
     'channel_up': 'up',
     'channel_down': 'down',
+    'last_channel': 'backspace',
+    'mute': 'm',
+    'toggle_subtitles': 'v',
+    'cycle_subtitles': 'j',
+    'cycle_audio': 'a',
     'power_stop': 'end',
     'exit': 'esc',
 }
 ```
+
+The number keys are always handled as channel entry and are not part of `KEY_MAPPINGS`.
 
 ### Available Key Names
 
@@ -87,6 +118,7 @@ KEY_MAPPINGS = {
 - **Arrows**: `up`, `down`, `left`, `right`
 - **Navigation**: `home`, `end`, `pageup`, `pagedown`, `insert`, `delete`
 - **Common**: `space`, `enter`, `tab`, `backspace`, `esc`
+- **Modifiers**: `leftshift`, `rightshift`, `leftctrl`, `rightctrl`, `leftalt`, `rightalt`
 
 ## Selecting an Input Device
 
@@ -149,11 +181,13 @@ You can run a script or shell command whenever a button is pressed. Create `runt
 ```json
 {
     "up": "echo Up pressed",
-    "power_stop": "path/to/power_pressed.sh"
+    "end": "path/to/power_pressed.sh"
 }
 ```
 
 Any valid shell command works here, including Python scripts.
+
+The keys in this file are **key names**, not function names - use `end` rather than `power_stop`, and `backspace` rather than `last_channel`. A callback runs in addition to the normal function for that key, so mapping `end` still toggles the services as usual. The file is read once when the remote controller starts, so restart it after making changes.
 
 ## Troubleshooting
 

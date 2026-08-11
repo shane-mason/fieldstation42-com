@@ -277,9 +277,11 @@ Gracefully stop the player.
 
 | Endpoint | Description |
 |----------|-------------|
-| `GET/POST /player/volume/up` | Increase volume by 5% |
-| `GET/POST /player/volume/down` | Decrease volume by 5% |
+| `GET/POST /player/volume/up` | Increase volume by 2% |
+| `GET/POST /player/volume/down` | Decrease volume by 2% |
 | `GET/POST /player/volume/mute` | Toggle mute on/off |
+
+The step size is set by `VOLUME_STEP` in `fs42/fs42_server/api/player.py`.
 
 **Response Example:**
 
@@ -288,10 +290,20 @@ Gracefully stop the player.
   "action": "up",
   "method": "pulseaudio",
   "status": "success",
-  "message": "Volume increased by 5%",
+  "message": "Volume increased by 2%",
   "volume": "75%"
 }
 ```
+
+### Subtitle and Audio Tracks
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET/POST /player/mpv/toggle-subtitles` | Show or hide subtitles |
+| `GET/POST /player/mpv/cycle-subtitles` | Step through the available subtitle tracks |
+| `GET/POST /player/mpv/cycle-audio` | Step through the available audio tracks |
+
+These act on the item currently playing and do not interrupt playback. They return `{"status": "ok"}` once the command is queued, or `503` if the player is not connected. Both the web remote and the IR remote controller drive these same endpoints.
 
 ### System Monitoring
 
