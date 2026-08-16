@@ -75,9 +75,11 @@ Using `sudo python3` instead will use the system Python and won't have access to
 
 ### Subtitles and Audio Tracks
 
-The subtitle and audio keys act on the item playing at that moment. `j` steps through each subtitle track in the current file and then back to off, while `v` hides and restores subtitles without changing which track is selected. `a` steps through the audio tracks, which is useful for media carrying alternate language dubs or commentary.
+The subtitle and audio keys act on whatever is playing right now. `j` steps through each subtitle track in the current file and then back to off, while `v` hides and restores subtitles without changing which track is selected. `a` steps through the audio tracks, which is useful for media carrying alternate language dubs or commentary.
 
-Each program, commercial and bump is loaded as a fresh file, so these selections reset when the player moves on to the next item. Most media has a single audio track and no subtitles at all - on those files, pressing these keys will not appear to do anything because there is nothing to cycle to.
+Your track choice sticks for the rest of the program. The player reapplies it each time the program resumes after a commercial break, and clears it when the next program starts. Only choices made while the program itself is on screen are remembered - pressing these keys during a commercial or bump affects just that clip and is not carried forward. Nothing is written to disk, so selections are lost when the player restarts.
+
+Most media has a single audio track and no subtitles at all - on those files, pressing these keys will not appear to do anything because there is nothing to cycle to.
 
 The same subtitle and audio cycling is available on the [web remote](/docs/reference/web-remote/).
 

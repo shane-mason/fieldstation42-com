@@ -30,7 +30,9 @@ The `Subs` and `Audio` buttons cycle through the tracks embedded in the video fi
 
 A few things to keep in mind:
 
-- These buttons only affect the item playing at that moment. Each program, commercial and bump is loaded fresh, so your selection resets when the player moves on to the next item.
+- Your choice sticks for the rest of the program. The player reapplies it each time the program resumes after a commercial break, and clears it when the next program starts.
+- Only choices made while the program itself is on screen are remembered. If you press the buttons during a commercial or bump, that selection applies to the clip you are watching and is not carried forward.
+- Nothing is written to disk, so selections are lost when the player restarts.
 - Most media has a single audio track and no subtitles at all. On those files, pressing the buttons will not appear to do anything - there is nothing to cycle to.
 - The remote's display briefly shows `SUBTITLES` or `AUDIO` to confirm the button press was sent, then returns to the channel number. It does not report which track ended up selected, so cycling is a matter of pressing until you hear or see what you want.
 
