@@ -91,6 +91,10 @@ You can use any of the hint formats:
 - **Quarter:** `"hint": "Q4"` -- restricts to Q1/Q2/Q3/Q4
 - **Date range:** `"hint": "October 15 - October 31"` -- restricts to an explicit range, including across year boundaries
 - **Day of week:** `"hint": "friday"` -- restricts to a specific day (use lowercase)
+- **Week number:** `"hint": "week number 44"` -- restricts to a single ISO week, numbered 1 through 53
+- **Custom holiday:** `"hint": "thanksgiving"` -- restricts to a date you name in the `custom_holidays` block of your main config
+
+Note that an unrecognized hint string is ignored rather than treated as an error, which leaves the marathon running on its `chance` value with no date restriction at all. A misspelled holiday name is the usual cause, and a warning naming the unmatched string is written to the log.
 
 See [Scheduling Hints](/docs/guides/scheduling-hints/) for the full details on each format.
 
