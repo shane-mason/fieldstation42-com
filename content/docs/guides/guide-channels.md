@@ -90,19 +90,20 @@ This requires the web channel dependencies. See [Recipe 7: Web Channel](/docs/gu
 
 All custom guide configuration is passed as URL parameters:
 
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `theme` | `80s` | Theme name. Loads `themes/{name}.css`. Falls back to `80s` if not found. |
-| `slots` | `3` | Number of 30-minute time slots to show in the grid. |
-| `header` | (from CSS) | Text shown in the header bar. Overrides the theme's `--header-text` variable. |
-| `pause` | (from CSS) | Scroll pause duration in seconds. Overrides the theme's `--scroll-pause`. |
-| `music` | none | Path to a music directory relative to the project root (e.g. `runtime/guide_music/`). |
-| `messages` | none | Path to a messages JSON file (e.g. `runtime/messages.json`). Used by grid-mode themes. |
-| `use_meta` | on | `?use_meta=0` hides the program descriptions pulled from NFO metadata. Grid-mode themes only (90s, 00s). |
-| `videos` | `true` | Set to `false` to hide the video panel in grid-mode themes. |
-| `loop` | off | `?loop=1` loops the operator video playlist continuously. Grid-mode themes only (90s, 00s). |
-| `random_start` | off | `?random_start=1` starts the operator video playlist at a random position. Grid-mode themes only (90s, 00s). |
-| `mock` | off | `?mock=1` generates fake schedule data for local testing without a server connection. |
+| Parameter          | Default | Description                                                                                                  |
+|--------------------|---------|--------------------------------------------------------------------------------------------------------------|
+| `theme`            | `80s` | Theme name. Loads `themes/{name}.css`. Falls back to `80s` if not found.                                     |
+| `slots`            | `3` | Number of 30-minute time slots to show in the grid.                                                          |
+| `header`           | (from CSS) | Text shown in the header bar. Overrides the theme's `--header-text` variable.                                |
+| `pause`            | (from CSS) | Scroll pause duration in seconds. Overrides the theme's `--scroll-pause`.                                    |
+| `music`            | none | Path to a music directory relative to the project root (e.g. `runtime/guide_music/`).                        |
+| `messages`         | none | Path to a messages JSON file (e.g. `runtime/messages.json`). Used by grid-mode themes.                       |
+| `use_meta`         | on | `?use_meta=0` hides the program descriptions pulled from NFO metadata. Grid-mode themes only (90s, 00s).     |
+| `videos`           | `true` | Set to `false` to hide the video panel in grid-mode themes.                                                  |
+| `loop`             | off | `?loop=1` loops the operator video playlist continuously. Grid-mode themes only (90s, 00s).                  |
+| `random_start`     | off | `?random_start=1` starts the operator video playlist at a random position. Grid-mode themes only (90s, 00s). |
+| `mock`             | off | `?mock=1` generates fake schedule data for local testing without a server connection.                        |
+| `show_description` | off | `?show_description=true` if showing metadata, use episode descriptions instead of episode title              |
 
 ## Program Descriptions
 
