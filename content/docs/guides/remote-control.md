@@ -89,30 +89,99 @@ The same subtitle and audio cycling is available on the [web remote](/docs/refer
 
 By default the power key does not simply stop the player. `USE_SYSTEMCTL` is enabled at the top of `remote_controller.py`, so pressing it checks whether `fs42.service` is running and then starts or stops every service listed in `SYSTEMCTL_TO_TOGGLE` - the player, the cable box and the OSD. That gives a real power button that brings the whole system up and down.
 
-If you would rather have the key only stop the player, set `USE_SYSTEMCTL = False` and it will call the player's stop command instead.
+If you would rather have the key only stop the player, set `use_systemctl` to `false` in the [settings file](#the-settings-file) below and it will call the player's stop command instead. The list of services it toggles can be changed there too.
 
-## Customizing Key Mappings
+## The Settings File
 
-You don't need Flirc to use the remote controller. Any keyboard works. Edit the `KEY_MAPPINGS` section at the top of `remote_controller.py` to match whatever keys you want:
+Create `runtime/remote_controller.json` to change how the remote controller behaves without editing the script. The file is optional - when it is missing, the built-in defaults are used.
 
-```python
-KEY_MAPPINGS = {
-    'show_guide': 'home',
-    'volume_up': 'right',
-    'volume_down': 'left',
-    'channel_up': 'up',
-    'channel_down': 'down',
-    'last_channel': 'backspace',
-    'mute': 'm',
-    'toggle_subtitles': 'v',
-    'cycle_subtitles': 'j',
-    'cycle_audio': 'a',
-    'power_stop': 'end',
-    'exit': 'esc',
+```json
+{
+    "use_systemctl": true,
+    "systemctl_to_toggle": [
+        "fs42.service",
+        "fs42-cable-box.service",
+        "fs42-osd.service"
+    ],
+    "key_mappings": {
+        "volume_up": "pageup",
+        "volume_down": "pagedown"
+    }
 }
 ```
 
-The number keys are always handled as channel entry and are not part of `KEY_MAPPINGS`.
+| Setting | Type | Description |
+|---------|------|-------------|
+| `use_systemctl` | boolean | Whether the power key toggles services instead of only stopping the player |
+| `systemctl_to_toggle` | list | Service names the power key starts and stops |
+| `key_mappings` | object | Function names mapped to key names - see [Customizing Key Mappings](#customizing-key-mappings) below |
+
+Every setting is optional and anything you leave out keeps its default, so a file containing nothing but `use_systemctl` is perfectly valid. Note that JSON booleans are lowercase `true` and `false`, not Python's `True` and `False`.
+
+The file is read once when the remote controller starts, so restart it after making changes. If it cannot be read - a stray comma, a missing brace - the remote controller reports the error and carries on with the defaults rather than refusing to start.
+
+## Customizing Key Mappings
+
+You don't need Flirc to use the remote controller. Any keyboard works. Add a `key_mappings` block to `runtime/remote_controller.json` listing only the functions you want to change:
+
+```json
+{
+    "key_mappings": {
+        "volume_up": "pageup",
+        "volume_down": "pagedown"
+    }
+}
+```
+
+Everything you leave out keeps its default key. The example above moves volume onto the page keys while the guide stays on `Home`, mute stays on `m`, and the rest are untouched.
+
+These are the function names and the defaults you are overriding:
+
+```json
+{
+    "key_mappings": {
+        "show_guide": "home",
+        "volume_up": "right",
+        "volume_down": "left",
+        "channel_up": "up",
+        "channel_down": "down",
+        "last_channel": "backspace",
+        "mute": "m",
+        "toggle_subtitles": "v",
+        "cycle_subtitles": "j",
+        "cycle_audio": "a",
+        "power_stop": "end",
+        "exit": "esc"
+    }
+}
+```
+
+The number keys are always handled as channel entry and are not part of `key_mappings`.
+
+Editing `DEFAULT_KEY_MAPPINGS` at the top of `remote_controller.py` still works, but the settings file is the better place - it survives updates to the code.
+
+### Taking a Key From Another Function
+
+If you assign a key that another function holds by default, that function gives the key up rather than competing for it. Mapping `channel_up` to `right` means the right arrow changes channels, and volume up is left with no key at all:
+
+```json
+{
+    "key_mappings": {
+        "channel_up": "right"
+    }
+}
+```
+
+When you are rearranging keys this way, map the displaced function somewhere too:
+
+```json
+{
+    "key_mappings": {
+        "channel_up": "right",
+        "volume_up": "pageup"
+    }
+}
+```
 
 ### Available Key Names
 
