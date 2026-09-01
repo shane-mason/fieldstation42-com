@@ -68,6 +68,7 @@ The `network_type` property determines how the station operates:
 | `network_type` | string | Type of network operation | `"standard"`, `"web"`, `"guide"`, `"loop"`, `"streaming"` |
 | `hidden` | boolean | Hide channel from guide listings | `true`, `false` |
 | `active_rules` | object | Availability rules for when this config should be active | See [Active Rules](#active-rules) below |
+| `parental_controls` | boolean | Require the [global PIN](/docs/reference/main-config/#parental-controls) before this station will play. Standard networks only. | `true`, `false` |
 
 ### Scheduling Properties (Standard Networks)
 

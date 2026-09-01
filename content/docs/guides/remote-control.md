@@ -73,6 +73,8 @@ Using `sudo python3` instead will use the system Python and won't have access to
 - Press `1`, `2`, wait one second: switch to channel 12
 - Press `1`, `2`, `3`: immediately switch to channel 123
 
+If the station you are on has [parental controls](/docs/reference/main-config/#parental-controls) and is waiting for its PIN, the number keys enter PIN digits instead of selecting a channel. Channel up/down, the guide button, and the last-channel button still work, so you can leave the station without entering the PIN.
+
 ### Subtitles and Audio Tracks
 
 The subtitle and audio keys act on whatever is playing right now. `j` steps through each subtitle track in the current file and then back to off, while `v` hides and restores subtitles without changing which track is selected. `a` steps through the audio tracks, which is useful for media carrying alternate language dubs or commentary.
@@ -238,7 +240,7 @@ The player publishes its current status to `runtime/play_status.socket` as JSON.
 **Player is active:**
 
 ```json
-{"status": "playing", "network_name": "MyStation", "channel_number": 42, "timestamp": "2025-02-03T08:13:46.431558"}
+{"status": "playing", "network_name": "MyStation", "channel_number": 42, "timestamp": "2025-02-03T08:13:46.431558", "awaiting_pin": false, "pin_digits_entered": 0}
 ```
 
 **Player is stopped:**

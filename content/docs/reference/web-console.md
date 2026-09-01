@@ -305,6 +305,21 @@ The step size is set by `VOLUME_STEP` in `fs42/fs42_server/api/player.py`.
 
 These act on the item currently playing and do not interrupt playback. They return `{"status": "ok"}` once the command is queued, or `503` if the player is not connected. Both the web remote and the IR remote controller drive these same endpoints.
 
+### Parental Controls
+
+Stations configured with [parental controls](/docs/reference/main-config/#parental-controls) hold playback behind a four-digit PIN. These endpoints feed that prompt.
+
+| Endpoint | Description |
+|----------|-------------|
+| `POST /player/parental/digit/{digit}` | Enter a single PIN digit |
+| `POST /player/parental/clear` | Clear the digits entered so far |
+
+`{digit}` must be a single numeric character. Anything else returns `400`. Both endpoints return `{"handled": true}` once the command is queued, or `503` if the player is not connected.
+
+Send one digit per request. The fourth digit completes the attempt: a correct PIN starts the station, and a wrong one clears the entry so the viewer can try again. Digits sent while no PIN prompt is on screen are ignored.
+
+Use `GET /player/status` to tell whether a prompt is waiting before sending digits - this is how the IR remote controller decides whether a number press is a PIN digit or a channel change.
+
 ### System Monitoring
 
 #### Player Status
@@ -314,6 +329,10 @@ GET /player/status
 ```
 
 Get current player status and program information.
+
+The payload always includes `awaiting_pin` and `pin_digits_entered`. `awaiting_pin` is `true` while a station is holding playback behind a [parental controls](/docs/reference/main-config/#parental-controls) PIN prompt, and `pin_digits_entered` counts the digits accepted so far. Poll this to decide whether to route number input to `/player/parental/digit/{digit}` instead of a channel change.
+
+Note that this reports the last status the player wrote. If the player exits uncleanly while a PIN prompt is on screen, `awaiting_pin` can remain `true` until the player runs again.
 
 #### System Information
 

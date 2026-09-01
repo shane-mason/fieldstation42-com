@@ -46,6 +46,8 @@ The `confs/main_config.json` file is optional. If it doesn't exist, FieldStation
 | `video_seek_timeout` | integer | `10` | How long in seconds to wait when seeking in streams and videos before giving up |
 | `schedule_agent` | object | none | Background agent for proactive schedule generation (see below) |
 | `follow_static_symlinks` | boolean | `false` | Serve files through symlinks that point outside the static directories (see below) |
+| `parental_controls_pin` | string | none | Four-digit PIN required before a locked station will play (see below) |
+| `parental_controls_theme` | string | `"minimal"` | Visual style for the PIN prompt: `"classic"`, `"modern"`, or `"minimal"` |
 
 ## Live Schedule Agent
 
@@ -301,3 +303,30 @@ Only enable this if you control the contents of your static directories. A symli
 If your web server is reachable beyond your local network, be especially deliberate about what you link.
 
 
+
+## Parental Controls
+
+Setting `parental_controls_pin` turns on an optional PIN prompt. Individual stations opt in by setting `parental_controls` to `true` in their own config, and those stations will not play until the PIN is entered.
+
+```json
+{
+  "parental_controls_pin": "1234",
+  "parental_controls_theme": "classic"
+}
+```
+
+The PIN must be exactly four digits. If it is missing or malformed, parental controls stay off entirely and every station plays normally, with a warning in the log. The `parental_controls_theme` setting controls the look of the prompt and accepts `classic` (dark with yellow text), `modern` (dark with a blue accent), or `minimal` (light and plain). Anything else falls back to `minimal`.
+
+When you tune to a locked station, playback stops and the prompt appears. The correct PIN starts the station; a wrong entry clears the digits and lets you try again. The unlock only lasts while you stay put - tune away and come back, and the PIN is required again.
+
+Only `standard` stations honor the setting. Guide, web, and executable channels start before the check runs, so setting `parental_controls` on one of those is accepted by the config schema but has no effect.
+
+### Entering the PIN
+
+PIN entry works from the number keys on a [connected IR remote](/docs/guides/remote-control/) and from the `/player/parental/digit/{digit}` API endpoint.
+
+It does **not** work from the [web remote](/docs/reference/web-remote/). Its number buttons still send channel changes, so pressing them at the PIN prompt tunes you to that channel rather than entering a digit. This is a gap in the web remote, not a deliberate restriction. To leave a locked station without unlocking it, use channel up/down, the guide button, or the last-channel button.
+
+### What This Actually Protects
+
+Treat this as an entertainment feature, not a security control. The PIN is stored in plain text in `main_config.json`, and it only gates playback on the TV - it does not restrict the web console, the API, or the guide, all of which can still see and tune the locked station. It is there to keep a channel off the dial for casual viewing, in the spirit of the hardware it imitates.

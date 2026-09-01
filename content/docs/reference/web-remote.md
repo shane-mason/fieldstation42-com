@@ -20,6 +20,7 @@ This will take you to the main web interface for FS42, just select 'Remote' from
 - `Guide` button auto-navigates to guide channel (if you have one configured)
 - `Info` button toggles the 'Now Playing' to show system information like CPU load, memory usage and even CPU temperature if available.
 - `Subs` and `Audio` buttons cycle through the subtitle and audio tracks of whatever is playing right now
+- Number buttons always send channel changes - they cannot enter a parental controls PIN (see below)
 - `Exit` button to return to the main UI
 
 ---
@@ -37,5 +38,17 @@ A few things to keep in mind:
 - The remote's display briefly shows `SUBTITLES` or `AUDIO` to confirm the button press was sent, then returns to the channel number. It does not report which track ended up selected, so cycling is a matter of pressing until you hear or see what you want.
 
 The same functions are available from an IR remote or keyboard - see [Connecting Remote Controls](/docs/guides/remote-control/).
+
+---
+
+## 🔒 Parental Controls and the Number Buttons
+
+If a station is configured with [parental controls](/docs/reference/main-config/#parental-controls), it will not play until its PIN is entered - and the web remote cannot currently enter that PIN.
+
+The number buttons here always send a channel change. Pressing them at the PIN prompt tunes you to the channel you typed rather than entering a digit, so the keypad looks like it is misbehaving instead of simply doing nothing. This is a gap in the web remote, not a deliberate restriction.
+
+PIN entry currently works from an IR remote or keyboard (see [Connecting Remote Controls](/docs/guides/remote-control/)) and from the `/player/parental/digit/{digit}` endpoint of the [server API](/docs/reference/web-console/).
+
+You can still leave a locked station from the web remote using the channel up/down buttons or the `Guide` button. You just cannot unlock it from here.
 
 ---
