@@ -308,12 +308,30 @@ If your web server is reachable beyond your local network, be especially deliber
 
 Setting `parental_controls_pin` turns on an optional PIN prompt. Individual stations opt in by setting `parental_controls` to `true` in their own config, and those stations will not play until the PIN is entered.
 
+Setting it up takes two files.
+
+**1. Set the PIN in `confs/main_config.json`.** Both keys belong at the top level of the file, alongside your other main config settings:
+
 ```json
 {
   "parental_controls_pin": "1234",
   "parental_controls_theme": "classic"
 }
 ```
+
+**2. Lock the stations you want**, in each station's own config file, inside `station_conf`:
+
+```json
+{
+  "station_conf": {
+    "network_name": "Drama",
+    "channel_number": 13,
+    "parental_controls": true
+  }
+}
+```
+
+Repeat that for every station you want behind the prompt. There is one shared PIN for the whole system, not one per station.
 
 The PIN must be exactly four digits. If it is missing or malformed, parental controls stay off entirely and every station plays normally, with a warning in the log. The `parental_controls_theme` setting controls the look of the prompt and accepts `classic` (dark with yellow text), `modern` (dark with a blue accent), or `minimal` (light and plain). Anything else falls back to `minimal`.
 
@@ -323,9 +341,17 @@ Only `standard` stations honor the setting. Guide, web, and executable channels 
 
 ### Entering the PIN
 
-PIN entry works from the number keys on a [connected IR remote](/docs/guides/remote-control/) and from the `/player/parental/digit/{digit}` API endpoint.
+PIN entry works from the number keys on a [connected IR remote](/docs/guides/remote-control/), from the [web remote](/docs/reference/web-remote/), and from the `/player/parental/digit/{digit}` API endpoint.
 
-It does **not** work from the [web remote](/docs/reference/web-remote/). Its number buttons still send channel changes, so pressing them at the PIN prompt tunes you to that channel rather than entering a digit. This is a gap in the web remote, not a deliberate restriction. To leave a locked station without unlocking it, use channel up/down, the guide button, or the last-channel button.
+On the web remote, the number buttons switch to entering PIN digits on their own whenever a locked station is waiting for one, and go back to changing channels once it unlocks. To leave a locked station without unlocking it, use channel up/down, the guide button, or the last-channel button.
+
+### When Nothing Happens
+
+Every way this can be misconfigured fails the same way - the locked station simply plays, with no prompt and nothing on screen to explain why. Check these in order:
+
+- **Is the PIN at the top level of `main_config.json`?** Nesting it inside another object - under `custom_holidays`, say - is silently ignored. Only recognized top-level keys are read into the config.
+- **Is the PIN exactly four digits, in quotes?** Anything else turns parental controls off for every station. The warning goes to the player log, not to the screen.
+- **Is the station a `standard` network?** Guide, web, and executable channels never reach the check, as described above.
 
 ### What This Actually Protects
 

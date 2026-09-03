@@ -85,6 +85,14 @@ Summary: Common problems and solutions for FieldStation42 setup and operation.
 - Remember: hour `"0"` = midnight, `"13"` = 1 PM, `"20"` = 8 PM
 - Hours not in your schedule = off-air
 
+### Parental controls PIN prompt never appears
+
+- `parental_controls_pin` must be at the **top level** of `main_config.json` - nested inside another key it is silently ignored
+- The PIN must be exactly four digits, in quotes
+- The station needs `"parental_controls": true` in its own config, inside `station_conf`
+- Only `standard` networks are checked - guide, web, and executable channels always play
+- See [Parental Controls](/docs/reference/main-config/#parental-controls) for the full setup
+
 ## Scheduling Issues
 
 ### Sequences not playing in order
