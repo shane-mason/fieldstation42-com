@@ -282,6 +282,13 @@ a:hover { color: var(--orange); }
 }
 .btn-patreon:hover { background: #e03040; color: var(--white); }
 
+.btn-coffee {
+    background: #FFDD00;
+    color: #0D0C22;
+    border: 1px solid transparent;
+}
+.btn-coffee:hover { background: #e6c700; color: #0D0C22; }
+
 /* Hero visual / screen mockup */
 .hero-visual {
     display: flex;
