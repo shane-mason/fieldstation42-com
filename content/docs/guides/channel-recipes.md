@@ -14,6 +14,7 @@ FieldStation42 supports a lot of different channel types. This guide gives you r
 - [Recipe 8: Radio Channel](#recipe-8-radio-music-channel-audio-with-now-playing-overlay)
 - [Recipe 9: WeatherStar Channel](#recipe-9-weatherstar-channel)
 - [Recipe 10: Pay-Per-View (PPV)](#recipe-10-pay-per-view-ppv)
+- [Recipe 11: Executable Channel (Kodi, Emulators, External Apps)](#recipe-11-executable-channel-kodi-emulators-external-apps)
 
 ---
 
@@ -390,4 +391,29 @@ You can also create your own theme. Add a CSS file to the `ppv/themes/` director
 The `variation` value maps directly to the filename (without the `.css` extension) in `ppv/themes/`.
 
 See the [PPV README](https://github.com/shane-mason/FieldStation42/tree/main/fs42/fs42_server/static/ppv) for more details.
+
+---
+
+## Recipe 11: Executable Channel (Kodi, Emulators, External Apps)
+
+Runs an external program instead of playing video, so a "channel" can be Kodi, a game emulator, or any other app you want to launch from the remote.
+
+```json
+{"station_conf" : {
+    "network_name" : "Terminal",
+    "network_type" : "executable",
+    "channel_number": 7,
+    "executable_command": "flatpak run tv.kodi.Kodi",
+    "executable_shutdown": "flatpak kill tv.kodi.Kodi"
+}}
+```
+
+| Option | What it does |
+|--------|-------------|
+| `executable_command` | The command that gets launched when the channel is tuned to. Run directly (not through a shell), so no pipes or redirects. |
+| `executable_shutdown` | Runs instead of terminating the process when you change the channel. Needed for apps like Flatpak Kodi, which spawn child processes that a plain terminate signal won't clean up. |
+
+Tuning away from the channel (or exiting the app) works like any other channel change - hit the channel button on your remote and FieldStation42 handles the rest. If you don't set `executable_shutdown`, the launched process is terminated directly instead.
+
+Executable channels don't need a `content_dir`, catalog, or schedule - the two properties above are all you need.
 

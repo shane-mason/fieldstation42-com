@@ -55,6 +55,7 @@ The `network_type` property determines how the station operates:
 | `guide` | Interactive program guide display | Channel 0 / EPG |
 | `loop` | Continuously loops content | Simple playlist channels |
 | `streaming` | Plays external streaming sources | Live streams, HLS/m3u8 feeds |
+| `executable` | Runs an external command instead of playing video | Kodi, game emulators, other external apps |
 
 ## Top-Level Properties
 
@@ -65,7 +66,7 @@ The `network_type` property determines how the station operates:
 | `network_name` | string | **Required.** Name of the network | Any string |
 | `network_long_name` | string | Extended/full network name | Any string |
 | `channel_number` | integer | **Required.** Channel number | Any positive integer |
-| `network_type` | string | Type of network operation | `"standard"`, `"web"`, `"guide"`, `"loop"`, `"streaming"` |
+| `network_type` | string | Type of network operation | `"standard"`, `"web"`, `"guide"`, `"loop"`, `"streaming"`, `"executable"` |
 | `hidden` | boolean | Hide channel from guide listings | `true`, `false` |
 | `active_rules` | object | Availability rules for when this config should be active | See [Active Rules](#active-rules) below |
 | `parental_controls` | boolean | Require the [global PIN](/docs/reference/main-config/#parental-controls) before this station will play. Standard networks only. | `true`, `false` |
@@ -305,6 +306,31 @@ Each stream object contains:
   "duration": 30,
   "title": "Stream Title"
 }
+```
+
+### Executable Network Properties
+
+Executable channels run an arbitrary command instead of playing video, so a "station" can launch any external program - Kodi, a game emulator, or anything else - as part of your channel lineup.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `executable_command` | string | **Required.** Command to run when the channel is tuned to. Parsed with shell-style quoting and run directly, not through a shell (no pipes, redirects, or env expansion). |
+| `executable_shutdown` | string | Optional command to run instead of terminating `executable_command` when the channel is switched away from. Use this for apps (like Flatpak-installed programs) that spawn child processes which don't get cleanly reaped by a plain terminate signal. |
+
+When the channel is tuned to, FieldStation42 stops the normal player and launches `executable_command`. It watches for a channel-change or exit command from the remote/web UI: if `executable_shutdown` is set, that command runs to close things out; otherwise the launched process is terminated directly. If the launched program exits on its own, playback falls back to normal channel behavior.
+
+Executable networks don't need a schedule or catalog - just the command properties above.
+
+Example - launching Kodi (installed via Flatpak) as a channel:
+
+```json
+{"station_conf" : {
+    "network_name" : "Terminal",
+    "network_type" : "executable",
+    "channel_number": 7,
+    "executable_command": "flatpak run tv.kodi.Kodi",
+    "executable_shutdown": "flatpak kill tv.kodi.Kodi"
+}}
 ```
 
 ## Day Scheduling
@@ -772,8 +798,8 @@ python3 validate_configs.py
 - **Hour keys** in day schedules are strings (`"0"` through `"23"`)
 - **Off-air hours** are simply omitted from the schedule
 - **Template and override references** are case-sensitive
-- **Network types** without schedules: `guide`, `streaming`, `web`
-- **Network types** without catalogs: `guide`, `streaming`, `web`
+- **Network types** without schedules: `guide`, `streaming`, `web`, `executable`
+- **Network types** without catalogs: `guide`, `streaming`, `web`, `executable`
 
 ## See Also
 
