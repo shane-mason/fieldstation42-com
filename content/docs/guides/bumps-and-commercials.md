@@ -237,3 +237,17 @@ By default, autobumps slot in at the start or end of breaks alongside regular bu
 | `0.0` (default) | Autobumps slot in normally, breaks are not filled |
 
 This works well for channels where you want a clean "next up" presentation rather than a mix of bumps and spots. See the [Autobump reference](/docs/reference/autobump/) for the full list of configuration options.
+
+### Off-Air Fallback
+
+If a scheduled hour has no programming and no `off_air_video` or `off_air_image` configured, FieldStation42 needs something to show instead of failing to build the schedule. Add an `off_air_autobump` section (same shape as `autobump`) to your station config and it'll fill that gap automatically:
+
+```json
+"off_air_autobump": {
+  "title": "NBC TV",
+  "subtitle": "We'll be right back",
+  "variation": "retro"
+}
+```
+
+This is currently a config-file-only option -- there's no station editor support for it yet, so add it directly to the station's JSON file. See the [Autobump reference](/docs/reference/autobump/#off-air-fallback) for details.

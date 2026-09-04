@@ -194,7 +194,23 @@ Set `fill_break` in your autobump configuration:
 
 When a break is filled, FS42 generates an autobump that runs for the full break duration. The bump displays the "next up" program information and a countdown timer in the corner so viewers know when the show resumes.
 
-## Examples
+## Off-Air Fallback
+
+Set `off_air_autobump` at the top level of your station config to provide a fallback autobump for any scheduled hour that has no programming *and* no `off_air_video` or `off_air_image` configured. Without this fallback, a gap like that is a hard error that stops schedule generation.
+
+```json
+{
+    "off_air_autobump": {
+        "title": "NBC TV",
+        "subtitle": "We'll be right back",
+        "variation": "retro"
+    }
+}
+```
+
+`off_air_autobump` accepts the same fields as `autobump` -- see [JSON Configuration](#json-configuration) above for the full set.
+
+**Note:** This is currently a config-file-only feature. It isn't exposed in the station editor UI yet, so it needs to be added directly to the station's JSON configuration.
 
 ### Basic Station ID
 
