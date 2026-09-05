@@ -7,8 +7,10 @@ Create customizable station identification bumps with multiple visual styles, ba
 ## Quick Start
 
 ```
-bump.html?title=MTV&subtitle=Music Television&variation=retro&bg_music=logo2.mp3
+http://localhost:4242/static/bump/bump.html?title=MTV&subtitle=Music%20Television&variation=retro
 ```
+
+The bump page is served from the FieldStation42 server at `static/bump/bump.html`. The remaining examples use the relative path `static/bump/bump.html`; prefix it with your server address (for example `http://localhost:4242/`) to open one directly in a browser.
 
 ## Parameters
 
@@ -42,7 +44,7 @@ bump.html?title=MTV&subtitle=Music Television&variation=retro&bg_music=logo2.mp3
 Clean, futuristic design with blue gradients
 
 ```
-bump.html?title=TECH TV&subtitle=Future Forward&variation=modern
+static/bump/bump.html?title=TECH TV&subtitle=Future Forward&variation=modern
 ```
 
 ### Retro
@@ -50,7 +52,7 @@ bump.html?title=TECH TV&subtitle=Future Forward&variation=modern
 80s synthwave aesthetic with neon colors
 
 ```
-bump.html?title=MTV&subtitle=Music Television&variation=retro
+static/bump/bump.html?title=MTV&subtitle=Music Television&variation=retro
 ```
 
 ### Corporate
@@ -58,7 +60,7 @@ bump.html?title=MTV&subtitle=Music Television&variation=retro
 Professional look with light colors
 
 ```
-bump.html?title=CNN&subtitle=Breaking News&variation=corporate
+static/bump/bump.html?title=CNN&subtitle=Breaking News&variation=corporate
 ```
 
 ### Terminal
@@ -66,7 +68,7 @@ bump.html?title=CNN&subtitle=Breaking News&variation=corporate
 Monospace terminal theme with green text
 
 ```
-bump.html?title=HACKER TV&subtitle=System Online&variation=terminal
+static/bump/bump.html?title=HACKER TV&subtitle=System Online&variation=terminal
 ```
 
 ## Background Music
@@ -75,10 +77,10 @@ FieldStation42 includes 7 background music tracks: `logo0.mp3` through `logo6.mp
 
 ```
 # Using built-in music
-bump.html?title=MTV&variation=retro&bg_music=logo2.mp3
+static/bump/bump.html?title=MTV&variation=retro&bg_music=logo2.mp3
 
 # Using custom music
-bump.html?title=RADIO FM&bg_music=https://example.com/theme.mp3
+static/bump/bump.html?title=RADIO FM&bg_music=https://example.com/theme.mp3
 ```
 
 **Features:**
@@ -98,7 +100,7 @@ bump.html?title=RADIO FM&bg_music=https://example.com/theme.mp3
 Use a WebM video file as the bump background instead of a static color or image. Store video files in `fs42/fs42_server/static/bump/video/` and reference by filename, or use a full URL.
 
 ```
-bump.html?title=MTV&variation=retro&bg_video=intro.webm&bg_video_loop_count=2
+static/bump/bump.html?title=MTV&variation=retro&bg_video=intro.webm&bg_video_loop_count=2
 ```
 
 **Audio behavior:**
@@ -113,7 +115,7 @@ The bump duration is computed as: video duration x `bg_video_loop_count`. If the
 
 ```
 # Loop 3 times, then end
-bump.html?title=ESPN&bg_video=highlight_reel.webm&bg_video_loop_count=3
+static/bump/bump.html?title=ESPN&bg_video=highlight_reel.webm&bg_video_loop_count=3
 ```
 
 Video backgrounds also work during fill-break autobumps. Text timing controls (see below) are applied per loop so overlays stay synchronized.
@@ -146,7 +148,7 @@ Place the text block anywhere on screen using `text_position`:
 For video autobumps, position is relative to the rendered video frame, not the full viewport.
 
 ```
-bump.html?title=HBO&subtitle=Premium Entertainment&text_position=bottom-left
+static/bump/bump.html?title=HBO&subtitle=Premium Entertainment&text_position=bottom-left
 ```
 
 ### Text Timing
@@ -155,7 +157,7 @@ Control when text appears and disappears:
 
 ```
 # Text fades in after 2 seconds, fades out over 1 second, hides 2 seconds before end
-bump.html?title=NBC&bg_video=nbc_bumper.webm&text_delay=2&text_fade_in=0.5&text_fade_out=1&text_hide_before_end=2
+static/bump/bump.html?title=NBC&bg_video=nbc_bumper.webm&text_delay=2&text_fade_in=0.5&text_fade_out=1&text_hide_before_end=2
 ```
 
 For video autobumps, `text_delay` and `text_hide_before_end` reset each loop so timing stays consistent across multiple plays.
@@ -165,7 +167,7 @@ For video autobumps, `text_delay` and `text_hide_before_end` reset each loop so 
 Show upcoming shows from FieldStation42 schedule:
 
 ```
-bump.html?title=HBO&subtitle=Premium Entertainment&next_network=hbo
+static/bump/bump.html?title=HBO&subtitle=Premium Entertainment&next_network=hbo
 ```
 
 Displays next 3 upcoming shows as: `"2:30 PM - Show Title"`
@@ -215,19 +217,19 @@ Set `off_air_autobump` at the top level of your station config to provide a fall
 ### Basic Station ID
 
 ```
-bump.html?title=NBC&subtitle=Must See TV&detail1=Channel 4&detail2=nbctv.com
+static/bump/bump.html?title=NBC&subtitle=Must See TV&detail1=Channel 4&detail2=nbctv.com
 ```
 
 ### With Music and Programming
 
 ```
-bump.html?title=MTV&subtitle=Music Television&variation=retro&next_network=mtv&bg_music=logo2.mp3&duration=7
+static/bump/bump.html?title=MTV&subtitle=Music Television&variation=retro&next_network=mtv&bg_music=logo2.mp3&duration=7
 ```
 
 ### Custom Colors
 
 ```
-bump.html?title=ESPN&subtitle=The Worldwide Leader&bg_color=%23ff0000&fg_color=%23ffffff
+static/bump/bump.html?title=ESPN&subtitle=The Worldwide Leader&bg_color=%23ff0000&fg_color=%23ffffff
 ```
 
 ## JavaScript API
@@ -289,7 +291,7 @@ Hex colors must be URL-encoded:
 Create a CSS file and reference it:
 
 ```
-bump.html?title=LOCAL NEWS&css=custom-styles.css
+static/bump/bump.html?title=LOCAL NEWS&css=custom-styles.css
 ```
 
 **Common customizations:**
