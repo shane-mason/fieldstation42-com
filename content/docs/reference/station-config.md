@@ -125,7 +125,9 @@ Example:
 ]
 ```
 
-The system automatically adjusts durations based on `break_strategy` to account for commercial time.
+Internally the system targets a slightly shorter duration than requested (about 95% of it) when gathering clips, leaving room to fill the rest with commercial/bump breaks — but the block's scheduled length always ends up exactly matching the `duration` you configured (or the 60-minute default).
+
+**`duration` is independent of `schedule_increment`.** A clip show always runs for its own configured (or default) duration once selected — it is never rounded, stretched, or truncated to fit the enclosing slot's `schedule_increment`. This is important when a clip show tag is one option in a [random tag selection](#random-tag-selection): once picked, it occupies its full `duration`, which may span multiple scheduling increments rather than just the one it was selected for. Set `duration` explicitly to match the increment you want it to fill if you need it to stay within a single rotation slot.
 
 ### Active Rules
 

@@ -151,7 +151,7 @@ Define your templates in `day_templates`, then assign each day to a template by 
 You can split an hour between different tags by passing a list:
 
 ```json
-"18": {"tags": ["news", "sitcoms"]}
+"18" : {"tags": ["news", "sitcoms"]}
 ```
 
 Note that the two shows listed for 6 PM are wrapped in square brackets `[]` and separated by a comma. That's what tells FieldStation42 to treat them as a split hour rather than a single tag. This splits the 6 PM hour into two 30-minute blocks: news first, then a sitcom. Three tags would split it into three 20-minute blocks, and so on. If a show runs longer than its block, the next tag gets skipped.
@@ -179,6 +179,10 @@ You can customize the target duration (default is 60 minutes) and add opener/clo
   {"tags": "comedy_shorts", "start_clip": "openers/comedy", "end_clip": "closers/comedy"}
 ]
 ```
+
+**Duration is exact and independent of `schedule_increment`.** Whatever `duration` you set (or 60 minutes if you don't set one) is exactly how long the block runs once that clip show is selected — it's never stretched or shrunk to line up with the slot's `schedule_increment`.
+
+This matters if you mix clip shows into a [random tag rotation](/docs/reference/station-config/#random-tag-selection) to build a block out of several short segments (an "adult swim" style mix, for example). If one of the randomly-picked tags is a clip show, it will play for its own full configured `duration`, not just the slice of the hour it happened to be picked for — a 60-minute clip show selected inside a 15-minute rotation will still run a full 60 minutes, consuming the next three picks. Set each clip show's `duration` to match the increment you want it to fill (e.g. `"duration": 15` for a 15-minute rotation) if you want it to hand control back to the rotation on schedule.
 
 ### Sign-Off Event
 
