@@ -49,13 +49,17 @@ The OSD text overlay is configured in `osd/osd.json`. The default shows channel 
 ]
 ```
 
-| Field | Type | Description |
-|---|---|---|
-| `halign` | string | Horizontal position: `"LEFT"`, `"RIGHT"`, or `"CENTER"`. |
-| `valign` | string | Vertical position: `"TOP"`, `"BOTTOM"`, or `"CENTER"`. |
-| `font_size` | integer | Font size in points. |
-| `text_color` | array | RGBA color as `[R, G, B, A]`, each value 0-255. The fourth value is opacity. |
-| `format_text` | string | Display template. Available variables: `{channel_number}`, `{network_name}`. |
+| Field         | Type    | Description                                                                               |
+|---------------|---------|-------------------------------------------------------------------------------------------|
+| `halign`      | string  | Horizontal position: `"LEFT"`, `"RIGHT"`, or `"CENTER"`.                                  |
+| `valign`      | string  | Vertical position: `"TOP"`, `"BOTTOM"`, or `"CENTER"`.                                    |
+| `font_size`   | integer | Font size in points.                                                                      |
+| `font`        | path    | Path to a ttf file, either system or downloaded. If not set, will use the system default. |
+| `text_color`  | array   | RGBA color as `[R, G, B, A]`, each value 0-255. The fourth value is opacity.              |
+| `format_text` | string  | Display template. Available variables: `{channel_number}`, `{network_name}`.              |
+
+For the `font` argument, it expects a path to a true type file. This can be either a system font (already installed) 
+or one you download from a site like https://fonts.google.com/
 
 More examples are in `osd/examples/` in the repo.
 
