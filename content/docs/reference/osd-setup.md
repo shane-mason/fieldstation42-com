@@ -58,7 +58,7 @@ The OSD text overlay is configured in `osd/osd.json`. The default shows channel 
 | `text_color`  | array   | RGBA color as `[R, G, B, A]`, each value 0-255. The fourth value is opacity.              |
 | `format_text` | string  | Display template. Available variables: `{channel_number}`, `{network_name}`.              |
 
-For the `font` argument, it expects a path to a true type file. This can be either a system font (already installed) 
+For the `font` argument, it expects a path to a true type font file (.ttf). This can be either a system font (already installed) 
 or one you download from a site like https://fonts.google.com/
 
 More examples are in `osd/examples/` in the repo.
