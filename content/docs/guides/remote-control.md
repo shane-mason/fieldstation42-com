@@ -185,13 +185,25 @@ When you are rearranging keys this way, map the displaced function somewhere too
 
 ### Available Key Names
 
+Any key your device sends can be mapped. Key names are the Linux key names in lowercase without the `KEY_` prefix, so `KEY_PAGEUP` is `pageup` and `KEY_KPPLUS` is `kpplus`. The most common ones:
+
 - **Letters**: `a` through `z`
 - **Numbers**: `0` through `9`
-- **Function keys**: `f1` through `f12`
+- **Function keys**: `f1` through `f24`
 - **Arrows**: `up`, `down`, `left`, `right`
 - **Navigation**: `home`, `end`, `pageup`, `pagedown`, `insert`, `delete`
 - **Common**: `space`, `enter`, `tab`, `backspace`, `esc`
-- **Modifiers**: `leftshift`, `rightshift`, `leftctrl`, `rightctrl`, `leftalt`, `rightalt`
+- **Punctuation**: `minus`, `equal`, `comma`, `dot`, `slash`, `semicolon`, `apostrophe`, `grave`, `leftbrace`, `rightbrace`, `backslash`
+- **Keypad**: `kp0` through `kp9`, `kpplus`, `kpminus`, `kpasterisk`, `kpslash`, `kpdot`, `kpenter`
+- **Modifiers**: `leftshift`, `rightshift`, `leftctrl`, `rightctrl`, `leftalt`, `rightalt`, `leftmeta`, `rightmeta`
+
+To find the name of a particular key, run the remote controller and press it. Every key press is printed along with its name:
+
+```
+DEBUG: Key pressed: kpplus (code: 78)
+```
+
+A key without a Linux key name is reported by its code number instead, and that number can be used as the key name, for example `"mute": "250"`.
 
 ## Selecting an Input Device
 
@@ -236,6 +248,39 @@ You can also set the device via environment variable instead of passing `-d` eve
 ```bash
 FS42_INPUT_DEVICE=flirc python3 fs42/pi/remote_controller.py
 ```
+
+### Listening to All Devices
+
+Use `-d all` to listen to every keyboard and remote at once, for example a Flirc receiver and a wireless keyboard together:
+
+```bash
+python3 fs42/pi/remote_controller.py -d all
+```
+
+Devices plugged in after the remote controller starts are picked up automatically, and devices that are unplugged are dropped. Devices the remote controller does not have permission to open are skipped.
+
+In this mode the remote controller takes exclusive control of each device it listens to, so other programs, including the desktop and console, will not see key presses from those devices while it is running.
+
+If you run the remote controller as a [service](/docs/guides/autostart/), set the device through the `FS42_INPUT_DEVICE` environment variable. Run:
+
+```bash
+systemctl --user edit fs42-remote-controller.service
+```
+
+Add these lines in the editable area at the top of the file, then save and exit:
+
+```ini
+[Service]
+Environment=FS42_INPUT_DEVICE=all
+```
+
+Then restart the service:
+
+```bash
+systemctl --user restart fs42-remote-controller.service
+```
+
+The same approach works for any other device setting, such as `FS42_INPUT_DEVICE=flirc`.
 
 ## Server Location
 
