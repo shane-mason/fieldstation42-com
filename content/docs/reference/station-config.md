@@ -563,7 +563,7 @@ Tags can be:
 |----------|------|-------------|
 | `start_bump` | string | Path to bump video before content |
 | `end_bump` | string | Path to bump video after content |
-| `bump_dir` | string | Override bump directory for this slot |
+| `bump_dir` | string or object | Override bump directory for this slot, or `{"tags": directory, "chance": 0-1}` to mix it with the station default (see [Mixing Override Bumps with the Default](#mixing-override-bumps-with-the-default)) |
 | `commercial_dir` | string | Override commercial directory for this slot |
 | `video_scramble_fx` | string or boolean | Apply video scrambling effect (see available effects above) or `false` to disable |
 | `audio_scramble_fx` | string or boolean | Apply audio scrambling effect (see available effects above) or `false` to disable |
@@ -725,6 +725,32 @@ Same as slot overrides:
 - `video_scramble_fx`
 - `audio_scramble_fx`
 - `marathon`
+
+#### Mixing Override Bumps with the Default
+
+To mix a `bump_dir` override with the station's default bumps instead of replacing them, use an object instead of a string:
+
+```json
+"tag_overrides": {
+  "sitcoms/70sShow": {
+    "bump_dir": {"tags": "Special_Program_Bumpers/70sShow", "chance": 0.75}
+  }
+}
+```
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `tags` | string (required) | The bump directory, same as a plain `bump_dir` string |
+| `chance` | number, `0`–`1` (optional, default `1`) | Probability of using `tags` for each bump |
+
+No other keys are allowed.
+
+- Each bump is chosen independently: with probability `chance` it comes from `tags`, otherwise from the station-level `bump_dir`. This holds even when the scheduled slot has its own `bump_dir`; the fallback is always the station default.
+- `chance` is a fraction, not a percentage. `0` always uses the default; `1` always uses the override.
+- A plain string `bump_dir` is still unconditional. Other overrides (`commercial_dir`, `start_bump`, `end_bump`) are unaffected.
+- The object form works anywhere a slot-level `bump_dir` does: tag overrides, day/date/week schedule slots, and `slot_overrides`. The station-level `bump_dir` must remain a string.
+- Both directories are cataloged, even when `chance` is `0`.
+- `chance` picks the source; it doesn't guarantee exact proportions. Duration and hint filtering, `pre/`/`post/` folders, coming-up-next bumps, and autobumps all work as usual. If the chosen directory has no eligible bump, FieldStation42 does not retry with the other directory.
 
 ### Random Tag Selection
 

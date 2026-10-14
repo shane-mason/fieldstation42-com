@@ -165,6 +165,20 @@ Some ideas for when this is useful:
 - Themed bumps for holiday or sports blocks
 - Different ad content for different time slots or audiences
 
+### Mixing Show Bumps with Your Regular Bumps
+
+A string `bump_dir` replaces your channel's bumps completely. If you'd rather sprinkle show-specific bumps in among the regular ones (think cast bumps during *That '70s Show* breaks), give `bump_dir` an object with a `chance`:
+
+```json
+"tag_overrides": {
+  "sitcoms/70sShow": {
+    "bump_dir": {"tags": "Special_Program_Bumpers/70sShow", "chance": 0.75}
+  }
+}
+```
+
+Each bump has a 75% chance of coming from `Special_Program_Bumpers/70sShow` and a 25% chance of coming from your station's regular `bump_dir`. `chance` runs from `0` to `1` and defaults to `1`. The same object works in schedule slots and slot overrides too. See the [Station Config Reference](/docs/reference/station-config/#mixing-override-bumps-with-the-default) for the details.
+
 ## Break Strategy Per Slot
 
 You can override where commercials are placed for individual time slots, even if the rest of your channel uses a different strategy:
