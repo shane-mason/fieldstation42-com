@@ -138,6 +138,31 @@ You can change the time block size for a specific hour:
 
 This gives the 3 PM hour 15-minute blocks instead of the station's default. Pick values that divide evenly into 60 (5, 10, 15, 20, 30, or 60). Odd values like 7 or 13 will cause problems.
 
+### Limiting Show Length
+
+Use `min_duration` and `max_duration` (in minutes) to keep a slot from picking content that's too short or too long. For example, to keep a three-hour epic out of movie night:
+
+```json
+"20": {
+  "tags": ["movies/PG", "movies/PG-13", "movies/R"],
+  "random_tags": true,
+  "max_duration": 135
+}
+```
+
+Use an array to set a different limit for each tag position. Here the first show can run up to 55 minutes, but the one starting at :30 is capped at 30, so nothing spills into the next hour:
+
+```json
+"9": {
+  "tags": ["cartoons", "cartoons"],
+  "schedule_increment": 30,
+  "min_duration": 22,
+  "max_duration": [55, 30]
+}
+```
+
+A long first show takes the whole hour, and a short one leaves room for the second. Use `null` in an array to leave a tag unrestricted. Limits don't apply to slots with a `sequence`. See [Duration Limits](/docs/reference/station-config/#duration-limits) for the details.
+
 ### Video and Audio Scramble Effects
 
 Add visual effects to specific content, great for simulating "premium" scrambled channels:

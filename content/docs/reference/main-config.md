@@ -48,6 +48,7 @@ The `confs/main_config.json` file is optional. If it doesn't exist, FieldStation
 | `follow_static_symlinks` | boolean | `false` | Serve files through symlinks that point outside the static directories (see below) |
 | `parental_controls_pin` | string | none | Four-digit PIN required before a locked station will play (see below) |
 | `parental_controls_theme` | string | `"minimal"` | Visual style for the PIN prompt: `"classic"`, `"modern"`, or `"minimal"` |
+| `api_key` | string | none | Key required for the web console and API. When not set, there is no protection (see [API Security](/docs/reference/api-security/)) |
 
 ## Live Schedule Agent
 

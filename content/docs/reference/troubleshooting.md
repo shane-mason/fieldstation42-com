@@ -93,6 +93,17 @@ Summary: Common problems and solutions for FieldStation42 setup and operation.
 - Only `standard` networks are checked - guide, web, and executable channels always play
 - See [Parental Controls](/docs/reference/main-config/#parental-controls) for the full setup
 
+### Scripts get "401 api key required"
+
+[API security](/docs/reference/api-security/) is on, and the request didn't include a valid key. Add `X-API-Key: YOUR_KEY` as a header, or `?api_key=YOUR_KEY` to the URL. The key is the `api_key` value in `confs/main_config.json`.
+
+### The web console keeps asking for the key
+
+- The key changed. Changing it logs every browser out, so log in again with the new value.
+- You changed `main_config.json` but didn't restart FieldStation42. The server only reads it at startup.
+- The browser is blocking or clearing cookies for the FieldStation42 address.
+- After 10 wrong keys in 5 minutes, logins from that device are paused for a few minutes.
+
 ## Scheduling Issues
 
 ### Sequences not playing in order

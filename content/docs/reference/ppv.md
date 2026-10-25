@@ -2,7 +2,7 @@ Title: Pay-Per-View (PPV)
 Slug: docs/reference/ppv
 Summary: Video-on-demand interface for FieldStation42 - browse and play movies with metadata, poster art, and TMDB integration.
 
-Video-on-demand interface for FieldStation42. Browse movies with page up/down keys, hit ENTER to play. Shows a slideshow with posters, titles, and descriptions.
+Video-on-demand interface for FieldStation42. Browse movies with the navigation keys on your remote and press confirm to play. Shows a slideshow with posters, titles, and descriptions.
 
 Metadata handling: checks for local NFO files first, falls back to TMDB API if missing. You can manually curate some content and automate the rest. Optimized for CRT displays.
 
@@ -44,9 +44,12 @@ For testing, you can access at `http://localhost:4242/static/ppv/ppv.html?channe
 
 ## Controls
 
-- **Page-Up / Page-Down** - Navigate movies
-- **ENTER/SPACE** - Play selected movie
-- **P** - Pause/resume slideshow (10s auto-advance)
+PPV does not read the keyboard directly. Keys reach it through the FieldStation42 server, sent by the [remote controller](/docs/guides/remote-control/#web-channel-navigation) or the nav pad on the [web remote](/docs/reference/web-remote/).
+
+- **Navigation Up / Navigation Down** (`Page Up` / `Page Down` by default) - Navigate movies
+- **Confirm** (`Enter` by default) - Play selected movie
+
+The slideshow advances on its own every 10 seconds by default, and navigating restarts the timer.
 
 ## Manual Metadata
 

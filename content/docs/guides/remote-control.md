@@ -21,6 +21,9 @@ Pick up a [Flirc USB receiver](https://flirc.tv/) and install the Flirc software
 | Mute | `m` |
 | Channel Up | `Up Arrow` |
 | Channel Down | `Down Arrow` |
+| Navigate Up | `Page Up` |
+| Navigate Down | `Page Down` |
+| Select / OK | `Enter` |
 | Last Channel | `Backspace` |
 | Subtitles On/Off | `v` |
 | Subtitle Track | `j` |
@@ -60,6 +63,9 @@ Using `sudo python3` instead will use the system Python and won't have access to
 | Mute | `m` | Mute or unmute volume |
 | Channel Up | `Up Arrow` | Next channel |
 | Channel Down | `Down Arrow` | Previous channel |
+| Navigation Up | `Page Up` | Next item on web channels such as [PPV](/docs/reference/ppv/) |
+| Navigation Down | `Page Down` | Previous item on web channels |
+| Confirm | `Enter` | Select the current item on web channels |
 | Last Channel | `Backspace` | Jump back to the previously watched channel |
 | Toggle Subtitles | `v` | Show or hide subtitles |
 | Cycle Subtitles | `j` | Step through the available subtitle tracks |
@@ -74,6 +80,12 @@ Using `sudo python3` instead will use the system Python and won't have access to
 - Press `1`, `2`, `3`: immediately switch to channel 123
 
 If the station you are on has [parental controls](/docs/reference/main-config/#parental-controls) and is waiting for its PIN, the number keys enter PIN digits instead of selecting a channel. Channel up/down, the guide button, and the last-channel button still work, so you can leave the station without entering the PIN.
+
+### Web Channel Navigation
+
+The navigation and confirm keys control web channels such as [PPV](/docs/reference/ppv/). The remote controller sends them through the FieldStation42 server to the web page on screen, so they work the same way as the nav pad on the [web remote](/docs/reference/web-remote/). On ordinary channels they do nothing.
+
+`Enter` does two jobs. While you are typing a channel number, it tunes to that channel straight away instead of waiting. Otherwise it is sent to the web channel as confirm.
 
 ### Subtitles and Audio Tracks
 
@@ -104,8 +116,8 @@ Create `runtime/remote_controller.json` to change how the remote controller beha
         "fs42-osd.service"
     ],
     "key_mappings": {
-        "volume_up": "pageup",
-        "volume_down": "pagedown"
+        "volume_up": "equal",
+        "volume_down": "minus"
     }
 }
 ```
@@ -127,13 +139,13 @@ You don't need Flirc to use the remote controller. Any keyboard works. Add a `ke
 ```json
 {
     "key_mappings": {
-        "volume_up": "pageup",
-        "volume_down": "pagedown"
+        "volume_up": "equal",
+        "volume_down": "minus"
     }
 }
 ```
 
-Everything you leave out keeps its default key. The example above moves volume onto the page keys while the guide stays on `Home`, mute stays on `m`, and the rest are untouched.
+Everything you leave out keeps its default key. The example above moves volume onto the `=` and `-` keys while the guide stays on `Home`, mute stays on `m`, and the rest are untouched.
 
 These are the function names and the defaults you are overriding:
 
@@ -145,6 +157,9 @@ These are the function names and the defaults you are overriding:
         "volume_down": "left",
         "channel_up": "up",
         "channel_down": "down",
+        "navigation_up": "pageup",
+        "navigation_down": "pagedown",
+        "confirm": "enter",
         "last_channel": "backspace",
         "mute": "m",
         "toggle_subtitles": "v",
@@ -178,7 +193,7 @@ When you are rearranging keys this way, map the displaced function somewhere too
 {
     "key_mappings": {
         "channel_up": "right",
-        "volume_up": "pageup"
+        "volume_up": "equal"
     }
 }
 ```
@@ -194,7 +209,7 @@ Any key your device sends can be mapped. Key names are the Linux key names in lo
 - **Navigation**: `home`, `end`, `pageup`, `pagedown`, `insert`, `delete`
 - **Common**: `space`, `enter`, `tab`, `backspace`, `esc`
 - **Punctuation**: `minus`, `equal`, `comma`, `dot`, `slash`, `semicolon`, `apostrophe`, `grave`, `leftbrace`, `rightbrace`, `backslash`
-- **Keypad**: `kp0` through `kp9`, `kpplus`, `kpminus`, `kpasterisk`, `kpslash`, `kpdot`, `kpenter`
+- **Keypad**: `kp0` through `kp9`, `kpplus`, `kpminus`, `kpasterisk`, `kpslash`, `kpdot` (the keypad Enter key is treated as `enter`)
 - **Modifiers**: `leftshift`, `rightshift`, `leftctrl`, `rightctrl`, `leftalt`, `rightalt`, `leftmeta`, `rightmeta`
 
 To find the name of a particular key, run the remote controller and press it. Every key press is printed along with its name:
@@ -291,6 +306,12 @@ FS42_HOST=192.168.1.100 FS42_PORT=8080 python3 remote_controller.py
 ```
 
 Or edit the values directly at the top of `remote_controller.py`.
+
+If [API security](/docs/reference/api-security/) is on, the remote controller reads the key from `confs/main_config.json` automatically. When it runs on a different machine, pass the key as well:
+
+```bash
+FS42_HOST=192.168.1.100 FS42_API_KEY=YOUR_KEY python3 remote_controller.py
+```
 
 ## Button Callbacks
 

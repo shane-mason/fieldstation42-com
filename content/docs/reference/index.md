@@ -16,6 +16,11 @@ Everything you need to know about how FieldStation42 works under the hood. Confi
     <div class="doc-index-desc">Global settings that apply across all your stations: server options, title normalization, day parts, and more.</div>
   </a>
 
+  <a href="/docs/reference/api-security/" class="doc-index-item">
+    <div class="doc-index-title">API Security</div>
+    <div class="doc-index-desc">Protect the web console and API with an api_key. Turning it on or off, logging in, and sending the key from your scripts.</div>
+  </a>
+
   <a href="/docs/reference/command-line/" class="doc-index-item">
     <div class="doc-index-title">Command Line Guide</div>
     <div class="doc-index-desc">Every flag and subcommand for station_42.py, from scanning your library to building schedules and managing sequences.</div>

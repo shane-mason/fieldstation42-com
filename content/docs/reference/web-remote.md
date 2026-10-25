@@ -14,6 +14,8 @@ FieldStation42 includes a web-based remote you can use from any desktop or mobil
 
 This will take you to the main web interface for FS42, just select 'Remote' from the menu to open the remote interface. You can also get there directly by navigating to `http://192.168.50.77:4242/remote`
 
+If [API security](/docs/reference/api-security/) is on, the first visit from each phone or browser asks for the API key. To save the key in a home-screen shortcut, use `http://192.168.50.77:4242/login?api_key=YOUR_KEY&next=/remote`.
+
 - Supports channels up to 999
 - `Stop` button to shut down FieldStation42
 - `Volume+`, `Volume-` and `Mute` buttons to control sound (should work on most Linux systems, including WSL if you install alsamixer)

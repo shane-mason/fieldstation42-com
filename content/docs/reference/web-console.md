@@ -27,6 +27,16 @@ Your server runs with these defaults (configurable in `main_config.json`):
 }
 ```
 
+### API Key
+
+If `api_key` is set in `main_config.json`, the web console asks for it once per browser, and every API call must send it, using one of:
+
+- `?api_key=YOUR_KEY` on the URL
+- an `X-API-Key: YOUR_KEY` header
+- `Authorization: Bearer YOUR_KEY`
+
+Calls without a valid key get a `401`. The examples on this page leave the key out, so add it if security is on. See [API Security](/docs/reference/api-security/) for setup and examples.
+
 ## API Overview
 
 The FieldStation42 API is organized around two main concepts:
@@ -234,6 +244,19 @@ Adds specified time period to all station schedules (e.g., "1d", "12h", "30m").
 GET /build/schedule/add_time/status/{task_id}
 ```
 
+### Server Management
+
+*Require `api_key` to be set - `403` otherwise. See [API Security](/docs/reference/api-security/#managing-the-server).*
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/manage/status` | Service, git and docker status (`{"enabled": false}` with no key) |
+| `POST` | `/manage/restart` | Restart all active `fs42*` systemd user services (`409` if not running under systemd) |
+| `POST` | `/manage/stop` | Stop every `fs42*` service and switch to the standby console (`fs42-standby.service`). Without the standby unit it stops everything, and when not under systemd it stops the player. `409` in standby |
+| `POST` | `/manage/start` | From standby, start every enabled `fs42*` service as a boot would. `409` when already running |
+| `POST` | `/manage/update/check` | `git fetch`; returns `behind`, `ahead` and the incoming commits |
+| `POST` | `/manage/update` | `git pull --ff-only`; `409` with git's output and a `reason` (`local edits`, `diverged`, `no upstream`, `detached`, `network`, `unknown`) if it can't fast-forward |
+
 ---
 
 ## Play-Time APIs
@@ -432,7 +455,7 @@ if (!response.ok) {
 
 ### Cross-Origin Requests
 
-The server supports CORS for web development. You can make requests from any origin during development.
+The server does not send CORS headers, so browsers block calls from pages served by another origin. Serve your page from FieldStation42's own `static` folder, or make the calls from a script or server-side tool instead.
 
 ---
 

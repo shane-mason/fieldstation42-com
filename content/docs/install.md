@@ -67,6 +67,8 @@ bash install.sh
 
 The installer sets up everything FieldStation42 needs to run. When it finishes, you'll see `runtime` and `catalog` folders appear. Those are for later steps.
 
+On a new install, the installer also turns on [API security](/docs/reference/api-security/): it creates an API key, saves it as `api_key` in `confs/main_config.json`, and prints it at the end. You'll need that key to log in to the web console. If you'd rather not use one, remove `api_key` from that file.
+
 If you see *"Virtual environment does not contain activate script"*, double-check that the Python packages from the first step installed correctly, then run `bash install.sh` again.
 
 ## Before You Run FieldStation42
