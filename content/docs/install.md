@@ -97,8 +97,10 @@ git pull
 
 Raspberry Pi works great with FieldStation42. A few things to know:
 
-- Use **Bookworm OS** for best results. A fresh install is recommended. When using the Raspberry Pi Imager, click **Choose OS**, then select **Raspberry Pi OS (64-bit)**. Trixie is now the default, so you'll need to scroll down and select the **Bookworm** version explicitly. Look for the release name in the description before writing.
-- **Trixie** support is in progress. If video won't display, run these commands to create a config file that fixes it:
+- Use Raspberry Pi OS **Trixie version** for best results. A fresh install is recommended. When using the Raspberry Pi Imager, click **Choose OS**, then select **Raspberry Pi OS (64-bit)**. Trixie is now the default. 
+- **Bookworm version** of the Raspberry Pi works fine if you want to use it instead. You'll just need to take an extra step to install web channel requirements.
+
+- Note that early versions of Trixie had some MPV configuration issues. If video won't display, run these commands to create a config file that fixes it:
 
 ```bash
 mkdir -p ~/.config/mpv
