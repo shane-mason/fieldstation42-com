@@ -23,6 +23,8 @@ Pick up a [Flirc USB receiver](https://flirc.tv/) and install the Flirc software
 | Channel Down | `Down Arrow` |
 | Navigate Up | `Page Up` |
 | Navigate Down | `Page Down` |
+| Navigate Left | `[` |
+| Navigate Right | `]` |
 | Select / OK | `Enter` |
 | Last Channel | `Backspace` |
 | Subtitles On/Off | `v` |
@@ -63,9 +65,11 @@ Using `sudo python3` instead will use the system Python and won't have access to
 | Mute | `m` | Mute or unmute volume |
 | Channel Up | `Up Arrow` | Next channel |
 | Channel Down | `Down Arrow` | Previous channel |
-| Navigation Up | `Page Up` | Next item on web channels such as [PPV](/docs/reference/ppv/) |
-| Navigation Down | `Page Down` | Previous item on web channels |
-| Confirm | `Enter` | Select the current item on web channels |
+| Navigation Up | `Page Up` | Move up in the [interactive guide](/docs/guides/guide-channels/#interactive-guide), next item in [PPV](/docs/reference/ppv/) |
+| Navigation Down | `Page Down` | Move down in the interactive guide, previous item in PPV |
+| Navigation Left | `[` | Move left in the interactive guide |
+| Navigation Right | `]` | Move right in the interactive guide |
+| Confirm | `Enter` | Tune to the highlighted channel in the interactive guide, play the selected title in PPV |
 | Last Channel | `Backspace` | Jump back to the previously watched channel |
 | Toggle Subtitles | `v` | Show or hide subtitles |
 | Cycle Subtitles | `j` | Step through the available subtitle tracks |
@@ -83,7 +87,11 @@ If the station you are on has [parental controls](/docs/reference/main-config/#p
 
 ### Web Channel Navigation
 
-The navigation and confirm keys control web channels such as [PPV](/docs/reference/ppv/). The remote controller sends them through the FieldStation42 server to the web page on screen, so they work the same way as the nav pad on the [web remote](/docs/reference/web-remote/). On ordinary channels they do nothing.
+The navigation and confirm keys control web channels: the [interactive guide](/docs/guides/guide-channels/#interactive-guide) and [PPV](/docs/reference/ppv/). The remote controller sends them through the FieldStation42 server to the web page on screen, so they work the same way as the nav pad on the [web remote](/docs/reference/web-remote/). On ordinary channels they do nothing.
+
+The arrow keys are already taken by volume and channel changes, so moving left and right uses `[` and `]` by default. On a remote with a direction pad and separate channel and volume buttons, program the direction pad onto the navigation keys in Flirc - up and down as `Page Up` and `Page Down`, left and right as `[` and `]`, and OK as `Enter` - and keep the channel and volume buttons on the arrow keys.
+
+External scripts can send the same keys with `POST /player/web/key/{key}`, where `{key}` is `PageUp`, `PageDown`, `NavLeft`, `NavRight` or `Enter`. The older `POST /ppv/{channel}/key/{key}` still works but is deprecated.
 
 `Enter` does two jobs. While you are typing a channel number, it tunes to that channel straight away instead of waiting. Otherwise it is sent to the web channel as confirm.
 
@@ -159,6 +167,8 @@ These are the function names and the defaults you are overriding:
         "channel_down": "down",
         "navigation_up": "pageup",
         "navigation_down": "pagedown",
+        "navigation_left": "leftbrace",
+        "navigation_right": "rightbrace",
         "confirm": "enter",
         "last_channel": "backspace",
         "mute": "m",

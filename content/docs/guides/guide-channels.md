@@ -6,7 +6,7 @@ FieldStation42 has two types of guide channels.
 
 The **classic guide** is built directly into the player. It renders a scrolling schedule grid using Python and Tkinter, supports rotating messages and images in the header, and plays background music. It is configured entirely through JSON and has no external dependencies beyond the base install.
 
-The **custom guide** is a web-based guide that runs inside FieldStation42's web channel component. It comes with three decade-themed visual styles (80s, 90s, 00s), supports background music, video panels, and rotating text messages, and can be extended with your own CSS themes. It requires the web channel dependencies to be installed.
+The **custom guide** is a web-based guide that runs inside FieldStation42's web channel component. It comes with three decade-themed visual styles (80s, 90s, 00s) plus a satellite-receiver style, supports background music, video panels, rotating text messages, and an interactive mode you can browse with the remote, and can be extended with your own CSS themes. It requires the web channel dependencies to be installed.
 
 For quick copy-paste configs for both types, see [Recipe 5 in the Channel Recipes guide](/docs/guides/channel-recipes/#recipe-5-guide-channels).
 
@@ -104,6 +104,10 @@ All custom guide configuration is passed as URL parameters:
 | `random_start`     | off        | `?random_start=1` starts the operator video playlist at a random position. Grid-mode themes only (90s, 00s). |
 | `mock`             | off        | `?mock=1` generates fake schedule data for local testing without a server connection.                        |
 | `show_description` | off        | `?show_description=true` if showing metadata, use episode descriptions instead of episode title              |
+| `interactive`      | off        | `?interactive=1` lets viewers browse the grid and tune channels with the remote. Grid-mode themes only. See [Interactive Guide](#interactive-guide). |
+| `autoscroll`       | on         | `?autoscroll=0` stops the grid from scrolling on its own. Mostly useful with `interactive=1`.               |
+| `max_hours`        | `24`       | How far ahead, in hours, an interactive guide can be browsed.                                                |
+| `idle`             | `30`       | Seconds without a key press before an interactive guide returns to the current time and resumes scrolling.  |
 
 ## Program Descriptions
 
@@ -120,6 +124,53 @@ http://localhost:4242/static/customguide/customguide.html?theme=90s&slots=3&use_
 Only the literal value `0` disables it. Any other value, or omitting the parameter, leaves descriptions on.
 
 The 80s theme never requests metadata, so `use_meta` has no effect there.
+
+## Interactive Guide
+
+By default the custom guide is a passive scrolling channel. Add `interactive=1` to the URL and viewers can take control of it with the remote: move through the grid, look ahead at what's coming up, and tune straight to a channel.
+
+```
+http://localhost:4242/static/customguide/customguide.html?theme=satellite&slots=3&interactive=1
+```
+
+Interactive mode works with the grid-mode themes (90s, 00s, satellite, and any custom theme using `--layout-mode: "grid"`). The 80s list theme ignores it.
+
+### Controls
+
+The guide is driven by the navigation keys of the [remote controller](/docs/guides/remote-control/#web-channel-navigation) or the nav pad on the [web remote](/docs/reference/web-remote/). A keyboard plugged straight into the TV box is ignored - run `remote_controller.py` to use a keyboard (it can listen to every input device).
+
+| Remote function | Default key | In the guide |
+|-----------------|-------------|--------------|
+| `navigation_up` | `Page Up` | Move up a channel |
+| `navigation_down` | `Page Down` | Move down a channel |
+| `navigation_left` | `[` | Move to the previous show |
+| `navigation_right` | `]` | Move to the next show |
+| `confirm` | `Enter` | Tune to the highlighted channel |
+
+Channel up/down, volume, and the other remote functions keep working as usual - changing the channel leaves the guide.
+
+### How it behaves
+
+- **Taking control.** The guide scrolls normally until a navigation key is pressed. The first press stops scrolling and highlights the show on now in the topmost visible row. It doesn't move or tune anything.
+- **Moving around.** Up and down keep the same time column, so moving through the channels stays lined up with the show you started on. Left and right move from show to show. When the next show is off the edge of the grid, the grid moves forward 30 minutes.
+- **Limits.** You can't go into the past - left stops at the current half hour. Right stops `max_hours` ahead (24 hours by default).
+- **Show details.** While navigating, the text panel shows the highlighted show's title, channel, start and end time, and, when [NFO metadata](/docs/reference/nfo-metadata/) is available, the episode title and description. Long descriptions are cut off with an ellipsis.
+- **Tuning.** `Enter` tunes to the highlighted channel. On a future show it simply tunes to the channel.
+- **Going idle.** After `idle` seconds (30 by default) with no key press, the guide jumps back to the current time, the message carousel returns, and scrolling resumes.
+
+### Without scrolling
+
+Add `autoscroll=0` for a guide that sits still until someone uses it:
+
+```
+http://localhost:4242/static/customguide/customguide.html?theme=00s&interactive=1&autoscroll=0
+```
+
+The grid stays at the top showing the current time and keeps itself up to date. Once someone starts navigating it stays where they left it - there is no idle reset.
+
+### Highlight color
+
+Every theme gets a highlight automatically: a solid yellow fill with dark text that gently pulses. The 00s theme uses red and the satellite theme uses an amber bar. To change it in your own theme, set the `--program-selected-*` variables listed under [Grid mode: program blocks](#grid-mode-program-blocks).
 
 ## Decade Themes
 
@@ -150,6 +201,14 @@ Expects 4:3 aspect ratio video clips. Music only plays if `?music=` is passed.
 Same split-screen layout as 90s. Red rounded channel pills, pill-shaped time slot labels, rounded program blocks. Cleaner and more polished. Matches early-2000s digital cable guide aesthetics.
 
 Expects 16:9 aspect ratio video clips. Music only plays if `?music=` is passed.
+
+### Satellite
+
+![Satellite guide channel theme](/theme/pixels/satellite_guide.png)
+
+Modeled on the on-screen guides of mid-2000s satellite receivers. A light blue info panel sits across the top with the video on the right, above a flat navy grid with thin cell edges. Channel numbers and names sit on one line (`287 MILT`), titles and times are left-aligned, and the interactive highlight is an amber bar.
+
+Expects 16:9 aspect ratio video clips. Music only plays if `?music=` is passed. Pairs well with `interactive=1`.
 
 ## Assets
 
@@ -228,6 +287,8 @@ If no messages file is provided, the panel shows "FieldStation42" as a static pl
 A theme is a single CSS file placed in `fs42/fs42_server/static/customguide/themes/`. The filename is the theme name: `mytheme.css` is loaded with `?theme=mytheme`.
 
 The theme sets CSS custom properties on `:root`. The structural CSS uses these variables with sensible fallbacks, so you only need to define what you want to change.
+
+A theme is an ordinary stylesheet, so it can also include regular CSS rules after the `:root` block for anything the variables don't cover. The satellite theme does this to put the channel number and name on one line and to draw gradients behind the page and top panel. If you give the top panel a background this way, set `--video-panel-bg` and `--text-panel-bg` to `transparent` so the same background shows behind both the video and the messages.
 
 ### Layout mode
 
@@ -360,6 +421,9 @@ This is the most important variable. It controls which DOM layout the JS builds 
 | `--program-current-bg` | background of the currently-airing block |
 | `--program-current-border` | border color of the currently-airing block |
 | `--program-current-color` | text color of the currently-airing block |
+| `--program-selected-bg` | fill of the highlighted block in an interactive guide (default `#ffff00`) |
+| `--program-selected-color` | text color of the highlighted block (default `#000066`) |
+| `--program-selected-animation` | animation on the highlighted block; defaults to a slow pulse, `none` turns it off |
 
 ## Classic Guide Appearance Reference
 

@@ -22,7 +22,7 @@ If [API security](/docs/reference/api-security/) is on, the first visit from eac
 - `Guide` button auto-navigates to guide channel (if you have one configured)
 - `Info` button toggles the 'Now Playing' to show system information like CPU load, memory usage and even CPU temperature if available.
 - `Subs` and `Audio` buttons cycle through the subtitle and audio tracks of whatever is playing right now
-- `NAV` button swaps the number pad for a navigation pad, used to drive Pay-Per-View and other web channels (see below)
+- `NAV` button swaps the number pad for a navigation pad, used to drive the interactive guide, Pay-Per-View and other web channels (see below)
 - Number buttons send channel changes, and enter the PIN when a station is locked with parental controls (see below)
 - `CLR` button clears a partly-typed channel number, or a partly-typed PIN
 - `Exit` button to return to the main UI
@@ -47,20 +47,20 @@ The same functions are available from an IR remote or keyboard - see [Connecting
 
 ## 🕹️ Navigation Pad
 
-[Pay-Per-View](/docs/reference/ppv/) and other `web` type channels are driven by keystrokes rather than by the usual player commands, so the remote has a second pad for them.
+The [interactive guide](/docs/guides/guide-channels/#interactive-guide), [Pay-Per-View](/docs/reference/ppv/) and other `web` type channels are driven by keystrokes rather than by the usual player commands, so the remote has a second pad for them.
 
 The `NAV` button, on the same row as `0`, swaps the number pad for a navigation pad: arrows around a central `OK` button, with `123` in the same corner to swap back. The rest of the remote stays where it is.
 
-- `▲` - next title (Page Up)
-- `▼` - previous title (Page Down)
-- `OK` - play the selected title (Enter)
+- `▲` - up a channel in the guide, next title in PPV (Page Up)
+- `▼` - down a channel in the guide, previous title in PPV (Page Down)
+- `◀` / `▶` - previous / next show in the guide (NavLeft / NavRight). PPV ignores them.
+- `OK` - tune to the highlighted channel in the guide, play the selected title in PPV (Enter)
 
 A few things to keep in mind:
 
-- The left and right arrows are there so the pad reads like a physical remote, but they are disabled. PPV does not bind any horizontal keys.
 - Switching pads is manual. The remote does not swap to the navigation pad on its own when you tune to a web channel, and it stays on whichever pad you left it on.
 - The keys only do something while the web channel itself is on screen. Once you press `OK` and a movie starts playing, the navigation keys are ignored until the movie ends and the channel returns to its slideshow.
-- The display briefly shows `NEXT`, `PREV` or `SELECT` to confirm the button press was sent.
+- The display briefly shows `UP`, `DOWN`, `LEFT`, `RIGHT` or `SELECT` to confirm the button press was sent.
 - The number pad is hidden while the navigation pad is up, so switch back with `123` before typing a channel number.
 
 ---

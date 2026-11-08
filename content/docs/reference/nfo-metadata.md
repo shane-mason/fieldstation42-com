@@ -18,7 +18,7 @@ If all you want is an overlay on a music video channel, the [NFO File Format](#n
 
 Only music video and plain text NFOs draw an on-screen overlay during playback. The other types are there to describe your library, not to appear over it.
 
-Those four cover everything worth writing. FieldStation42 reads per-file sidecars only, so Kodi's series-level `tvshow.nfo` is never picked up and there is no reason to create one. If your library already has `<tvshow>` files scattered through it, they do no harm.
+Those four cover everything worth writing. FieldStation42 reads per-file sidecars, with one exception: an episode with no content rating of its own takes it from the show's `tvshow.nfo`, for the on-screen [rating display](/docs/reference/osd-setup/#rating-display). If you don't use rating bugs, or your episode NFOs carry their own ratings, there is no reason to create a `tvshow.nfo`.
 
 Where "Guide" appears above, it means the grid-mode custom guide themes (90s and 00s), which show a program description under each title. That is on by default and controlled by the `use_meta` URL parameter. See [Program Descriptions](/docs/guides/guide-channels/#program-descriptions) in the Guide Channels guide.
 
@@ -84,9 +84,23 @@ If you would rather not write these by hand, [nfo-maker-thingy](https://github.c
 </episodedetails>
 ```
 
-Any other Kodi root tag is accepted too, including `<tvshow>`. FieldStation42 keeps its `<title>` plus whichever of `<year>`, `<plot>`, and `<genre>` are present. A `<title>` is required for these: without one, the file is ignored. This is tolerance for libraries that already carry other Kodi files, not a format to reach for.
+Any other Kodi root tag is accepted too. FieldStation42 keeps its `<title>` plus whichever of `<year>`, `<plot>`, and `<genre>` are present. A `<title>` is required for these: without one, the file is ignored. This is tolerance for libraries that already carry other Kodi files, not a format to reach for.
 
 Where a type has a `<year>` but the file only carries `<premiered>`, the year is taken from the premiere date.
+
+Movies also keep `<premiered>`, `<tagline>`, every `<director>`, and the `<name>` of every `<actor>`. A movie can list several `<genre>` tags, and all of them are kept.
+
+**Content ratings.** Movies and episodes keep their rating from `<certification>`, or from `<mpaa>` if there is no certification, for example `<mpaa>TV-14</mpaa>` or `<certification>US:PG-13</certification>`. An episode without one takes the rating from the show's `tvshow.nfo`, found in the episode's folder or up to two folders above it. If the episode has no `<showtitle>`, it takes the show's title from there as well:
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<tvshow>
+  <title>Friends</title>
+  <mpaa>TV-PG</mpaa>
+</tvshow>
+```
+
+The rating is what drives the on-screen rating bug. See [Rating Display](/docs/reference/osd-setup/#rating-display) in the OSD setup.
 
 ### Plain Text Fallback
 
@@ -170,10 +184,14 @@ Parsed NFO and audio tag metadata is stored as a JSON object with a `type` discr
 
 ```json
 { "type": "music",     "title": "...", "artist": "...", "album": "...", "year": "...", "genre": "..." }
-{ "type": "movie",     "title": "...", "year": "...", "plot": "...", "genre": "..." }
-{ "type": "episode",   "title": "...", "show_title": "...", "season": 4, "episode": 5, "aired": "...", "plot": "..." }
+{ "type": "movie",     "title": "...", "year": "...", "plot": "...", "genre": ["...", "..."],
+  "content_rating": "...", "premiere_date": "...", "director": ["..."], "actors": ["...", "..."], "tagline": "..." }
+{ "type": "episode",   "title": "...", "show_title": "...", "season": 4, "episode": 5, "aired": "...", "plot": "...",
+  "content_rating": "..." }
 { "type": "plaintext", "title": "...", "lines": ["...", "..."] }
 ```
+
+`genre` is a list for movies and other Kodi types, since they can carry several, but stays a single string for music. Empty lists are left out like any other empty field. `content_rating` is stored exactly as written in the NFO, for example `US:PG / US:Rated PG`. The player cleans it up to `PG` when it publishes the current program's status for the OSD.
 
 This is also what comes back from the server API. Schedule blocks built around a single feature carry the object as a `meta` field. Blocks holding multiple pieces of content, such as clip shows and loops, and off-air blocks have no single feature to describe, so they carry no `meta` and consumers fall back to the block title. The [Server API reference](/docs/reference/web-console/) has the endpoints.
 
